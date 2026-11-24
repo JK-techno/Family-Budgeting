@@ -2,55 +2,59 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tracker Anggaran Keluarga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>FAMILY EXPENSE TRACKER</title>
   <style>
     :root {
       --bg-page: #f4f3ef;
       --bg-card: #fcfbf9;
-      --bg-subtle: #efede7;
-      --header-bg: #1e3a4c;
-      --header-border: #162c3a;
+      --bg-subtle: #edeae2;
+      --header-bg: #1b3644;
+      --header-bg-end: #24485a;
+      --header-border: #132732;
       --text-main: #1e293b;
-      --text-muted: #5b6777;
-      --border: #dedad0;
-      --border-strong: #c9c3b5;
+      --text-muted: #5c6878;
+      --border: #ddd8cd;
+      --border-strong: #c6bfb0;
 
       /* Calm & Professional Accent Palette */
-      --teal: #2f6f65;
-      --teal-dark: #23554d;
-      --teal-soft: #e6f0ee;
-      --indigo: #3b5998;
-      --indigo-soft: #eaedf7;
-      --rose: #a84a6b;
-      --rose-soft: #f8eaf0;
-      --amber: #b4692e;
+      --teal: #2d6a6a;
+      --teal-dark: #215151;
+      --teal-soft: #e5f0ef;
+      --slate: #466885;
+      --slate-soft: #eaeff4;
+      --amber: #b3682d;
       --amber-soft: #faefe6;
-      --slate: #476b8a;
-      --slate-soft: #ebf0f5;
-      --purple: #6b5280;
-      --purple-soft: #f1edf5;
-      --terracotta: #a6523b;
-      --terracotta-soft: #f7ece9;
-      --olive: #4c6b45;
+      --rose: #a64b6a;
+      --rose-soft: #f7eaef;
+      --indigo: #465b91;
+      --indigo-soft: #ebeff7;
+      --terracotta: #a3523c;
+      --terracotta-soft: #f6ece9;
+      --olive: #4c6b46;
       --olive-soft: #ebf1ea;
+      --plum: #69517d;
+      --plum-soft: #f0ecf4;
 
-      --danger: #b53f3f;
+      --danger: #b43e3e;
       --danger-soft: #fbeaea;
       --radius-lg: 14px;
       --radius-md: 10px;
       --radius-sm: 8px;
-      --shadow-sm: 0 2px 8px rgba(30, 58, 76, 0.05);
-      --shadow-md: 0 10px 28px rgba(15, 23, 42, 0.14);
+      --shadow-sm: 0 2px 8px rgba(27, 54, 68, 0.05);
+      --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.16);
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: var(--bg-page);
       color: var(--text-main);
@@ -62,55 +66,74 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Header */
+    /* =====================================================================
+       HEADER PRESISI RATA TENGAH & FULL-WIDTH RAPIH DI MOBILE
+       ===================================================================== */
     .topbar {
-      background: linear-gradient(135deg, #1a3343 0%, #234659 100%);
+      width: 100%;
+      background: linear-gradient(135deg, var(--header-bg) 0%, var(--header-bg-end) 100%);
       color: #f8fafc;
       border-bottom: 1px solid var(--header-border);
       position: sticky;
       top: 0;
       z-index: 30;
-      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 3px 14px rgba(15, 23, 42, 0.12);
     }
 
     .topbar-inner {
-      max-width: 1180px;
+      width: 100%;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 14px 18px;
+      padding: 18px 16px;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      justify-content: center;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .brand {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .brand h1 {
-      font-size: 1.2rem;
+      font-size: clamp(1.2rem, 4.5vw, 1.55rem);
       font-weight: 800;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: #ffffff;
+      line-height: 1.25;
     }
 
     .brand p {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: #cbd5e1;
-      margin-top: 2px;
+      margin-top: 4px;
+      max-width: 540px;
     }
 
     .toolbar {
+      width: 100%;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      justify-content: center;
       gap: 8px;
     }
 
     .month-box {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 6px 12px;
       border-radius: var(--radius-sm);
     }
 
@@ -124,17 +147,19 @@
       background: transparent;
       border: none;
       color: #ffffff;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
       outline: none;
       cursor: pointer;
       color-scheme: dark;
+      width: auto;
+      padding: 0;
     }
 
     /* Buttons */
     button, .btn {
       font-family: inherit;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       border-radius: var(--radius-sm);
       padding: 8px 12px;
@@ -146,6 +171,7 @@
       gap: 6px;
       transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
       touch-action: manipulation;
+      white-space: nowrap;
     }
 
     button:active {
@@ -155,7 +181,7 @@
     .btn-ghost-light {
       background: rgba(255, 255, 255, 0.1);
       color: #f1f5f9;
-      border-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .btn-ghost-light:hover {
@@ -198,30 +224,47 @@
     }
 
     .btn-danger:hover {
-      background: #9c3333;
+      background: #9a3232;
     }
 
     .btn-sm {
-      padding: 5px 9px;
-      font-size: 0.76rem;
+      padding: 5px 10px;
+      font-size: 0.75rem;
     }
 
-    /* Container */
+    /* =====================================================================
+       MAIN CONTAINER & SYMMETRIC GRID
+       ===================================================================== */
     .container {
-      max-width: 1180px;
+      width: 100%;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 20px 18px 40px;
+      padding: 20px 16px 40px;
     }
 
     /* KPI Grid */
     .kpi-grid {
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .kpi-card {
+      width: 100%;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -243,7 +286,7 @@
     }
 
     .kpi-label {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -251,14 +294,15 @@
     }
 
     .kpi-val {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: var(--text-main);
       letter-spacing: -0.02em;
+      word-break: break-word;
     }
 
     .kpi-sub {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--text-muted);
       margin-top: 4px;
     }
@@ -268,86 +312,17 @@
       align-items: center;
       padding: 2px 9px;
       border-radius: 999px;
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
 
     .pill-teal { background: var(--teal-soft); color: var(--teal-dark); }
     .pill-amber { background: var(--amber-soft); color: var(--amber); }
     .pill-danger { background: var(--danger-soft); color: var(--danger); }
-    .pill-indigo { background: var(--indigo-soft); color: var(--indigo); }
-    .pill-rose { background: var(--rose-soft); color: var(--rose); }
-
-    /* Person Bar */
-    .person-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 14px 18px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 22px;
-    }
-
-    .person-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .person-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    .person-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .person-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: var(--radius-md);
-      font-size: 0.84rem;
-      border: 1px solid var(--border);
-    }
-
-    .person-chip.suami {
-      background: var(--indigo-soft);
-      border-color: #d3dbf0;
-    }
-
-    .person-chip.istri {
-      background: var(--rose-soft);
-      border-color: #edd0dc;
-    }
-
-    .dual-bar {
-      height: 8px;
-      background: var(--bg-subtle);
-      border-radius: 999px;
-      overflow: hidden;
-      display: flex;
-      margin-top: 12px;
-    }
-
-    .dual-bar-suami {
-      background: var(--indigo);
-      transition: width 0.3s ease;
-    }
-
-    .dual-bar-istri {
-      background: var(--rose);
-      transition: width 0.3s ease;
-    }
 
     /* Section Header & Filter Tabs */
     .section-head {
+      width: 100%;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -357,27 +332,29 @@
     }
 
     .section-head h2 {
-      font-size: 1.08rem;
+      font-size: 1.06rem;
       font-weight: 800;
     }
 
     .section-head p {
       font-size: 0.78rem;
       color: var(--text-muted);
+      margin-top: 2px;
     }
 
     .filter-pills {
+      width: 100%;
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 14px;
+      gap: 7px;
+      margin-bottom: 16px;
     }
 
     .tab-pill {
       background: var(--bg-card);
       color: var(--text-muted);
       border: 1px solid var(--border);
-      padding: 6px 12px;
+      padding: 6px 13px;
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 600;
@@ -396,18 +373,26 @@
 
     /* Budget Category Cards Grid */
     .pos-grid {
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 14px;
       margin-bottom: 26px;
     }
 
+    @media (max-width: 560px) {
+      .pos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .pos-card {
+      width: 100%;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-top: 4px solid var(--teal);
       border-radius: var(--radius-lg);
-      padding: 15px;
+      padding: 16px;
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
@@ -416,18 +401,18 @@
     }
 
     .pos-card:hover {
-      box-shadow: 0 6px 16px rgba(30, 58, 76, 0.08);
+      box-shadow: 0 6px 16px rgba(27, 54, 68, 0.08);
     }
 
     .pos-card-top {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 8px;
     }
 
     .cat-tag {
-      font-size: 0.69rem;
+      font-size: 0.7rem;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 6px;
@@ -437,22 +422,23 @@
     .pos-title {
       font-size: 0.98rem;
       font-weight: 800;
-      margin-top: 8px;
+      margin-top: 9px;
       color: var(--text-main);
     }
 
     .pos-metrics {
       margin: 12px 0 10px;
-      font-size: 0.83rem;
+      font-size: 0.84rem;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
     .metric-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
 
     .metric-row span:first-child {
@@ -467,20 +453,20 @@
       color: var(--text-main);
       background: var(--bg-subtle);
       border: 1px dashed var(--border-strong);
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 6px;
       cursor: pointer;
     }
 
     .pagu-clickable:hover {
-      background: #e5e2d9;
+      background: #e3dfd5;
       border-color: var(--teal);
       color: var(--teal-dark);
     }
 
     .metric-divider {
       border-top: 1px solid var(--border);
-      padding-top: 6px;
+      padding-top: 7px;
       margin-top: 2px;
       font-weight: 700;
     }
@@ -491,7 +477,7 @@
       background: var(--bg-subtle);
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .prog-fill {
@@ -505,7 +491,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 6px;
-      padding-top: 8px;
+      padding-top: 10px;
       border-top: 1px solid var(--border);
     }
 
@@ -516,19 +502,21 @@
 
     /* Bottom Split: Form & Table */
     .workspace-grid {
+      width: 100%;
       display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 20px;
+      grid-template-columns: 350px minmax(0, 1fr);
+      gap: 18px;
       align-items: start;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 880px) {
       .workspace-grid {
         grid-template-columns: 1fr;
       }
     }
 
     .panel {
+      width: 100%;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -579,61 +567,26 @@
     input:focus,
     select:focus {
       border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(47, 111, 101, 0.14);
-    }
-
-    /* Segmented Toggle Suami / Istri */
-    .person-toggle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .person-toggle input {
-      display: none;
-    }
-
-    .person-toggle label {
-      margin: 0;
-      text-align: center;
-      padding: 9px 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-strong);
-      background: #ffffff;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      transition: all 0.15s;
-    }
-
-    #radioSuami:checked + label {
-      background: var(--indigo-soft);
-      border-color: var(--indigo);
-      color: var(--indigo);
-    }
-
-    #radioIstri:checked + label {
-      background: var(--rose-soft);
-      border-color: var(--rose);
-      color: var(--rose);
+      box-shadow: 0 0 0 3px rgba(45, 106, 106, 0.14);
     }
 
     /* Table */
     .table-filters {
+      width: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr 1.2fr;
+      grid-template-columns: 1fr 1.2fr;
       gap: 8px;
       margin-bottom: 14px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 560px) {
       .table-filters {
         grid-template-columns: 1fr;
       }
     }
 
     .table-wrap {
+      width: 100%;
       overflow-x: auto;
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
@@ -710,9 +663,9 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
       width: 100%;
-      max-width: 460px;
+      max-width: 450px;
       padding: 20px;
-      max-height: 92vh;
+      max-height: 90vh;
       overflow-y: auto;
     }
 
@@ -726,7 +679,7 @@
     }
 
     .modal-header h3 {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       font-weight: 800;
     }
 
@@ -739,7 +692,7 @@
 
     .swatch-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       margin-top: 6px;
     }
@@ -760,7 +713,7 @@
     .swatch-btn.selected {
       border-color: var(--header-bg);
       background: var(--slate-soft);
-      box-shadow: 0 0 0 2px rgba(30, 58, 76, 0.2);
+      box-shadow: 0 0 0 2px rgba(27, 54, 68, 0.2);
     }
 
     .swatch-dot {
@@ -773,17 +726,11 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 8px;
       margin-top: 18px;
       padding-top: 14px;
       border-top: 1px solid var(--border);
-    }
-
-    .modal-footer-right {
-      display: flex;
-      gap: 8px;
-      margin-left: auto;
     }
 
     .danger-zone-box {
@@ -799,34 +746,39 @@
     .toast-stack {
       position: fixed;
       bottom: 16px;
-      right: 16px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 60;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 8px;
-      max-width: 340px;
+      width: calc(100% - 32px);
+      max-width: 380px;
       pointer-events: none;
     }
 
     .toast-item {
-      background: #1e3a4c;
+      width: 100%;
+      text-align: center;
+      background: var(--header-bg);
       color: #ffffff;
       padding: 11px 14px;
       border-radius: var(--radius-md);
       font-size: 0.82rem;
       font-weight: 600;
       box-shadow: var(--shadow-md);
-      border-left: 4px solid #5eead4;
+      border-bottom: 3px solid #5eead4;
       animation: slideUp 0.2s ease;
     }
 
     .toast-item.warn {
-      border-left-color: #fbbf24;
+      border-bottom-color: #fbbf24;
     }
 
     .toast-item.error {
       background: #5c1d1d;
-      border-left-color: #fca5a5;
+      border-bottom-color: #fca5a5;
     }
 
     @keyframes slideUp {
@@ -835,16 +787,18 @@
     }
 
     footer {
-      max-width: 1180px;
+      width: 100%;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 16px 18px 28px;
+      padding: 18px 16px 32px;
       border-top: 1px solid var(--border);
       font-size: 0.76rem;
       color: var(--text-muted);
+      text-align: center;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
     }
   </style>
 </head>
@@ -853,12 +807,12 @@
   <!-- Toast Container -->
   <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 
-  <!-- Header -->
+  <!-- Header Presisi Rata Tengah -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <h1>Tracker Anggaran Keluarga</h1>
-        <p>Palet kalem &bull; Edit pagu langsung per pos &bull; Pencatatan Suami &amp; Istri</p>
+        <h1>FAMILY EXPENSE TRACKER</h1>
+        <p>Pengelolaan anggaran bulanan keluarga &bull; Edit pagu langsung per pos &bull; Pencatatan harian praktis</p>
       </div>
 
       <div class="toolbar">
@@ -888,7 +842,7 @@
           <button type="button" class="btn-outline btn-sm" id="btnEditTargetIncome">Ubah Target</button>
         </div>
         <div class="kpi-val tabular" id="kpiTargetIncome">Rp12.000.000</div>
-        <div class="kpi-sub tabular" id="kpiUnallocatedNote">Pas 100% teralokasi</div>
+        <div class="kpi-sub tabular" id="kpiUnallocatedNote">Pas 100% teralokasi ke pos</div>
       </div>
 
       <!-- Total Pagu Pos -->
@@ -898,7 +852,7 @@
           <span class="pill pill-teal" id="kpiPosCountBadge">10 Pos</span>
         </div>
         <div class="kpi-val tabular" id="kpiTotalPagu">Rp12.000.000</div>
-        <div class="kpi-sub">Klik nominal pagu di kartu bawah untuk ubah</div>
+        <div class="kpi-sub">Ketuk nominal pagu di kartu untuk edit</div>
       </div>
 
       <!-- Total Terpakai -->
@@ -922,38 +876,12 @@
       </div>
     </section>
 
-    <!-- Ringkasan Pencatat: Suami vs Istri -->
-    <section class="person-card">
-      <div class="person-row">
-        <div>
-          <div class="person-title">Ringkasan Pengeluaran: Suami vs Istri</div>
-          <div style="font-size: 0.76rem; color: var(--text-muted);">Perbandingan otomatis berdasarkan transaksi bulan aktif</div>
-        </div>
-        <div class="person-stats">
-          <div class="person-chip suami">
-            <span class="pill pill-indigo">Suami</span>
-            <strong class="tabular" id="statSuamiAmt">Rp0</strong>
-            <span class="tabular" style="font-size: 0.76rem; color: var(--indigo);" id="statSuamiMeta">(0 tx &bull; 0%)</span>
-          </div>
-          <div class="person-chip istri">
-            <span class="pill pill-rose">Istri</span>
-            <strong class="tabular" id="statIstriAmt">Rp0</strong>
-            <span class="tabular" style="font-size: 0.76rem; color: var(--rose);" id="statIstriMeta">(0 tx &bull; 0%)</span>
-          </div>
-        </div>
-      </div>
-      <div class="dual-bar" aria-hidden="true">
-        <div class="dual-bar-suami" id="barSuami" style="width: 0%;"></div>
-        <div class="dual-bar-istri" id="barIstri" style="width: 0%;"></div>
-      </div>
-    </section>
-
     <!-- Daftar Pos Anggaran -->
     <section>
       <div class="section-head">
         <div>
           <h2>Rincian &amp; Sisa Pagu per Pos</h2>
-          <p>Klik nominal <strong>Pagu</strong> atau tombol <strong>Edit Pagu / Pos</strong> pada kartu mana pun untuk mengubah alokasi.</p>
+          <p>Ketuk nominal <strong>Pagu</strong> atau tombol <strong>Edit Pagu / Pos</strong> pada kartu mana pun untuk mengubah alokasi.</p>
         </div>
         <button type="button" class="btn-teal" id="btnAddNewPos">+ Tambah Pos Baru</button>
       </div>
@@ -974,16 +902,6 @@
           <div class="form-field">
             <label for="txDate">Tanggal</label>
             <input type="date" id="txDate" required />
-          </div>
-
-          <div class="form-field">
-            <label>Dicatat Oleh</label>
-            <div class="person-toggle">
-              <input type="radio" name="txPerson" id="radioSuami" value="Suami" checked />
-              <label for="radioSuami">Suami</label>
-              <input type="radio" name="txPerson" id="radioIstri" value="Istri" />
-              <label for="radioIstri">Istri</label>
-            </div>
           </div>
 
           <div class="form-field">
@@ -1009,19 +927,12 @@
 
       <!-- Riwayat Transaksi -->
       <div class="panel">
-        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px;">
-          <div>
-            <h3 style="margin-bottom:2px;">Riwayat Transaksi Bulan Ini</h3>
-            <p style="font-size:0.78rem; color:var(--text-muted);">Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.</p>
-          </div>
+        <div style="margin-bottom:12px;">
+          <h3 style="margin-bottom:2px;">Riwayat Transaksi Bulan Ini</h3>
+          <p style="font-size:0.78rem; color:var(--text-muted);">Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.</p>
         </div>
 
         <div class="table-filters">
-          <select id="filterPerson" aria-label="Filter Pencatat">
-            <option value="ALL">Semua Pencatat</option>
-            <option value="Suami">Suami</option>
-            <option value="Istri">Istri</option>
-          </select>
           <select id="filterPos" aria-label="Filter Pos Anggaran">
             <option value="ALL">Semua Pos Anggaran</option>
           </select>
@@ -1033,7 +944,6 @@
             <thead>
               <tr>
                 <th>Tanggal</th>
-                <th>Oleh</th>
                 <th>Pos Anggaran</th>
                 <th>Keterangan</th>
                 <th class="text-right">Nominal</th>
@@ -1049,7 +959,7 @@
   </main>
 
   <footer>
-    <span>Tracker Anggaran Keluarga &bull; Siap untuk GitHub Pages &amp; Browser HP</span>
+    <span>FAMILY EXPENSE TRACKER &bull; Pengelolaan Anggaran Bulanan Keluarga</span>
     <span>Data tersimpan otomatis di browser (localStorage). Gunakan Backup JSON untuk cadangan file.</span>
   </footer>
 
@@ -1107,10 +1017,8 @@
         </div>
 
         <div class="modal-footer">
-          <div class="modal-footer-right">
-            <button type="button" class="btn-outline" id="btnCancelPosModal">Batal</button>
-            <button type="submit" class="btn-teal">Simpan Perubahan</button>
-          </div>
+          <button type="button" class="btn-outline" id="btnCancelPosModal">Batal</button>
+          <button type="submit" class="btn-teal">Simpan Perubahan</button>
         </div>
       </form>
     </div>
@@ -1132,10 +1040,8 @@
           </p>
         </div>
         <div class="modal-footer">
-          <div class="modal-footer-right">
-            <button type="button" class="btn-outline" id="btnCancelTargetModal">Batal</button>
-            <button type="submit" class="btn-teal">Simpan Target</button>
-          </div>
+          <button type="button" class="btn-outline" id="btnCancelTargetModal">Batal</button>
+          <button type="submit" class="btn-teal">Simpan Target</button>
         </div>
       </form>
     </div>
@@ -1149,10 +1055,8 @@
       </div>
       <p id="confirmModalDesc" style="font-size: 0.88rem; color: var(--text-main); line-height: 1.55;"></p>
       <div class="modal-footer">
-        <div class="modal-footer-right">
-          <button type="button" class="btn-outline" id="btnConfirmCancel">Batal</button>
-          <button type="button" class="btn-teal" id="btnConfirmOk">Ya, Lanjutkan</button>
-        </div>
+        <button type="button" class="btn-outline" id="btnConfirmCancel">Batal</button>
+        <button type="button" class="btn-teal" id="btnConfirmOk">Ya, Lanjutkan</button>
       </div>
     </div>
   </div>
@@ -1161,17 +1065,17 @@
     (function () {
       'use strict';
 
-      const STORAGE_KEY = 'jk_family_budgeting_v4';
+      const STORAGE_KEY = 'family_expense_tracker_v5';
 
       const PALETTE = [
-        { key: 'rose', label: 'Dusty Rose', hex: '#a84a6b', soft: '#f8eaf0' },
-        { key: 'slate', label: 'Slate Blue', hex: '#476b8a', soft: '#ebf0f5' },
-        { key: 'teal', label: 'Sage Teal', hex: '#2f6f65', soft: '#e6f0ee' },
-        { key: 'amber', label: 'Warm Amber', hex: '#b4692e', soft: '#faefe6' },
-        { key: 'terracotta', label: 'Terracotta', hex: '#a6523b', soft: '#f7ece9' },
-        { key: 'indigo', label: 'Muted Indigo', hex: '#3b5998', soft: '#eaedf7' },
-        { key: 'olive', label: 'Olive Sage', hex: '#4c6b45', soft: '#ebf1ea' },
-        { key: 'purple', label: 'Plum', hex: '#6b5280', soft: '#f1edf5' }
+        { key: 'rose', label: 'Dusty Rose', hex: '#a64b6a', soft: '#f7eaef' },
+        { key: 'slate', label: 'Slate Blue', hex: '#466885', soft: '#eaeff4' },
+        { key: 'teal', label: 'Sage Teal', hex: '#2d6a6a', soft: '#e5f0ef' },
+        { key: 'amber', label: 'Warm Amber', hex: '#b3682d', soft: '#faefe6' },
+        { key: 'terracotta', label: 'Terracotta', hex: '#a3523c', soft: '#f6ece9' },
+        { key: 'indigo', label: 'Muted Indigo', hex: '#465b91', soft: '#ebeff7' },
+        { key: 'olive', label: 'Olive Sage', hex: '#4c6b46', soft: '#ebf1ea' },
+        { key: 'purple', label: 'Plum', hex: '#69517d', soft: '#f0ecf4' }
       ];
 
       const DEFAULT_CATEGORIES = [
@@ -1336,7 +1240,6 @@
         const store = loadStore();
         const mData = ensureMonth(store, monthKey);
 
-        // Populate category suggestions
         const cats = new Set(['Keluarga & Pendidikan', 'Jalan-Jalan & Kesenangan', 'Rumah & Utilitas', 'Tabungan & Investasi']);
         mData.categories.forEach((c) => cats.add(c.category));
         document.getElementById('categoryDatalist').innerHTML = Array.from(cats)
@@ -1354,7 +1257,6 @@
           document.getElementById('posBudgetInput').value = posObj.budget > 0 ? posObj.budget.toLocaleString('id-ID') : '0';
           modalSelectedColor = posObj.color || 'teal';
 
-          // Show delete option if more than 1 category exists
           if (mData.categories.length > 1) {
             delSection.style.display = 'block';
             const relatedTx = mData.transactions.filter((t) => t.categoryId === posObj.id);
@@ -1416,22 +1318,11 @@
 
         const spentByPos = {};
         let totalSpent = 0;
-        let suamiSpent = 0;
-        let suamiTxCount = 0;
-        let istriSpent = 0;
-        let istriTxCount = 0;
 
         mData.transactions.forEach((tx) => {
           const amt = Number(tx.amount) || 0;
           spentByPos[tx.categoryId] = (spentByPos[tx.categoryId] || 0) + amt;
           totalSpent += amt;
-          if (tx.person === 'Istri') {
-            istriSpent += amt;
-            istriTxCount++;
-          } else {
-            suamiSpent += amt;
-            suamiTxCount++;
-          }
         });
 
         const totalPagu = mData.categories.reduce((sum, c) => sum + (Number(c.budget) || 0), 0);
@@ -1493,16 +1384,6 @@
           remStatus.textContent = 'Aman terkendali';
           remStatus.style.color = 'var(--teal-dark)';
         }
-
-        // Suami vs Istri Summary
-        const suamiPct = totalSpent > 0 ? Math.round((suamiSpent / totalSpent) * 100) : 0;
-        const istriPct = totalSpent > 0 ? Math.round((istriSpent / totalSpent) * 100) : 0;
-        document.getElementById('statSuamiAmt').textContent = formatRp(suamiSpent);
-        document.getElementById('statSuamiMeta').textContent = `(${suamiTxCount} tx • ${suamiPct}%)`;
-        document.getElementById('statIstriAmt').textContent = formatRp(istriSpent);
-        document.getElementById('statIstriMeta').textContent = `(${istriTxCount} tx • ${istriPct}%)`;
-        document.getElementById('barSuami').style.width = `${totalSpent > 0 ? (suamiSpent / totalSpent) * 100 : 0}%`;
-        document.getElementById('barIstri').style.width = `${totalSpent > 0 ? (istriSpent / totalSpent) * 100 : 0}%`;
 
         // Category Filter Tabs
         const uniqueGroups = Array.from(new Set(mData.categories.map((c) => c.category)));
@@ -1571,7 +1452,7 @@
                   <div class="pos-metrics tabular">
                     <div class="metric-row">
                       <span>Pagu Bulanan:</span>
-                      <button type="button" class="pagu-clickable" data-edit-id="${escapeHtml(cat.id)}" title="Klik untuk edit pagu">
+                      <button type="button" class="pagu-clickable" data-edit-id="${escapeHtml(cat.id)}" title="Ketuk untuk edit pagu">
                         ${formatRp(cat.budget)} &#9998;
                       </button>
                     </div>
@@ -1640,14 +1521,12 @@
           filterPosSelect.value = prevFilterVal;
         }
 
-        // Render Transaction Table
-        const fPerson = document.getElementById('filterPerson').value;
+        // Render Transaction Table (Tanpa Kolom Suami/Istri)
         const fPos = filterPosSelect.value;
         const fSearch = document.getElementById('filterSearch').value.trim().toLowerCase();
         const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c]));
 
         const filteredTx = mData.transactions.filter((tx) => {
-          if (fPerson !== 'ALL' && tx.person !== fPerson) return false;
           if (fPos !== 'ALL' && tx.categoryId !== fPos) return false;
           if (fSearch) {
             const posName = catMap[tx.categoryId] ? catMap[tx.categoryId].name.toLowerCase() : '';
@@ -1658,16 +1537,12 @@
 
         const tbody = document.getElementById('txTableBody');
         if (filteredTx.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6" class="empty-box">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" class="empty-box">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</td></tr>`;
           return;
         }
 
         tbody.innerHTML = filteredTx
           .map((tx) => {
-            const isIstri = tx.person === 'Istri';
-            const personPill = isIstri
-              ? `<span class="pill pill-rose">Istri</span>`
-              : `<span class="pill pill-indigo">Suami</span>`;
             const posObj = catMap[tx.categoryId];
             const pal = getPaletteObj(posObj ? posObj.color : 'teal');
             const posLabel = posObj
@@ -1677,7 +1552,6 @@
             return `
               <tr>
                 <td class="tabular" style="white-space:nowrap;">${escapeHtml(tx.date)}</td>
-                <td>${personPill}</td>
                 <td>${posLabel}</td>
                 <td>${escapeHtml(tx.note)}</td>
                 <td class="text-right tabular" style="font-weight:700; white-space:nowrap;">${formatRp(tx.amount)}</td>
@@ -1859,7 +1733,6 @@
           e.preventDefault();
           const monthKey = monthPicker.value;
           const date = document.getElementById('txDate').value;
-          const person = document.querySelector('input[name="txPerson"]:checked').value;
           const categoryId = document.getElementById('txCategory').value;
           const note = document.getElementById('txNote').value.trim();
           const amount = parseDigits(txAmountEl.value);
@@ -1876,7 +1749,6 @@
           mData.transactions.unshift({
             id: `tx_${Date.now()}`,
             date,
-            person,
             categoryId,
             note,
             amount
@@ -1895,7 +1767,7 @@
             if (rem < 0) {
               showToast(`Tercatat! Pos "${posObj.name}" overbudget ${formatRp(Math.abs(rem))}.`, 'error');
             } else {
-              showToast(`Tercatat ${formatRp(amount)} (${person}) • Sisa ${posObj.name}: ${formatRp(rem)}`);
+              showToast(`Tercatat ${formatRp(amount)} • Sisa ${posObj.name}: ${formatRp(rem)}`);
             }
           }
         });
@@ -1956,7 +1828,7 @@
           const blob = new Blob([JSON.stringify(store, null, 2)], { type: 'application/json' });
           const a = document.createElement('a');
           a.href = URL.createObjectURL(blob);
-          a.download = `backup_anggaran_keluarga_${monthPicker.value}.json`;
+          a.download = `family_expense_backup_${monthPicker.value}.json`;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
@@ -1993,24 +1865,24 @@
           reader.readAsText(file);
         });
 
-        // Export CSV
+        // Export CSV (Tanpa Kolom Suami/Istri)
         document.getElementById('btnExportCsv').addEventListener('click', () => {
           const curr = monthPicker.value;
           const store = loadStore();
           const mData = ensureMonth(store, curr);
           const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c.name]));
 
-          let csv = 'Tanggal,Dicatat Oleh,Pos Anggaran,Keterangan,Nominal\n';
+          let csv = 'Tanggal,Pos Anggaran,Keterangan,Nominal\n';
           mData.transactions.forEach((t) => {
             const posName = (catMap[t.categoryId] || 'Lainnya').replace(/"/g, '""');
             const note = String(t.note).replace(/"/g, '""');
-            csv += `${t.date},"${t.person}","${posName}","${note}",${t.amount}\n`;
+            csv += `${t.date},"${posName}","${note}",${t.amount}\n`;
           });
 
           const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
           const a = document.createElement('a');
           a.href = URL.createObjectURL(blob);
-          a.download = `pengeluaran_${curr}.csv`;
+          a.download = `family_expense_${curr}.csv`;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
@@ -2019,7 +1891,6 @@
         });
 
         // Filters
-        document.getElementById('filterPerson').addEventListener('change', render);
         document.getElementById('filterPos').addEventListener('change', render);
         document.getElementById('filterSearch').addEventListener('input', render);
 
