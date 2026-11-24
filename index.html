@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tracker Anggaran Keluarga — Palet Kalem &amp; Profesional</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f4f3ef; /* Warm ivory / soft sand agar tidak silau */
+      color: #1e293b;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .surface-card {
+      background-color: #fcfbf9;
+    }
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ebe8e1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
+
+  <!-- Toast Notification Container (Menggantikan alert native) -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- Modal CRUD Pos Anggaran (Tambah / Edit Pos Kustom) -->
+  <div id="posModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/55 backdrop-blur-[2px] p-4" role="dialog" aria-modal="true" aria-labelledby="posModalTitle">
+    <div class="surface-card rounded-2xl shadow-2xl border border-stone-200 max-w-md w-full p-5 sm:p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-stone-200/80">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2.5 h-6 rounded-full bg-teal-700"></span>
+          <h3 id="posModalTitle" class="text-base sm:text-lg font-extrabold text-slate-800">Tambah Pos Anggaran</h3>
+        </div>
+        <button id="posModalCloseX" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-stone-200/60 transition cursor-pointer" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="posForm" class="mt-4 space-y-4">
+        <input type="hidden" id="posEditId" value="" />
+
+        <!-- Nama Pos -->
+        <div>
+          <label for="posNameInput" class="block text-xs font-semibold text-slate-700 mb-1">Nama Pos Anggaran <span class="text-rose-600">*</span></label>
+          <input id="posNameInput" type="text" required placeholder="Contoh: Dana Kesehatan / Cicilan Kendaraan" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+        </div>
+
+        <!-- Kategori (Pilih atau Ketik Kustom) -->
+        <div>
+          <label for="posCategorySelect" class="block text-xs font-semibold text-slate-700 mb-1">Kategori <span class="text-rose-600">*</span></label>
+          <select id="posCategorySelect" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition cursor-pointer">
+            <!-- Diisi dinamis + opsi '+ Ketik Kategori Baru...' -->
+          </select>
+          <div id="customCategoryWrap" class="mt-2 hidden">
+            <input id="posCustomCategoryInput" type="text" placeholder="Ketik nama kategori baru..." class="w-full px-3.5 py-2.5 rounded-xl border border-teal-600 text-sm bg-teal-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 transition" />
+          </div>
+        </div>
+
+        <!-- Nominal Pagu Bulanan -->
+        <div>
+          <label for="posBudgetInput" class="block text-xs font-semibold text-slate-700 mb-1">Nominal Pagu Bulanan (Rp) <span class="text-rose-600">*</span></label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">Rp</span>
+            <input id="posBudgetInput" type="text" inputmode="numeric" required placeholder="0" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-bold tabular-nums bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+          </div>
+        </div>
+
+        <!-- Pilihan Warna Label / Aksen Kalem -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1.5">Warna Label &amp; Aksen Kartu</label>
+          <div id="colorPickerGrid" class="grid grid-cols-4 gap-2">
+            <!-- Swatch warna kalem dirender lewat JS -->
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-stone-200/80 flex items-center justify-end gap-2.5">
+          <button id="posModalCancelBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-stone-200/70 hover:bg-stone-200 transition cursor-pointer">
+            Batal
+          </button>
+          <button type="submit" id="posModalSubmitBtn" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-teal-800 hover:bg-teal-900 transition cursor-pointer shadow-xs">
+            Simpan Pos
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Hapus Pos Anggaran (Dengan Opsi Pindahkan Transaksi atau Ikut Hapus) -->
+  <div id="deletePosModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/55 backdrop-blur-[2px] p-4" role="dialog" aria-modal="true" aria-labelledby="delPosModalTitle">
+    <div class="surface-card rounded-2xl shadow-2xl border border-stone-200 max-w-md w-full p-5 sm:p-6">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-100/80 text-rose-700 flex items-center justify-center shrink-0 border border-rose-200/70">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+          </svg>
+        </div>
+        <div>
+          <h3 id="delPosModalTitle" class="text-base font-extrabold text-slate-800">Hapus Pos Anggaran?</h3>
+          <p id="delPosModalDesc" class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- Opsi Penanganan Transaksi Jika Pos Memiliki Transaksi -->
+      <div id="delPosTxOptions" class="mt-4 p-3.5 rounded-xl bg-amber-50/90 border border-amber-200/90 space-y-3 hidden">
+        <p id="delPosTxWarning" class="text-xs font-semibold text-amber-900"></p>
+
+        <label class="flex items-start gap-2.5 cursor-pointer">
+          <input type="radio" name="delTxAction" value="move" checked class="mt-0.5 accent-teal-700 cursor-pointer" />
+          <div class="flex-1">
+            <span class="block text-xs font-bold text-slate-800">Pindahkan semua transaksi ke pos lain</span>
+            <select id="delPosTargetSelect" class="mt-1.5 w-full px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40"></select>
+          </div>
+        </label>
+
+        <label class="flex items-start gap-2.5 cursor-pointer">
+          <input type="radio" name="delTxAction" value="delete" class="mt-0.5 accent-rose-700 cursor-pointer" />
+          <div>
+            <span class="block text-xs font-bold text-rose-800">Ikut hapus seluruh transaksi pada pos ini</span>
+            <span class="block text-[11px] text-slate-500">Riwayat transaksi terkait akan dihapus permanen.</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-2.5">
+        <button id="delPosCancelBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-stone-200/70 hover:bg-stone-200 transition cursor-pointer">
+          Batal
+        </button>
+        <button id="delPosConfirmBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 transition cursor-pointer">
+          Hapus Pos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Umum (Hapus Transaksi / Salin Pagu / Restore / Reset Default) -->
+  <div id="confirmModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/55 backdrop-blur-[2px] p-4" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="surface-card rounded-2xl shadow-2xl border border-stone-200 max-w-md w-full p-5 sm:p-6">
+      <h3 id="confirmTitle" class="text-base font-extrabold text-slate-800">Konfirmasi</h3>
+      <p id="confirmDesc" class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed"></p>
+      <div class="mt-6 flex items-center justify-end gap-2.5">
+        <button id="confirmCancelBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-stone-200/70 hover:bg-stone-200 transition cursor-pointer">
+          Batal
+        </button>
+        <button id="confirmOkBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-teal-800 hover:bg-teal-900 transition cursor-pointer">
+          Ya, Lanjutkan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Deep Slate-Teal yang Tenang & Berkelas -->
+  <header class="bg-gradient-to-r from-[#182c34] via-[#1d3942] to-[#1e4347] text-stone-100 border-b border-teal-950/40 sticky top-0 z-20 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-teal-500/15 text-teal-200 text-[11px] font-semibold border border-teal-400/25 mb-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Kustomisasi Pos Penuh &bull; Suami &amp; Istri
+        </div>
+        <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight">
+          Tracker Anggaran Keluarga
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 mt-0.5">
+          Kelola alokasi bulanan dengan tenang, catat pengeluaran harian, dan pantau sisa pagu bersama.
+        </p>
+      </div>
+
+      <!-- Toolbar Kontrol Periode + Backup/Restore/CSV/Reset -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-xl px-3 py-2 backdrop-blur-xs">
+          <label for="monthPicker" class="text-xs font-semibold text-teal-200">Periode:</label>
+          <input id="monthPicker" type="month" class="bg-transparent text-xs sm:text-sm font-bold text-white focus:outline-none cursor-pointer [color-scheme:dark]" />
+        </div>
+
+        <button id="btnCopyPrevMonth" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/18 text-stone-100 border border-white/15 transition cursor-pointer" title="Salin susunan pos dan pagu dari bulan sebelumnya">
+          Salin Susunan Pos dari Bulan Lalu
+        </button>
+
+        <button id="btnBackupJson" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/18 text-stone-100 border border-white/15 transition cursor-pointer" title="Unduh seluruh data ke file .json">
+          Backup JSON
+        </button>
+
+        <button id="btnRestoreJson" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/18 text-stone-100 border border-white/15 transition cursor-pointer" title="Pulihkan data dari file .json">
+          Restore JSON
+        </button>
+        <input id="restoreFileInput" type="file" accept=".json,application/json" class="hidden" />
+
+        <button id="btnExportCsv" type="button" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-xs transition cursor-pointer" title="Ekspor transaksi bulan aktif ke CSV">
+          Unduh CSV
+        </button>
+
+        <button id="btnResetDefault" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-rose-950/50 hover:bg-rose-900/70 text-rose-200 border border-rose-400/25 transition cursor-pointer" title="Kembalikan bulan aktif ke 10 pos awal Rp12.000.000">
+          Reset ke Default
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Konten Utama -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- 3 Kartu KPI Ringkasan dengan Aksen Kalem -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <!-- KPI 1: Total Pagu -->
+      <div class="surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-slate-600 shadow-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Pagu Bulan Ini</span>
+          <span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+            </svg>
+          </span>
+        </div>
+        <div id="kpiBudget" class="text-2xl sm:text-3xl font-extrabold text-slate-800 tabular-nums mt-2">Rp12.000.000</div>
+        <div id="kpiBudgetNote" class="text-xs text-slate-500 mt-1">10 pos anggaran aktif</div>
+      </div>
+
+      <!-- KPI 2: Total Terpakai -->
+      <div class="surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-amber-600/80 shadow-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Terpakai</span>
+          <span id="kpiSpentBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100/80 text-amber-800 tabular-nums">0%</span>
+        </div>
+        <div id="kpiSpent" class="text-2xl sm:text-3xl font-extrabold text-slate-800 tabular-nums mt-2">Rp0</div>
+        <div id="kpiSpentPct" class="text-xs font-medium text-slate-500 mt-1">0% dari total pagu terpakai</div>
+      </div>
+
+      <!-- KPI 3: Sisa Pagu Keseluruhan -->
+      <div id="kpiRemainingCard" class="surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-teal-700 shadow-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sisa Pagu Keseluruhan</span>
+          <span id="kpiRemainingBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100/80 text-teal-800 tabular-nums">100%</span>
+        </div>
+        <div id="kpiRemaining" class="text-2xl sm:text-3xl font-extrabold text-teal-800 tabular-nums mt-2">Rp12.000.000</div>
+        <div id="kpiRemainingStatus" class="text-xs font-medium text-teal-700 mt-1">Aman terkendali</div>
+      </div>
+    </section>
+
+    <!-- Bar Ringkasan Pengeluaran Suami vs Istri (Soft Indigo & Dusty Rose) -->
+    <section class="surface-card rounded-2xl p-4 sm:p-5 border border-stone-200/90 shadow-xs">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h2 class="text-sm sm:text-base font-bold text-slate-800">Ringkasan Pengeluaran Suami vs Istri</h2>
+          <p class="text-xs text-slate-500">Proporsi pengeluaran tercatat per pencatat pada periode aktif</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Pill Suami: Soft Indigo -->
+          <div class="flex items-center gap-2.5 bg-indigo-50/80 border border-indigo-200/80 px-3.5 py-2 rounded-xl">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-600/90 text-white">Suami</span>
+            <div>
+              <span id="sumSuami" class="text-sm font-extrabold text-slate-800 tabular-nums">Rp0</span>
+              <span id="pctSuami" class="text-xs font-semibold text-indigo-700 ml-1">(0%)</span>
+            </div>
+          </div>
+
+          <!-- Pill Istri: Dusty Rose -->
+          <div class="flex items-center gap-2.5 bg-rose-50/80 border border-rose-200/80 px-3.5 py-2 rounded-xl">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-600/85 text-white">Istri</span>
+            <div>
+              <span id="sumIstri" class="text-sm font-extrabold text-slate-800 tabular-nums">Rp0</span>
+              <span id="pctIstri" class="text-xs font-semibold text-rose-700 ml-1">(0%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar Gabungan Suami vs Istri -->
+      <div class="w-full h-2.5 bg-stone-200/80 rounded-full overflow-hidden flex mt-3.5" role="img" aria-label="Perbandingan pengeluaran Suami dan Istri">
+        <div id="barSuami" class="h-full bg-indigo-500 transition-all duration-300" style="width: 0%"></div>
+        <div id="barIstri" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </section>
+
+    <!-- Daftar Kartu Per Pos Anggaran + Filter Kategori + Tambah Pos -->
+    <section>
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
+        <div>
+          <h2 class="text-base sm:text-lg font-extrabold text-slate-800">Rincian &amp; Sisa Pagu per Pos</h2>
+          <p class="text-xs text-slate-500">
+            Status Pagu: <span class="text-emerald-700 font-semibold">Sage Hijau (&lt;80%)</span> &bull;
+            <span class="text-amber-700 font-semibold">Amber Hangat (&ge;80%)</span> &bull;
+            <span class="text-rose-700 font-semibold">Terracotta Merah (&ge;100% / Overbudget)</span>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btnAddPos" type="button" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-teal-800 hover:bg-teal-900 text-white shadow-xs transition cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            + Tambah Pos
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Pills Kategori Pos -->
+      <div id="categoryFilterBar" class="flex flex-wrap items-center gap-1.5 mb-4">
+        <!-- Dirender dinamis berdasarkan kategori yang ada di bulan aktif -->
+      </div>
+
+      <!-- Grid Kartu Pos Anggaran -->
+      <div id="posGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <!-- Kartu pos dirender dinamis -->
+      </div>
+    </section>
+
+    <!-- Area Bawah: Form Input Harian & Tabel Riwayat Transaksi -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Form Input Pengeluaran Harian (4 Kolom) -->
+      <div class="lg:col-span-4 surface-card rounded-2xl p-5 sm:p-6 border border-stone-200/90 shadow-xs">
+        <div class="flex items-center gap-2.5 mb-1">
+          <div class="w-8 h-8 rounded-xl bg-teal-800/10 text-teal-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+          </div>
+          <h2 class="text-base sm:text-lg font-bold text-slate-800">Catat Pengeluaran Harian</h2>
+        </div>
+        <p class="text-xs text-slate-500 mb-4">Nominal otomatis memotong sisa pagu pada pos terkait.</p>
+
+        <form id="txForm" class="space-y-3.5">
+          <div>
+            <label for="txDate" class="block text-xs font-semibold text-slate-700 mb-1">Tanggal</label>
+            <input id="txDate" type="date" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+          </div>
+
+          <div>
+            <label for="txPerson" class="block text-xs font-semibold text-slate-700 mb-1">Dicatat Oleh</label>
+            <select id="txPerson" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition cursor-pointer">
+              <option value="Suami">Suami</option>
+              <option value="Istri">Istri</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="txCategory" class="block text-xs font-semibold text-slate-700 mb-1">Pos Anggaran</label>
+            <select id="txCategory" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition cursor-pointer"></select>
+          </div>
+
+          <div>
+            <label for="txNote" class="block text-xs font-semibold text-slate-700 mb-1">Keterangan</label>
+            <input id="txNote" type="text" required placeholder="Contoh: Belanja mingguan / Bayar les" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+          </div>
+
+          <div>
+            <label for="txAmount" class="block text-xs font-semibold text-slate-700 mb-1">Nominal (Rp)</label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">Rp</span>
+              <input id="txAmount" type="text" inputmode="numeric" required placeholder="0" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-bold tabular-nums bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3 px-4 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm shadow-xs transition cursor-pointer mt-1">
+            Simpan &amp; Potong Pagu
+          </button>
+        </form>
+      </div>
+
+      <!-- Tabel Riwayat Transaksi (8 Kolom) -->
+      <div class="lg:col-span-8 surface-card rounded-2xl border border-stone-200/90 shadow-xs overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-stone-200/80 flex flex-col gap-3">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-slate-800">Riwayat Transaksi Bulan Ini</h2>
+              <p class="text-xs text-slate-500">Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos terkait</p>
+            </div>
+          </div>
+
+          <!-- Filter Pencatat, Pos Anggaran & Pencarian Keterangan -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <select id="filterPerson" aria-label="Filter pencatat" class="px-3 py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 cursor-pointer">
+              <option value="ALL">Semua Pencatat</option>
+              <option value="Suami">Suami</option>
+              <option value="Istri">Istri</option>
+            </select>
+
+            <select id="filterCategory" aria-label="Filter pos anggaran" class="px-3 py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 cursor-pointer">
+              <option value="ALL">Semua Pos Anggaran</option>
+            </select>
+
+            <div class="relative">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+              <input id="filterSearch" type="text" placeholder="Cari keterangan..." class="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 transition" />
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-stone-100/80 border-b border-stone-200 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                <th class="py-3 px-4">Tanggal</th>
+                <th class="py-3 px-3">Oleh</th>
+                <th class="py-3 px-3">Pos Anggaran</th>
+                <th class="py-3 px-3">Keterangan</th>
+                <th class="py-3 px-4 text-right">Nominal</th>
+                <th class="py-3 px-4 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="txTableBody" class="divide-y divide-stone-200/70 text-xs sm:text-sm">
+              <!-- Baris transaksi dirender dinamis -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 text-xs text-slate-500 border-t border-stone-200/90 flex flex-col sm:flex-row items-center justify-between gap-2 mt-8">
+    <span>Tracker Anggaran Keluarga &bull; Palet Kalem, Kustomisasi Pos &amp; Pencatatan Harian</span>
+    <span>Data tersimpan otomatis di browser (localStorage) — gunakan Backup JSON untuk cadangan file</span>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // 1. KONFIGURASI AWAL & PALET WARNA KALEM (MUTED & HARMONIOUS)
+    // =========================================================================
+    const STORAGE_KEY = 'tracker_anggaran_keluarga_custom_v1';
+
+    const COLOR_PALETTE = [
+      { key: 'sage_teal', label: 'Sage Teal', hex: '#0f766e', badgeBg: 'bg-teal-50/90', badgeText: 'text-teal-800', badgeBorder: 'border-teal-200/90', accentBorder: 'border-t-teal-700', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'slate_blue', label: 'Slate Blue', hex: '#3b6084', badgeBg: 'bg-sky-50/90', badgeText: 'text-slate-700', badgeBorder: 'border-slate-300/80', accentBorder: 'border-t-[#3b6084]', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'warm_amber', label: 'Warm Amber', hex: '#b45309', badgeBg: 'bg-amber-50/90', badgeText: 'text-amber-800', badgeBorder: 'border-amber-200/90', accentBorder: 'border-t-amber-600', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'dusty_rose', label: 'Dusty Rose', hex: '#be4b68', badgeBg: 'bg-rose-50/90', badgeText: 'text-rose-800', badgeBorder: 'border-rose-200/90', accentBorder: 'border-t-[#be4b68]', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'muted_indigo', label: 'Muted Indigo', hex: '#4f5d95', badgeBg: 'bg-indigo-50/90', badgeText: 'text-indigo-800', badgeBorder: 'border-indigo-200/90', accentBorder: 'border-t-[#4f5d95]', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'terracotta', label: 'Terracotta', hex: '#b8543d', badgeBg: 'bg-orange-50/90', badgeText: 'text-orange-900', badgeBorder: 'border-orange-200/90', accentBorder: 'border-t-[#b8543d]', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'olive', label: 'Olive', hex: '#5c7246', badgeBg: 'bg-lime-50/80', badgeText: 'text-emerald-900', badgeBorder: 'border-emerald-200/90', accentBorder: 'border-t-[#5c7246]', cardTint: 'bg-[#fcfbf9]' },
+      { key: 'plum', label: 'Plum', hex: '#78517a', badgeBg: 'bg-purple-50/80', badgeText: 'text-purple-900', badgeBorder: 'border-purple-200/90', accentBorder: 'border-t-[#78517a]', cardTint: 'bg-[#fcfbf9]' }
+    ];
+
+    // Kompatibilitas warna lama (jika restore dari backup versi sebelumnya)
+    const LEGACY_COLOR_MAP = {
+      blue: 'slate_blue',
+      indigo: 'muted_indigo',
+      teal: 'sage_teal',
+      emerald: 'olive',
+      amber: 'warm_amber',
+      pink: 'dusty_rose',
+      purple: 'plum',
+      slate: 'slate_blue'
+    };
+
+    const BASE_CATEGORIES = [
+      'Keluarga & Pendidikan',
+      'Gaya Hidup & Rekreasi',
+      'Rumah & Utilitas',
+      'Tabungan & Investasi'
+    ];
+
+    // 10 Pos Anggaran Awal (Total Rp12.000.000) dengan warna kalem harmonis
+    const DEFAULT_POS_LIST = [
+      { id: 'jatah_istri', name: 'Jatah Istri', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'dusty_rose' },
+      { id: 'les_anak', name: 'Les Anak', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'muted_indigo' },
+      { id: 'jatah_orang_tua', name: 'Jatah Orang Tua', category: 'Keluarga & Pendidikan', budget: 1500000, color: 'slate_blue' },
+      { id: 'kesenangan_pribadi', name: 'Kesenangan Pribadi', category: 'Gaya Hidup & Rekreasi', budget: 1500000, color: 'warm_amber' },
+      { id: 'jalan_jalan_keluarga', name: 'Jalan-Jalan Keluarga', category: 'Gaya Hidup & Rekreasi', budget: 1200000, color: 'terracotta' },
+      { id: 'spp_anak', name: 'SPP Anak', category: 'Keluarga & Pendidikan', budget: 1100000, color: 'plum' },
+      { id: 'belanja_bulanan', name: 'Belanja Bulanan', category: 'Rumah & Utilitas', budget: 1000000, color: 'sage_teal' },
+      { id: 'tabungan_sisa_dana', name: 'Tabungan / Sisa Dana', category: 'Tabungan & Investasi', budget: 990000, color: 'olive' },
+      { id: 'listrik_air_internet', name: 'Listrik, Air & Internet', category: 'Rumah & Utilitas', budget: 500000, color: 'sage_teal' },
+      { id: 'cicilan_ipl', name: 'Cicilan IPL (Rp2,5 jt/thn)', category: 'Rumah & Utilitas', budget: 210000, color: 'slate_blue' }
+    ];
+
+    let activePosCategoryFilter = 'ALL';
+    let selectedModalColor = 'sage_teal';
+
+    // =========================================================================
+    // 2. UTILITAS FORMAT RUPIAH, TANGGAL & PENYIMPANAN LOCALSTORAGE
+    // =========================================================================
+    function formatRupiah(amount) {
+      const num = Number(amount) || 0;
+      const isNegative = num < 0;
+      const formatted = Math.abs(Math.round(num)).toLocaleString('id-ID');
+      return `${isNegative ? '-Rp' : 'Rp'}${formatted}`;
+    }
+
+    function parseDigits(value) {
+      const cleaned = String(value ?? '').replace(/[^\d]/g, '');
+      return cleaned ? parseInt(cleaned, 10) : 0;
+    }
+
+    function formatInputThousands(inputEl) {
+      const num = parseDigits(inputEl.value);
+      inputEl.value = num > 0 ? num.toLocaleString('id-ID') : '';
+    }
+
+    function getCurrentMonthKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    function getDefaultDateForMonth(monthKey) {
+      const currentMonth = getCurrentMonthKey();
+      const todayIso = new Date().toISOString().split('T')[0];
+      if (monthKey === currentMonth && todayIso.startsWith(monthKey)) {
+        return todayIso;
+      }
+      return `${monthKey}-01`;
+    }
+
+    function escapeHtml(value) {
+      const div = document.createElement('div');
+      div.textContent = String(value ?? '');
+      return div.innerHTML;
+    }
+
+    function getColorConfig(colorKey) {
+      const normalizedKey = LEGACY_COLOR_MAP[colorKey] || colorKey;
+      return COLOR_PALETTE.find((c) => c.key === normalizedKey) || COLOR_PALETTE[0];
+    }
+
+    function loadStore() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { months: {} };
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && parsed.months && typeof parsed.months === 'object') {
+          return parsed;
+        }
+        return { months: {} };
+      } catch (err) {
+        console.error('Gagal membaca localStorage:', err);
+        return { months: {} };
+      }
+    }
+
+    function saveStore(store) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+      } catch (err) {
+        console.error('Gagal menyimpan ke localStorage:', err);
+        showToast('Gagal menyimpan ke browser. Gunakan Backup JSON untuk cadangan.', 'error');
+      }
+    }
+
+    function ensureMonthData(store, monthKey) {
+      if (!store.months[monthKey]) {
+        store.months[monthKey] = {
+          categories: DEFAULT_POS_LIST.map((item) => ({ ...item })),
+          transactions: []
+        };
+        saveStore(store);
+      } else {
+        if (!Array.isArray(store.months[monthKey].categories)) {
+          store.months[monthKey].categories = DEFAULT_POS_LIST.map((item) => ({ ...item }));
+        }
+        store.months[monthKey].categories = store.months[monthKey].categories.map((c) => ({
+          id: c.id,
+          name: c.name || 'Pos Anggaran',
+          category: c.category || 'Lainnya',
+          budget: Number(c.budget) || 0,
+          color: LEGACY_COLOR_MAP[c.color] || c.color || 'sage_teal'
+        }));
+        if (!Array.isArray(store.months[monthKey].transactions)) {
+          store.months[monthKey].transactions = [];
+        }
+      }
+      return store.months[monthKey];
+    }
+
+    // =========================================================================
+    // 3. TOAST NOTIFICATION & MODAL KUSTOM
+    // =========================================================================
+    function showToast(message, variant = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      const styles = {
+        success: 'bg-[#182c34] text-stone-100 border-teal-500',
+        warn: 'bg-amber-950 text-amber-50 border-amber-400',
+        error: 'bg-rose-950 text-rose-50 border-rose-400'
+      };
+      toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg border-l-4 text-xs sm:text-sm font-medium transition-all duration-300 ${styles[variant] || styles.success}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 250);
+      }, 3200);
+    }
+
+    function openConfirmModal({ title, desc, confirmText = 'Ya, Lanjutkan', isDanger = false, onConfirm }) {
+      const modal = document.getElementById('confirmModal');
+      const titleEl = document.getElementById('confirmTitle');
+      const descEl = document.getElementById('confirmDesc');
+      const cancelBtn = document.getElementById('confirmCancelBtn');
+      const okBtn = document.getElementById('confirmOkBtn');
+
+      titleEl.textContent = title;
+      descEl.textContent = desc;
+      okBtn.textContent = confirmText;
+      okBtn.className = isDanger
+        ? 'px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 transition cursor-pointer'
+        : 'px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-teal-800 hover:bg-teal-900 transition cursor-pointer';
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      const close = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        okBtn.onclick = null;
+        cancelBtn.onclick = null;
+      };
+
+      cancelBtn.onclick = close;
+      okBtn.onclick = () => {
+        close();
+        if (typeof onConfirm === 'function') onConfirm();
+      };
+    }
+
+    // =========================================================================
+    // 4. CRUD KUSTOMISASI POS ANGGARAN (TAMBAH, EDIT, HAPUS, URUTKAN)
+    // =========================================================================
+    function renderColorSwatches() {
+      const grid = document.getElementById('colorPickerGrid');
+      grid.innerHTML = COLOR_PALETTE.map((c) => {
+        const isSelected = selectedModalColor === c.key;
+        return `
+          <button type="button" data-swatch="${c.key}" title="${c.label}"
+            class="flex flex-col items-center justify-center p-2 rounded-xl border transition cursor-pointer ${
+              isSelected ? 'border-teal-800 bg-teal-50/70 ring-2 ring-teal-800/20' : 'border-stone-200 bg-white hover:bg-stone-50'
+            }">
+            <span class="w-5 h-5 rounded-full shadow-2xs" style="background-color: ${c.hex};"></span>
+            <span class="text-[10px] font-semibold text-slate-700 mt-1 text-center leading-tight">${c.label}</span>
+          </button>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('[data-swatch]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          selectedModalColor = btn.getAttribute('data-swatch');
+          renderColorSwatches();
+        });
+      });
+    }
+
+    function openPosModal(editPosObj = null) {
+      const monthKey = document.getElementById('monthPicker').value;
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+
+      const modal = document.getElementById('posModal');
+      const titleEl = document.getElementById('posModalTitle');
+      const submitBtn = document.getElementById('posModalSubmitBtn');
+      const editIdInput = document.getElementById('posEditId');
+      const nameInput = document.getElementById('posNameInput');
+      const catSelect = document.getElementById('posCategorySelect');
+      const customCatWrap = document.getElementById('customCategoryWrap');
+      const customCatInput = document.getElementById('posCustomCategoryInput');
+      const budgetInput = document.getElementById('posBudgetInput');
+
+      const existingCats = new Set(BASE_CATEGORIES);
+      mData.categories.forEach((c) => {
+        if (c.category) existingCats.add(c.category);
+      });
+
+      catSelect.innerHTML =
+        Array.from(existingCats)
+          .map((cat) => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`)
+          .join('') + `<option value="__CUSTOM__">+ Ketik Kategori Baru...</option>`;
+
+      customCatWrap.classList.add('hidden');
+      customCatInput.value = '';
+
+      if (editPosObj) {
+        titleEl.textContent = 'Edit Pos Anggaran';
+        submitBtn.textContent = 'Simpan Perubahan';
+        editIdInput.value = editPosObj.id;
+        nameInput.value = editPosObj.name;
+        catSelect.value = existingCats.has(editPosObj.category) ? editPosObj.category : '__CUSTOM__';
+        if (catSelect.value === '__CUSTOM__') {
+          customCatWrap.classList.remove('hidden');
+          customCatInput.value = editPosObj.category;
+        }
+        budgetInput.value = editPosObj.budget > 0 ? editPosObj.budget.toLocaleString('id-ID') : '0';
+        selectedModalColor = LEGACY_COLOR_MAP[editPosObj.color] || editPosObj.color || 'sage_teal';
+      } else {
+        titleEl.textContent = 'Tambah Pos Anggaran Baru';
+        submitBtn.textContent = 'Tambah Pos';
+        editIdInput.value = '';
+        nameInput.value = '';
+        catSelect.value = BASE_CATEGORIES[0];
+        budgetInput.value = '';
+        selectedModalColor = 'sage_teal';
+      }
+
+      renderColorSwatches();
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      nameInput.focus();
+    }
+
+    function closePosModal() {
+      const modal = document.getElementById('posModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function handleSavePosForm(event) {
+      event.preventDefault();
+      const monthKey = document.getElementById('monthPicker').value;
+      const editId = document.getElementById('posEditId').value;
+      const name = document.getElementById('posNameInput').value.trim();
+      const catSelectVal = document.getElementById('posCategorySelect').value;
+      const customCatVal = document.getElementById('posCustomCategoryInput').value.trim();
+      const budget = parseDigits(document.getElementById('posBudgetInput').value);
+
+      const finalCategory = catSelectVal === '__CUSTOM__' ? customCatVal : catSelectVal;
+
+      if (!name) {
+        showToast('Nama pos anggaran wajib diisi.', 'warn');
+        return;
+      }
+      if (!finalCategory) {
+        showToast('Pilih kategori atau ketik nama kategori baru.', 'warn');
+        return;
+      }
+
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+
+      if (editId) {
+        const target = mData.categories.find((c) => c.id === editId);
+        if (target) {
+          target.name = name;
+          target.category = finalCategory;
+          target.budget = budget;
+          target.color = selectedModalColor;
+          saveStore(store);
+          closePosModal();
+          renderApp();
+          showToast(`Pos "${name}" berhasil diperbarui.`);
+        }
+      } else {
+        const newPos = {
+          id: `pos_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          name,
+          category: finalCategory,
+          budget,
+          color: selectedModalColor
+        };
+        mData.categories.push(newPos);
+        saveStore(store);
+        closePosModal();
+        renderApp();
+        showToast(`Pos baru "${name}" (${formatRupiah(budget)}) ditambahkan.`);
+      }
+    }
+
+    function openDeletePosModal(posId) {
+      const monthKey = document.getElementById('monthPicker').value;
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+      const targetPos = mData.categories.find((c) => c.id === posId);
+      if (!targetPos) return;
+
+      if (mData.categories.length <= 1) {
+        showToast('Minimal harus tersisa 1 pos anggaran aktif.', 'warn');
+        return;
+      }
+
+      const relatedTx = mData.transactions.filter((t) => t.categoryId === posId);
+      const otherPosList = mData.categories.filter((c) => c.id !== posId);
+
+      const modal = document.getElementById('deletePosModal');
+      const descEl = document.getElementById('delPosModalDesc');
+      const txOptionsBox = document.getElementById('delPosTxOptions');
+      const txWarningEl = document.getElementById('delPosTxWarning');
+      const targetSelect = document.getElementById('delPosTargetSelect');
+      const cancelBtn = document.getElementById('delPosCancelBtn');
+      const confirmBtn = document.getElementById('delPosConfirmBtn');
+
+      descEl.textContent = `Anda akan menghapus pos "${targetPos.name}" (Pagu: ${formatRupiah(targetPos.budget)}) dari periode ${monthKey}.`;
+
+      if (relatedTx.length > 0) {
+        const totalTxAmt = relatedTx.reduce((s, t) => s + t.amount, 0);
+        txOptionsBox.classList.remove('hidden');
+        txWarningEl.textContent = `Pos ini memiliki ${relatedTx.length} transaksi tercatat senilai ${formatRupiah(totalTxAmt)}. Pilih tindakan untuk transaksi tersebut:`;
+        targetSelect.innerHTML = otherPosList
+          .map((p) => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)} (${escapeHtml(p.category)})</option>`)
+          .join('');
+        const moveRadio = modal.querySelector('input[name="delTxAction"][value="move"]');
+        if (moveRadio) moveRadio.checked = true;
+      } else {
+        txOptionsBox.classList.add('hidden');
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      const closeDelModal = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        confirmBtn.onclick = null;
+        cancelBtn.onclick = null;
+      };
+
+      cancelBtn.onclick = closeDelModal;
+      confirmBtn.onclick = () => {
+        const freshStore = loadStore();
+        const freshMonth = ensureMonthData(freshStore, monthKey);
+
+        if (relatedTx.length > 0) {
+          const selectedAction = modal.querySelector('input[name="delTxAction"]:checked')?.value || 'move';
+          if (selectedAction === 'move') {
+            const destPosId = targetSelect.value;
+            freshMonth.transactions.forEach((tx) => {
+              if (tx.categoryId === posId) {
+                tx.categoryId = destPosId;
+              }
+            });
+          } else {
+            freshMonth.transactions = freshMonth.transactions.filter((tx) => tx.categoryId !== posId);
+          }
+        }
+
+        freshMonth.categories = freshMonth.categories.filter((c) => c.id !== posId);
+        saveStore(freshStore);
+        closeDelModal();
+
+        const remainingCats = new Set(freshMonth.categories.map((c) => c.category));
+        if (activePosCategoryFilter !== 'ALL' && !remainingCats.has(activePosCategoryFilter)) {
+          activePosCategoryFilter = 'ALL';
+        }
+
+        renderApp();
+        showToast(`Pos "${targetPos.name}" berhasil dihapus.`, 'warn');
+      };
+    }
+
+    function handleMovePosOrder(posId, direction) {
+      const monthKey = document.getElementById('monthPicker').value;
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+      const idx = mData.categories.findIndex((c) => c.id === posId);
+      if (idx === -1) return;
+
+      const newIdx = idx + direction;
+      if (newIdx < 0 || newIdx >= mData.categories.length) return;
+
+      const temp = mData.categories[idx];
+      mData.categories[idx] = mData.categories[newIdx];
+      mData.categories[newIdx] = temp;
+
+      saveStore(store);
+      renderApp();
+    }
+
+    // =========================================================================
+    // 5. LOGIKA TRANSAKSI, BULAN LALU, BACKUP/RESTORE JSON, CSV & RESET
+    // =========================================================================
+    function handleAddTransaction(event) {
+      event.preventDefault();
+      const monthKey = document.getElementById('monthPicker').value;
+      const dateVal = document.getElementById('txDate').value;
+      const personVal = document.getElementById('txPerson').value === 'Istri' ? 'Istri' : 'Suami';
+      const categoryId = document.getElementById('txCategory').value;
+      const noteVal = document.getElementById('txNote').value.trim();
+      const amountVal = parseDigits(document.getElementById('txAmount').value);
+
+      if (!dateVal || !categoryId || !noteVal || amountVal <= 0) {
+        showToast('Lengkapi tanggal, pos anggaran, keterangan, dan nominal lebih dari 0.', 'warn');
+        return;
+      }
+
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+      const targetCat = mData.categories.find((c) => c.id === categoryId);
+
+      mData.transactions.unshift({
+        id: `tx_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        date: dateVal,
+        person: personVal,
+        categoryId,
+        note: noteVal,
+        amount: amountVal
+      });
+
+      saveStore(store);
+      document.getElementById('txNote').value = '';
+      document.getElementById('txAmount').value = '';
+
+      renderApp();
+
+      if (targetCat) {
+        const spentNow = mData.transactions
+          .filter((t) => t.categoryId === targetCat.id)
+          .reduce((sum, t) => sum + t.amount, 0);
+        const remNow = targetCat.budget - spentNow;
+        if (remNow < 0) {
+          showToast(`Tercatat! Pos "${targetCat.name}" overbudget ${formatRupiah(Math.abs(remNow))}.`, 'error');
+        } else {
+          showToast(`Tercatat ${formatRupiah(amountVal)} (${personVal}) • Sisa ${targetCat.name}: ${formatRupiah(remNow)}`);
+        }
+      }
+    }
+
+    function handleDeleteTransaction(txId) {
+      const monthKey = document.getElementById('monthPicker').value;
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+      const txObj = mData.transactions.find((t) => t.id === txId);
+      if (!txObj) return;
+
+      openConfirmModal({
+        title: 'Hapus Transaksi Ini?',
+        desc: `Hapus "${txObj.note}" (${formatRupiah(txObj.amount)})? Nominal akan otomatis dikembalikan ke sisa pagu pos terkait.`,
+        confirmText: 'Hapus Transaksi',
+        isDanger: true,
+        onConfirm: () => {
+          const freshStore = loadStore();
+          const freshMonth = ensureMonthData(freshStore, monthKey);
+          freshMonth.transactions = freshMonth.transactions.filter((t) => t.id !== txId);
+          saveStore(freshStore);
+          renderApp();
+          showToast('Transaksi dihapus & sisa pagu dikembalikan.', 'warn');
+        }
+      });
+    }
+
+    function handleCopyPrevMonth() {
+      const currentKey = document.getElementById('monthPicker').value;
+      if (!currentKey || !/^\d{4}-\d{2}$/.test(currentKey)) return;
+
+      const [yearStr, monthStr] = currentKey.split('-');
+      const prevDate = new Date(Number(yearStr), Number(monthStr) - 2, 1);
+      const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+
+      const store = loadStore();
+      const prevData = store.months[prevKey];
+      if (!prevData || !Array.isArray(prevData.categories) || prevData.categories.length === 0) {
+        showToast(`Data susunan pos bulan sebelumnya (${prevKey}) belum tersedia.`, 'warn');
+        return;
+      }
+
+      openConfirmModal({
+        title: `Salin Susunan Pos dari ${prevKey}?`,
+        desc: `Seluruh pos kustom, kategori, warna, dan nominal pagu dari ${prevKey} akan disalin ke ${currentKey}. Transaksi di bulan ${currentKey} tetap aman.`,
+        confirmText: 'Salin Susunan Pos',
+        onConfirm: () => {
+          const freshStore = loadStore();
+          const targetMonth = ensureMonthData(freshStore, currentKey);
+          targetMonth.categories = freshStore.months[prevKey].categories.map((c) => ({ ...c }));
+          saveStore(freshStore);
+          activePosCategoryFilter = 'ALL';
+          renderApp();
+          showToast(`Susunan pos dari ${prevKey} berhasil disalin ke ${currentKey}.`);
+        }
+      });
+    }
+
+    function handleResetDefault() {
+      const monthKey = document.getElementById('monthPicker').value;
+      openConfirmModal({
+        title: `Reset Bulan ${monthKey} ke Default?`,
+        desc: 'Susunan pos anggaran akan dikembalikan ke 10 pos awal senilai Rp12.000.000. Transaksi yang cocok dengan ID pos awal akan tetap terhubung.',
+        confirmText: 'Reset ke Default',
+        isDanger: true,
+        onConfirm: () => {
+          const store = loadStore();
+          const mData = ensureMonthData(store, monthKey);
+          mData.categories = DEFAULT_POS_LIST.map((item) => ({ ...item }));
+          saveStore(store);
+          activePosCategoryFilter = 'ALL';
+          renderApp();
+          showToast(`Susunan pos bulan ${monthKey} dikembalikan ke default Rp12.000.000.`);
+        }
+      });
+    }
+
+    function handleBackupJson() {
+      const monthKey = document.getElementById('monthPicker').value || getCurrentMonthKey();
+      const store = loadStore();
+      const payload = {
+        app: 'Tracker Anggaran Keluarga',
+        version: '2.1',
+        exportedAt: new Date().toISOString(),
+        months: store.months
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `backup_anggaran_keluarga_${monthKey}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast('File Backup JSON berhasil diunduh.');
+    }
+
+    function handleRestoreJson(event) {
+      const file = event.target.files && event.target.files[0];
+      event.target.value = '';
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const parsed = JSON.parse(String(e.target.result || ''));
+          const monthsObj = parsed && parsed.months
+            ? parsed.months
+            : (parsed && parsed.data && parsed.data.months ? parsed.data.months : null);
+
+          if (!monthsObj || typeof monthsObj !== 'object') {
+            showToast('Format file JSON tidak valid.', 'error');
+            return;
+          }
+
+          openConfirmModal({
+            title: 'Restore Data dari File JSON?',
+            desc: 'Seluruh data pos kustom dan transaksi antarbulan akan dipulihkan dari file backup JSON yang dipilih.',
+            confirmText: 'Pulihkan Data',
+            onConfirm: () => {
+              const restoredStore = { months: monthsObj };
+              saveStore(restoredStore);
+              const keys = Object.keys(monthsObj).sort();
+              const picker = document.getElementById('monthPicker');
+              if (keys.length > 0 && !monthsObj[picker.value]) {
+                picker.value = keys[keys.length - 1];
+              }
+              activePosCategoryFilter = 'ALL';
+              renderApp();
+              showToast('Data berhasil dipulihkan dari file JSON!');
+            }
+          });
+        } catch (err) {
+          console.error('Restore JSON gagal:', err);
+          showToast('File JSON rusak atau tidak dapat dibaca.', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function handleExportCsv() {
+      const monthKey = document.getElementById('monthPicker').value || getCurrentMonthKey();
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+      const catMap = new Map(mData.categories.map((c) => [c.id, c]));
+
+      const lines = [];
+      lines.push(['RINGKASAN PAGU BULAN', monthKey].join(','));
+      lines.push(['Pos Anggaran', 'Kategori', 'Pagu (Rp)', 'Terpakai (Rp)', 'Sisa Pagu (Rp)'].join(','));
+
+      mData.categories.forEach((cat) => {
+        const spent = mData.transactions
+          .filter((t) => t.categoryId === cat.id)
+          .reduce((sum, t) => sum + t.amount, 0);
+        const rem = cat.budget - spent;
+        lines.push([
+          `"${String(cat.name).replace(/"/g, '""')}"`,
+          `"${String(cat.category).replace(/"/g, '""')}"`,
+          cat.budget,
+          spent,
+          rem
+        ].join(','));
+      });
+
+      lines.push('');
+      lines.push(['RIWAYAT TRANSAKSI BULAN', monthKey].join(','));
+      lines.push(['Tanggal', 'Dicatat Oleh', 'Pos Anggaran', 'Kategori', 'Keterangan', 'Nominal (Rp)'].join(','));
+
+      mData.transactions.forEach((tx) => {
+        const posObj = catMap.get(tx.categoryId);
+        const posName = `"${String(posObj ? posObj.name : 'Pos Dihapus').replace(/"/g, '""')}"`;
+        const posCat = `"${String(posObj ? posObj.category : '-').replace(/"/g, '""')}"`;
+        const note = `"${String(tx.note).replace(/"/g, '""')}"`;
+        const person = `"${String(tx.person).replace(/"/g, '""')}"`;
+        lines.push([tx.date, person, posName, posCat, note, tx.amount].join(','));
+      });
+
+      const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `tracker_anggaran_keluarga_${monthKey}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast(`File CSV bulan ${monthKey} berhasil diunduh.`);
+    }
+
+    // =========================================================================
+    // 6. RENDERING UI (KPI, SUAMI VS ISTRI, FILTER KATEGORI, KARTU & TABEL)
+    // =========================================================================
+    function renderApp() {
+      const monthPicker = document.getElementById('monthPicker');
+      const monthKey = monthPicker.value || getCurrentMonthKey();
+      monthPicker.value = monthKey;
+
+      const store = loadStore();
+      const mData = ensureMonthData(store, monthKey);
+
+      const spentByPos = new Map();
+      let totalSpent = 0;
+      let totalSuami = 0;
+      let totalIstri = 0;
+
+      mData.transactions.forEach((tx) => {
+        const amt = Number(tx.amount) || 0;
+        spentByPos.set(tx.categoryId, (spentByPos.get(tx.categoryId) || 0) + amt);
+        totalSpent += amt;
+        if (tx.person === 'Istri') {
+          totalIstri += amt;
+        } else {
+          totalSuami += amt;
+        }
+      });
+
+      const totalBudget = mData.categories.reduce((sum, c) => sum + (Number(c.budget) || 0), 0);
+      const totalRemaining = totalBudget - totalSpent;
+      const spentPct = totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0;
+      const remPct = totalBudget > 0 ? Math.max(0, 100 - spentPct) : 0;
+
+      // 1. KPI Cards
+      document.getElementById('kpiBudget').textContent = formatRupiah(totalBudget);
+      document.getElementById('kpiBudgetNote').textContent = `${mData.categories.length} pos anggaran aktif (Periode ${monthKey})`;
+
+      document.getElementById('kpiSpent').textContent = formatRupiah(totalSpent);
+      document.getElementById('kpiSpentPct').textContent = `${spentPct}% dari total pagu terpakai`;
+      document.getElementById('kpiSpentBadge').textContent = `${spentPct}%`;
+
+      const remCard = document.getElementById('kpiRemainingCard');
+      const remBadge = document.getElementById('kpiRemainingBadge');
+      const remEl = document.getElementById('kpiRemaining');
+      const remStatusEl = document.getElementById('kpiRemainingStatus');
+      remEl.textContent = formatRupiah(totalRemaining);
+
+      if (totalRemaining < 0) {
+        remCard.className = 'surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-rose-700 shadow-xs';
+        remBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100/90 text-rose-800 tabular-nums';
+        remBadge.textContent = 'Minus';
+        remEl.className = 'text-2xl sm:text-3xl font-extrabold text-rose-700 tabular-nums mt-2';
+        remStatusEl.textContent = 'Overbudget — pengeluaran melebihi total pagu';
+        remStatusEl.className = 'text-xs font-semibold text-rose-700 mt-1';
+      } else if (spentPct >= 80) {
+        remCard.className = 'surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-amber-600 shadow-xs';
+        remBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100/90 text-amber-800 tabular-nums';
+        remBadge.textContent = `${remPct}%`;
+        remEl.className = 'text-2xl sm:text-3xl font-extrabold text-amber-700 tabular-nums mt-2';
+        remStatusEl.textContent = 'Waspada — pemakaian mencapai ≥80% pagu';
+        remStatusEl.className = 'text-xs font-semibold text-amber-700 mt-1';
+      } else {
+        remCard.className = 'surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-teal-700 shadow-xs';
+        remBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100/80 text-teal-800 tabular-nums';
+        remBadge.textContent = `${remPct}%`;
+        remEl.className = 'text-2xl sm:text-3xl font-extrabold text-teal-800 tabular-nums mt-2';
+        remStatusEl.textContent = 'Aman terkendali';
+        remStatusEl.className = 'text-xs font-medium text-teal-700 mt-1';
+      }
+
+      // 2. Ringkasan Suami vs Istri
+      const suamiPct = totalSpent > 0 ? Math.round((totalSuami / totalSpent) * 100) : 0;
+      const istriPct = totalSpent > 0 ? Math.round((totalIstri / totalSpent) * 100) : 0;
+      document.getElementById('sumSuami').textContent = formatRupiah(totalSuami);
+      document.getElementById('pctSuami').textContent = `(${suamiPct}%)`;
+      document.getElementById('sumIstri').textContent = formatRupiah(totalIstri);
+      document.getElementById('pctIstri').textContent = `(${istriPct}%)`;
+      document.getElementById('barSuami').style.width = `${totalSpent > 0 ? (totalSuami / totalSpent) * 100 : 0}%`;
+      document.getElementById('barIstri').style.width = `${totalSpent > 0 ? (totalIstri / totalSpent) * 100 : 0}%`;
+
+      // 3. Filter Pills Kategori Pos
+      const uniqueCategories = Array.from(new Set(mData.categories.map((c) => c.category)));
+      if (activePosCategoryFilter !== 'ALL' && !uniqueCategories.includes(activePosCategoryFilter)) {
+        activePosCategoryFilter = 'ALL';
+      }
+
+      const catFilterBar = document.getElementById('categoryFilterBar');
+      const allBtnClass =
+        activePosCategoryFilter === 'ALL'
+          ? 'bg-teal-800 text-white border-teal-800 shadow-2xs'
+          : 'surface-card text-slate-700 border-stone-300/80 hover:bg-stone-100';
+
+      catFilterBar.innerHTML =
+        `<button type="button" data-filter-cat="ALL" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${allBtnClass}">Semua (${mData.categories.length})</button>` +
+        uniqueCategories
+          .map((catName) => {
+            const count = mData.categories.filter((c) => c.category === catName).length;
+            const activeClass =
+              activePosCategoryFilter === catName
+                ? 'bg-teal-800 text-white border-teal-800 shadow-2xs'
+                : 'surface-card text-slate-700 border-stone-300/80 hover:bg-stone-100';
+            return `<button type="button" data-filter-cat="${escapeHtml(catName)}" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${activeClass}">${escapeHtml(catName)} (${count})</button>`;
+          })
+          .join('');
+
+      catFilterBar.querySelectorAll('[data-filter-cat]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          activePosCategoryFilter = btn.getAttribute('data-filter-cat');
+          renderApp();
+        });
+      });
+
+      // 4. Grid Kartu Pos Anggaran
+      const posGrid = document.getElementById('posGrid');
+      posGrid.innerHTML = '';
+
+      const visiblePos =
+        activePosCategoryFilter === 'ALL'
+          ? mData.categories
+          : mData.categories.filter((c) => c.category === activePosCategoryFilter);
+
+      visiblePos.forEach((pos) => {
+        const globalIndex = mData.categories.findIndex((c) => c.id === pos.id);
+        const isFirst = globalIndex === 0;
+        const isLast = globalIndex === mData.categories.length - 1;
+
+        const spent = spentByPos.get(pos.id) || 0;
+        const remaining = pos.budget - spent;
+        const ratioPct = pos.budget > 0 ? (spent / pos.budget) * 100 : (spent > 0 ? 100 : 0);
+        const barWidth = Math.min(100, Math.max(0, ratioPct));
+        const colorCfg = getColorConfig(pos.color);
+
+        // Progress Bar Color Rules (Kalem & Jelas): Sage Hijau (<80%), Amber Hangat (>=80%), Terracotta/Merah (>=100% / overbudget)
+        let barColor = 'bg-[#4d7c6f]'; // Sage green lembut
+        let remTextClass = 'text-teal-800';
+        let statusTag = '';
+
+        if (ratioPct >= 100 || remaining < 0) {
+          barColor = 'bg-[#b84a39]'; // Muted terracotta red
+          remTextClass = 'text-rose-700';
+          statusTag = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100/80 text-rose-800 border border-rose-200/80">${remaining < 0 ? 'Overbudget' : '100% Habis'}</span>`;
+        } else if (ratioPct >= 80) {
+          barColor = 'bg-amber-600';
+          remTextClass = 'text-amber-700';
+          statusTag = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-800 border border-amber-200/80">${Math.round(ratioPct)}% Terpakai</span>`;
+        } else {
+          statusTag = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100/70 text-emerald-800 border border-emerald-200/80">Aman</span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = `${colorCfg.cardTint} rounded-2xl p-4 border border-stone-200/90 border-t-4 ${colorCfg.accentBorder} shadow-xs flex flex-col justify-between transition hover:shadow-md`;
+        card.innerHTML = `
+          <div>
+            <!-- Header Kategori Badge & Tombol Urutan / Edit / Hapus -->
+            <div class="flex items-start justify-between gap-1.5">
+              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-md border ${colorCfg.badgeBg} ${colorCfg.badgeText} ${colorCfg.badgeBorder} leading-tight">
+                ${escapeHtml(pos.category)}
+              </span>
+
+              <div class="flex items-center gap-0.5 shrink-0">
+                <button type="button" data-move-up="${escapeHtml(pos.id)}" ${isFirst ? 'disabled' : ''} title="Geser naik"
+                  class="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-stone-200/60 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                  </svg>
+                </button>
+                <button type="button" data-move-down="${escapeHtml(pos.id)}" ${isLast ? 'disabled' : ''} title="Geser turun"
+                  class="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-stone-200/60 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <button type="button" data-edit-pos="${escapeHtml(pos.id)}" title="Edit pos anggaran"
+                  class="p-1 rounded-lg text-slate-500 hover:text-teal-800 hover:bg-teal-50 transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z" />
+                  </svg>
+                </button>
+                <button type="button" data-del-pos="${escapeHtml(pos.id)}" title="Hapus pos anggaran"
+                  class="p-1 rounded-lg text-slate-400 hover:text-rose-700 hover:bg-rose-50 transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Nama Pos & Status Badge -->
+            <div class="mt-2.5 flex items-start justify-between gap-2">
+              <h3 class="text-sm font-extrabold text-slate-800 leading-snug">${escapeHtml(pos.name)}</h3>
+            </div>
+            <div class="mt-1">${statusTag}</div>
+
+            <!-- Nominal Pagu, Terpakai, Sisa -->
+            <div class="mt-3 space-y-1 text-xs tabular-nums">
+              <div class="flex justify-between text-slate-500">
+                <span>Pagu:</span>
+                <span class="font-semibold text-slate-700">${formatRupiah(pos.budget)}</span>
+              </div>
+              <div class="flex justify-between text-slate-500">
+                <span>Terpakai:</span>
+                <span class="font-medium text-slate-600">${formatRupiah(spent)}</span>
+              </div>
+              <div class="flex justify-between pt-1.5 border-t border-stone-200/80">
+                <span class="font-semibold text-slate-600">Sisa Pagu:</span>
+                <span class="font-extrabold ${remTextClass}">${formatRupiah(remaining)}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full h-2 bg-stone-200/80 rounded-full overflow-hidden mt-3">
+            <div class="h-full ${barColor} rounded-full transition-all duration-300" style="width: ${barWidth}%"></div>
+          </div>
+        `;
+        posGrid.appendChild(card);
+      });
+
+      // Bind aksi kartu pos
+      posGrid.querySelectorAll('[data-move-up]').forEach((btn) => {
+        btn.addEventListener('click', () => handleMovePosOrder(btn.getAttribute('data-move-up'), -1));
+      });
+      posGrid.querySelectorAll('[data-move-down]').forEach((btn) => {
+        btn.addEventListener('click', () => handleMovePosOrder(btn.getAttribute('data-move-down'), 1));
+      });
+      posGrid.querySelectorAll('[data-edit-pos]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const posObj = mData.categories.find((c) => c.id === btn.getAttribute('data-edit-pos'));
+          if (posObj) openPosModal(posObj);
+        });
+      });
+      posGrid.querySelectorAll('[data-del-pos]').forEach((btn) => {
+        btn.addEventListener('click', () => openDeletePosModal(btn.getAttribute('data-del-pos')));
+      });
+
+      // 5. Update Dropdown Form Transaksi & Filter Riwayat
+      const txCatSelect = document.getElementById('txCategory');
+      const filterCatSelect = document.getElementById('filterCategory');
+      const prevTxCat = txCatSelect.value;
+      const prevFilterCat = filterCatSelect.value;
+
+      txCatSelect.innerHTML = mData.categories
+        .map((c) => {
+          const rem = c.budget - (spentByPos.get(c.id) || 0);
+          return `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)} (Sisa: ${formatRupiah(rem)})</option>`;
+        })
+        .join('');
+
+      filterCatSelect.innerHTML =
+        `<option value="ALL">Semua Pos Anggaran</option>` +
+        mData.categories.map((c) => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)}</option>`).join('');
+
+      if (mData.categories.some((c) => c.id === prevTxCat)) {
+        txCatSelect.value = prevTxCat;
+      }
+      if (prevFilterCat === 'ALL' || mData.categories.some((c) => c.id === prevFilterCat)) {
+        filterCatSelect.value = prevFilterCat;
+      }
+
+      // 6. Render Tabel Riwayat Transaksi
+      const filterPersonVal = document.getElementById('filterPerson').value;
+      const filterCatVal = filterCatSelect.value;
+      const searchVal = document.getElementById('filterSearch').value.trim().toLowerCase();
+      const posObjMap = new Map(mData.categories.map((c) => [c.id, c]));
+
+      const filteredTx = mData.transactions.filter((tx) => {
+        if (filterPersonVal !== 'ALL' && tx.person !== filterPersonVal) return false;
+        if (filterCatVal !== 'ALL' && tx.categoryId !== filterCatVal) return false;
+        if (searchVal) {
+          const posObj = posObjMap.get(tx.categoryId);
+          const posName = posObj ? posObj.name.toLowerCase() : '';
+          const noteLower = String(tx.note || '').toLowerCase();
+          if (!noteLower.includes(searchVal) && !posName.includes(searchVal)) return false;
+        }
+        return true;
+      });
+
+      const tbody = document.getElementById('txTableBody');
+      if (filteredTx.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="py-10 px-4 text-center text-xs sm:text-sm text-slate-500">
+              Belum ada transaksi pengeluaran tercatat untuk periode atau filter ini.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filteredTx
+        .map((tx) => {
+          const isIstri = tx.person === 'Istri';
+          const personBadge = isIstri
+            ? `<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100/90 text-rose-800 border border-rose-200/70">Istri</span>`
+            : `<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100/90 text-indigo-800 border border-indigo-200/70">Suami</span>`;
+
+          const posObj = posObjMap.get(tx.categoryId);
+          const colorCfg = getColorConfig(posObj ? posObj.color : 'sage_teal');
+          const posBadge = posObj
+            ? `<span class="inline-block px-2 py-0.5 rounded-md text-xs font-semibold border ${colorCfg.badgeBg} ${colorCfg.badgeText} ${colorCfg.badgeBorder}">${escapeHtml(posObj.name)}</span>`
+            : `<span class="text-xs text-slate-400 italic">Pos Dihapus</span>`;
+
+          return `
+            <tr class="hover:bg-stone-100/60 transition">
+              <td class="py-3 px-4 whitespace-nowrap font-medium text-slate-600 tabular-nums">${escapeHtml(tx.date)}</td>
+              <td class="py-3 px-3 whitespace-nowrap">${personBadge}</td>
+              <td class="py-3 px-3 whitespace-nowrap">${posBadge}</td>
+              <td class="py-3 px-3 text-slate-700">${escapeHtml(tx.note)}</td>
+              <td class="py-3 px-4 whitespace-nowrap text-right font-bold text-slate-800 tabular-nums">${formatRupiah(tx.amount)}</td>
+              <td class="py-3 px-4 whitespace-nowrap text-center">
+                <button type="button" data-del-tx="${escapeHtml(tx.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/60 transition cursor-pointer">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          `;
+        })
+        .join('');
+
+      tbody.querySelectorAll('[data-del-tx]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          handleDeleteTransaction(btn.getAttribute('data-del-tx'));
+        });
+      });
+    }
+
+    // =========================================================================
+    // 7. INISIALISASI EVENT LISTENER SAAT HALAMAN DIMUAT
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const monthPicker = document.getElementById('monthPicker');
+      const initialMonth = getCurrentMonthKey();
+      monthPicker.value = initialMonth;
+      document.getElementById('txDate').value = getDefaultDateForMonth(initialMonth);
+
+      monthPicker.addEventListener('change', () => {
+        document.getElementById('txDate').value = getDefaultDateForMonth(monthPicker.value);
+        activePosCategoryFilter = 'ALL';
+        renderApp();
+      });
+
+      const txAmountInput = document.getElementById('txAmount');
+      txAmountInput.addEventListener('input', () => formatInputThousands(txAmountInput));
+
+      const posBudgetInput = document.getElementById('posBudgetInput');
+      posBudgetInput.addEventListener('input', () => formatInputThousands(posBudgetInput));
+
+      document.getElementById('posCategorySelect').addEventListener('change', (e) => {
+        const customWrap = document.getElementById('customCategoryWrap');
+        if (e.target.value === '__CUSTOM__') {
+          customWrap.classList.remove('hidden');
+          document.getElementById('posCustomCategoryInput').focus();
+        } else {
+          customWrap.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('btnAddPos').addEventListener('click', () => openPosModal(null));
+      document.getElementById('posModalCloseX').addEventListener('click', closePosModal);
+      document.getElementById('posModalCancelBtn').addEventListener('click', closePosModal);
+      document.getElementById('posForm').addEventListener('submit', handleSavePosForm);
+
+      document.getElementById('txForm').addEventListener('submit', handleAddTransaction);
+
+      document.getElementById('btnCopyPrevMonth').addEventListener('click', handleCopyPrevMonth);
+      document.getElementById('btnBackupJson').addEventListener('click', handleBackupJson);
+      document.getElementById('btnRestoreJson').addEventListener('click', () => {
+        document.getElementById('restoreFileInput').click();
+      });
+      document.getElementById('restoreFileInput').addEventListener('change', handleRestoreJson);
+      document.getElementById('btnExportCsv').addEventListener('click', handleExportCsv);
+      document.getElementById('btnResetDefault').addEventListener('click', handleResetDefault);
+
+      document.getElementById('filterPerson').addEventListener('change', renderApp);
+      document.getElementById('filterCategory').addEventListener('change', renderApp);
+      document.getElementById('filterSearch').addEventListener('input', renderApp);
+
+      renderApp();
+    });
+  </script>
+</body>
+</html>
