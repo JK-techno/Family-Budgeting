@@ -3,1499 +3,2029 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tracker Anggaran Keluarga — Palet Kalem &amp; Profesional</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
+  <title>Tracker Anggaran Keluarga</title>
   <style>
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: #f4f3ef; /* Warm ivory / soft sand agar tidak silau */
-      color: #1e293b;
+    :root {
+      --bg-page: #f4f3ef;
+      --bg-card: #fcfbf9;
+      --bg-subtle: #efede7;
+      --header-bg: #1e3a4c;
+      --header-border: #162c3a;
+      --text-main: #1e293b;
+      --text-muted: #5b6777;
+      --border: #dedad0;
+      --border-strong: #c9c3b5;
+
+      /* Calm & Professional Accent Palette */
+      --teal: #2f6f65;
+      --teal-dark: #23554d;
+      --teal-soft: #e6f0ee;
+      --indigo: #3b5998;
+      --indigo-soft: #eaedf7;
+      --rose: #a84a6b;
+      --rose-soft: #f8eaf0;
+      --amber: #b4692e;
+      --amber-soft: #faefe6;
+      --slate: #476b8a;
+      --slate-soft: #ebf0f5;
+      --purple: #6b5280;
+      --purple-soft: #f1edf5;
+      --terracotta: #a6523b;
+      --terracotta-soft: #f7ece9;
+      --olive: #4c6b45;
+      --olive-soft: #ebf1ea;
+
+      --danger: #b53f3f;
+      --danger-soft: #fbeaea;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 2px 8px rgba(30, 58, 76, 0.05);
+      --shadow-md: 0 10px 28px rgba(15, 23, 42, 0.14);
     }
-    .tabular-nums {
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .tabular {
       font-variant-numeric: tabular-nums;
     }
-    .surface-card {
-      background-color: #fcfbf9;
+
+    /* Header */
+    .topbar {
+      background: linear-gradient(135deg, #1a3343 0%, #234659 100%);
+      color: #f8fafc;
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.12);
     }
-    /* Custom subtle scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
-    ::-webkit-scrollbar-track {
-      background: #ebe8e1;
+
+    .brand h1 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #ffffff;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
+
+    .brand p {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      margin-top: 2px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .month-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    .month-box label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .month-box input[type="month"] {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+      color-scheme: dark;
+    }
+
+    /* Buttons */
+    button, .btn {
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+      touch-action: manipulation;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-ghost-light {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f1f5f9;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .btn-ghost-light:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .btn-teal {
+      background: var(--teal);
+      color: #ffffff;
+      border-color: var(--teal);
+    }
+
+    .btn-teal:hover {
+      background: var(--teal-dark);
+    }
+
+    .btn-outline {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border-color: var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+    }
+
+    .btn-danger-soft {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #ebc5c5;
+    }
+
+    .btn-danger-soft:hover {
+      background: #f6d8d8;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #ffffff;
+    }
+
+    .btn-danger:hover {
+      background: #9c3333;
+    }
+
+    .btn-sm {
+      padding: 5px 9px;
+      font-size: 0.76rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--slate);
+    }
+
+    .kpi-card.teal { border-left-color: var(--teal); }
+    .kpi-card.amber { border-left-color: var(--amber); }
+    .kpi-card.danger { border-left-color: var(--danger); }
+
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .kpi-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .kpi-val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.73rem;
+      font-weight: 700;
+    }
+
+    .pill-teal { background: var(--teal-soft); color: var(--teal-dark); }
+    .pill-amber { background: var(--amber-soft); color: var(--amber); }
+    .pill-danger { background: var(--danger-soft); color: var(--danger); }
+    .pill-indigo { background: var(--indigo-soft); color: var(--indigo); }
+    .pill-rose { background: var(--rose-soft); color: var(--rose); }
+
+    /* Person Bar */
+    .person-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 22px;
+    }
+
+    .person-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .person-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .person-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .person-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      border: 1px solid var(--border);
+    }
+
+    .person-chip.suami {
+      background: var(--indigo-soft);
+      border-color: #d3dbf0;
+    }
+
+    .person-chip.istri {
+      background: var(--rose-soft);
+      border-color: #edd0dc;
+    }
+
+    .dual-bar {
+      height: 8px;
+      background: var(--bg-subtle);
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      margin-top: 12px;
+    }
+
+    .dual-bar-suami {
+      background: var(--indigo);
+      transition: width 0.3s ease;
+    }
+
+    .dual-bar-istri {
+      background: var(--rose);
+      transition: width 0.3s ease;
+    }
+
+    /* Section Header & Filter Tabs */
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+
+    .section-head p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .tab-pill {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .tab-pill:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    .tab-pill.active {
+      background: var(--header-bg);
+      color: #ffffff;
+      border-color: var(--header-bg);
+    }
+
+    /* Budget Category Cards Grid */
+    .pos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .pos-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--teal);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.15s;
+    }
+
+    .pos-card:hover {
+      box-shadow: 0 6px 16px rgba(30, 58, 76, 0.08);
+    }
+
+    .pos-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .cat-tag {
+      font-size: 0.69rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .pos-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      margin-top: 8px;
+      color: var(--text-main);
+    }
+
+    .pos-metrics {
+      margin: 12px 0 10px;
+      font-size: 0.83rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .metric-row span:first-child {
+      color: var(--text-muted);
+    }
+
+    .pagu-clickable {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 700;
+      color: var(--text-main);
+      background: var(--bg-subtle);
+      border: 1px dashed var(--border-strong);
+      padding: 2px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .pagu-clickable:hover {
+      background: #e5e2d9;
+      border-color: var(--teal);
+      color: var(--teal-dark);
+    }
+
+    .metric-divider {
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+
+    .prog-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-subtle);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .prog-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .pos-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .order-btns {
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    /* Bottom Split: Form & Table */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .panel-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .form-field {
+      margin-bottom: 12px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(47, 111, 101, 0.14);
+    }
+
+    /* Segmented Toggle Suami / Istri */
+    .person-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .person-toggle input {
+      display: none;
+    }
+
+    .person-toggle label {
+      margin: 0;
+      text-align: center;
+      padding: 9px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+
+    #radioSuami:checked + label {
+      background: var(--indigo-soft);
+      border-color: var(--indigo);
+      color: var(--indigo);
+    }
+
+    #radioIstri:checked + label {
+      background: var(--rose-soft);
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+
+    /* Table */
+    .table-filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .table-filters {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    th {
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f7f5f0;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .empty-box {
+      padding: 32px 16px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      width: 100%;
+      max-width: 460px;
+      padding: 20px;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .quick-adjust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .swatch-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 4px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      color: var(--text-main);
+    }
+
+    .swatch-btn.selected {
+      border-color: var(--header-bg);
+      background: var(--slate-soft);
+      box-shadow: 0 0 0 2px rgba(30, 58, 76, 0.2);
+    }
+
+    .swatch-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+    }
+
+    .modal-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .modal-footer-right {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .danger-zone-box {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      background: var(--danger-soft);
+      border: 1px solid #ebc5c5;
+      font-size: 0.8rem;
+    }
+
+    /* Toast */
+    .toast-stack {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 340px;
+      pointer-events: none;
+    }
+
+    .toast-item {
+      background: #1e3a4c;
+      color: #ffffff;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      border-left: 4px solid #5eead4;
+      animation: slideUp 0.2s ease;
+    }
+
+    .toast-item.warn {
+      border-left-color: #fbbf24;
+    }
+
+    .toast-item.error {
+      background: #5c1d1d;
+      border-left-color: #fca5a5;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 18px 28px;
+      border-top: 1px solid var(--border);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-teal-700 selection:text-white">
+<body>
 
-  <!-- Toast Notification Container (Menggantikan alert native) -->
-  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+  <!-- Toast Container -->
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 
-  <!-- Modal CRUD Pos Anggaran (Tambah / Edit Pos Kustom) -->
-  <div id="posModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/55 backdrop-blur-[2px] p-4" role="dialog" aria-modal="true" aria-labelledby="posModalTitle">
-    <div class="surface-card rounded-2xl shadow-2xl border border-stone-200 max-w-md w-full p-5 sm:p-6">
-      <div class="flex items-center justify-between pb-3 border-b border-stone-200/80">
-        <div class="flex items-center gap-2.5">
-          <span class="w-2.5 h-6 rounded-full bg-teal-700"></span>
-          <h3 id="posModalTitle" class="text-base sm:text-lg font-extrabold text-slate-800">Tambah Pos Anggaran</h3>
-        </div>
-        <button id="posModalCloseX" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-stone-200/60 transition cursor-pointer" aria-label="Tutup">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <h1>Tracker Anggaran Keluarga</h1>
+        <p>Palet kalem &bull; Edit pagu langsung per pos &bull; Pencatatan Suami &amp; Istri</p>
       </div>
 
-      <form id="posForm" class="mt-4 space-y-4">
-        <input type="hidden" id="posEditId" value="" />
-
-        <!-- Nama Pos -->
-        <div>
-          <label for="posNameInput" class="block text-xs font-semibold text-slate-700 mb-1">Nama Pos Anggaran <span class="text-rose-600">*</span></label>
-          <input id="posNameInput" type="text" required placeholder="Contoh: Dana Kesehatan / Cicilan Kendaraan" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+      <div class="toolbar">
+        <div class="month-box">
+          <label for="monthPicker">Bulan:</label>
+          <input type="month" id="monthPicker" />
         </div>
-
-        <!-- Kategori (Pilih atau Ketik Kustom) -->
-        <div>
-          <label for="posCategorySelect" class="block text-xs font-semibold text-slate-700 mb-1">Kategori <span class="text-rose-600">*</span></label>
-          <select id="posCategorySelect" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition cursor-pointer">
-            <!-- Diisi dinamis + opsi '+ Ketik Kategori Baru...' -->
-          </select>
-          <div id="customCategoryWrap" class="mt-2 hidden">
-            <input id="posCustomCategoryInput" type="text" placeholder="Ketik nama kategori baru..." class="w-full px-3.5 py-2.5 rounded-xl border border-teal-600 text-sm bg-teal-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 transition" />
-          </div>
-        </div>
-
-        <!-- Nominal Pagu Bulanan -->
-        <div>
-          <label for="posBudgetInput" class="block text-xs font-semibold text-slate-700 mb-1">Nominal Pagu Bulanan (Rp) <span class="text-rose-600">*</span></label>
-          <div class="relative">
-            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">Rp</span>
-            <input id="posBudgetInput" type="text" inputmode="numeric" required placeholder="0" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-bold tabular-nums bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
-          </div>
-        </div>
-
-        <!-- Pilihan Warna Label / Aksen Kalem -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1.5">Warna Label &amp; Aksen Kartu</label>
-          <div id="colorPickerGrid" class="grid grid-cols-4 gap-2">
-            <!-- Swatch warna kalem dirender lewat JS -->
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-stone-200/80 flex items-center justify-end gap-2.5">
-          <button id="posModalCancelBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-stone-200/70 hover:bg-stone-200 transition cursor-pointer">
-            Batal
-          </button>
-          <button type="submit" id="posModalSubmitBtn" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-teal-800 hover:bg-teal-900 transition cursor-pointer shadow-xs">
-            Simpan Pos
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Hapus Pos Anggaran (Dengan Opsi Pindahkan Transaksi atau Ikut Hapus) -->
-  <div id="deletePosModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/55 backdrop-blur-[2px] p-4" role="dialog" aria-modal="true" aria-labelledby="delPosModalTitle">
-    <div class="surface-card rounded-2xl shadow-2xl border border-stone-200 max-w-md w-full p-5 sm:p-6">
-      <div class="flex items-start gap-3">
-        <div class="w-10 h-10 rounded-xl bg-rose-100/80 text-rose-700 flex items-center justify-center shrink-0 border border-rose-200/70">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-          </svg>
-        </div>
-        <div>
-          <h3 id="delPosModalTitle" class="text-base font-extrabold text-slate-800">Hapus Pos Anggaran?</h3>
-          <p id="delPosModalDesc" class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed"></p>
-        </div>
-      </div>
-
-      <!-- Opsi Penanganan Transaksi Jika Pos Memiliki Transaksi -->
-      <div id="delPosTxOptions" class="mt-4 p-3.5 rounded-xl bg-amber-50/90 border border-amber-200/90 space-y-3 hidden">
-        <p id="delPosTxWarning" class="text-xs font-semibold text-amber-900"></p>
-
-        <label class="flex items-start gap-2.5 cursor-pointer">
-          <input type="radio" name="delTxAction" value="move" checked class="mt-0.5 accent-teal-700 cursor-pointer" />
-          <div class="flex-1">
-            <span class="block text-xs font-bold text-slate-800">Pindahkan semua transaksi ke pos lain</span>
-            <select id="delPosTargetSelect" class="mt-1.5 w-full px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40"></select>
-          </div>
-        </label>
-
-        <label class="flex items-start gap-2.5 cursor-pointer">
-          <input type="radio" name="delTxAction" value="delete" class="mt-0.5 accent-rose-700 cursor-pointer" />
-          <div>
-            <span class="block text-xs font-bold text-rose-800">Ikut hapus seluruh transaksi pada pos ini</span>
-            <span class="block text-[11px] text-slate-500">Riwayat transaksi terkait akan dihapus permanen.</span>
-          </div>
-        </label>
-      </div>
-
-      <div class="mt-6 flex items-center justify-end gap-2.5">
-        <button id="delPosCancelBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-stone-200/70 hover:bg-stone-200 transition cursor-pointer">
-          Batal
-        </button>
-        <button id="delPosConfirmBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 transition cursor-pointer">
-          Hapus Pos
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Konfirmasi Umum (Hapus Transaksi / Salin Pagu / Restore / Reset Default) -->
-  <div id="confirmModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/55 backdrop-blur-[2px] p-4" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
-    <div class="surface-card rounded-2xl shadow-2xl border border-stone-200 max-w-md w-full p-5 sm:p-6">
-      <h3 id="confirmTitle" class="text-base font-extrabold text-slate-800">Konfirmasi</h3>
-      <p id="confirmDesc" class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed"></p>
-      <div class="mt-6 flex items-center justify-end gap-2.5">
-        <button id="confirmCancelBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-stone-200/70 hover:bg-stone-200 transition cursor-pointer">
-          Batal
-        </button>
-        <button id="confirmOkBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-teal-800 hover:bg-teal-900 transition cursor-pointer">
-          Ya, Lanjutkan
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Header Deep Slate-Teal yang Tenang & Berkelas -->
-  <header class="bg-gradient-to-r from-[#182c34] via-[#1d3942] to-[#1e4347] text-stone-100 border-b border-teal-950/40 sticky top-0 z-20 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
-      <div>
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-teal-500/15 text-teal-200 text-[11px] font-semibold border border-teal-400/25 mb-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          Kustomisasi Pos Penuh &bull; Suami &amp; Istri
-        </div>
-        <h1 class="text-lg sm:text-2xl font-extrabold text-white tracking-tight">
-          Tracker Anggaran Keluarga
-        </h1>
-        <p class="text-xs sm:text-sm text-slate-300 mt-0.5">
-          Kelola alokasi bulanan dengan tenang, catat pengeluaran harian, dan pantau sisa pagu bersama.
-        </p>
-      </div>
-
-      <!-- Toolbar Kontrol Periode + Backup/Restore/CSV/Reset -->
-      <div class="flex flex-wrap items-center gap-2">
-        <div class="flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-xl px-3 py-2 backdrop-blur-xs">
-          <label for="monthPicker" class="text-xs font-semibold text-teal-200">Periode:</label>
-          <input id="monthPicker" type="month" class="bg-transparent text-xs sm:text-sm font-bold text-white focus:outline-none cursor-pointer [color-scheme:dark]" />
-        </div>
-
-        <button id="btnCopyPrevMonth" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/18 text-stone-100 border border-white/15 transition cursor-pointer" title="Salin susunan pos dan pagu dari bulan sebelumnya">
-          Salin Susunan Pos dari Bulan Lalu
-        </button>
-
-        <button id="btnBackupJson" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/18 text-stone-100 border border-white/15 transition cursor-pointer" title="Unduh seluruh data ke file .json">
-          Backup JSON
-        </button>
-
-        <button id="btnRestoreJson" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/18 text-stone-100 border border-white/15 transition cursor-pointer" title="Pulihkan data dari file .json">
-          Restore JSON
-        </button>
-        <input id="restoreFileInput" type="file" accept=".json,application/json" class="hidden" />
-
-        <button id="btnExportCsv" type="button" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-xs transition cursor-pointer" title="Ekspor transaksi bulan aktif ke CSV">
-          Unduh CSV
-        </button>
-
-        <button id="btnResetDefault" type="button" class="px-3 py-2.5 rounded-xl text-xs font-semibold bg-rose-950/50 hover:bg-rose-900/70 text-rose-200 border border-rose-400/25 transition cursor-pointer" title="Kembalikan bulan aktif ke 10 pos awal Rp12.000.000">
-          Reset ke Default
-        </button>
+        <button type="button" class="btn-ghost-light" id="btnCopyPrev">Salin Pagu Bln Lalu</button>
+        <button type="button" class="btn-ghost-light" id="btnBackupJson">Backup JSON</button>
+        <button type="button" class="btn-ghost-light" id="btnRestoreJson">Restore JSON</button>
+        <input type="file" id="fileRestoreJson" accept=".json,application/json" style="display:none" />
+        <button type="button" class="btn-teal" id="btnExportCsv">Unduh CSV</button>
+        <button type="button" class="btn-ghost-light" id="btnResetDefault" title="Kembalikan pos bulan ini ke 10 pos awal Rp12.000.000">Reset Default</button>
       </div>
     </div>
   </header>
 
-  <!-- Konten Utama -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+  <!-- Main Workspace -->
+  <main class="container">
 
-    <!-- 3 Kartu KPI Ringkasan dengan Aksen Kalem -->
-    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <!-- KPI 1: Total Pagu -->
-      <div class="surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-slate-600 shadow-xs">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Pagu Bulan Ini</span>
-          <span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-            </svg>
-          </span>
+    <!-- 4 KPI Cards -->
+    <section class="kpi-grid">
+      <!-- Target Sisa Gaji Bulanan (Editable) -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Target Sisa Gaji</span>
+          <button type="button" class="btn-outline btn-sm" id="btnEditTargetIncome">Ubah Target</button>
         </div>
-        <div id="kpiBudget" class="text-2xl sm:text-3xl font-extrabold text-slate-800 tabular-nums mt-2">Rp12.000.000</div>
-        <div id="kpiBudgetNote" class="text-xs text-slate-500 mt-1">10 pos anggaran aktif</div>
+        <div class="kpi-val tabular" id="kpiTargetIncome">Rp12.000.000</div>
+        <div class="kpi-sub tabular" id="kpiUnallocatedNote">Pas 100% teralokasi</div>
       </div>
 
-      <!-- KPI 2: Total Terpakai -->
-      <div class="surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-amber-600/80 shadow-xs">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Terpakai</span>
-          <span id="kpiSpentBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100/80 text-amber-800 tabular-nums">0%</span>
+      <!-- Total Pagu Pos -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Total Pagu Pos</span>
+          <span class="pill pill-teal" id="kpiPosCountBadge">10 Pos</span>
         </div>
-        <div id="kpiSpent" class="text-2xl sm:text-3xl font-extrabold text-slate-800 tabular-nums mt-2">Rp0</div>
-        <div id="kpiSpentPct" class="text-xs font-medium text-slate-500 mt-1">0% dari total pagu terpakai</div>
+        <div class="kpi-val tabular" id="kpiTotalPagu">Rp12.000.000</div>
+        <div class="kpi-sub">Klik nominal pagu di kartu bawah untuk ubah</div>
       </div>
 
-      <!-- KPI 3: Sisa Pagu Keseluruhan -->
-      <div id="kpiRemainingCard" class="surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-teal-700 shadow-xs">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sisa Pagu Keseluruhan</span>
-          <span id="kpiRemainingBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100/80 text-teal-800 tabular-nums">100%</span>
+      <!-- Total Terpakai -->
+      <div class="kpi-card amber">
+        <div class="kpi-top">
+          <span class="kpi-label">Total Terpakai</span>
+          <span class="pill pill-amber tabular" id="kpiSpentPctBadge">0%</span>
         </div>
-        <div id="kpiRemaining" class="text-2xl sm:text-3xl font-extrabold text-teal-800 tabular-nums mt-2">Rp12.000.000</div>
-        <div id="kpiRemainingStatus" class="text-xs font-medium text-teal-700 mt-1">Aman terkendali</div>
+        <div class="kpi-val tabular" id="kpiTotalSpent">Rp0</div>
+        <div class="kpi-sub tabular" id="kpiTxCountNote">0 transaksi tercatat</div>
+      </div>
+
+      <!-- Sisa Pagu Keseluruhan -->
+      <div class="kpi-card teal" id="kpiRemCard">
+        <div class="kpi-top">
+          <span class="kpi-label">Sisa Pagu Bulan Ini</span>
+          <span class="pill pill-teal tabular" id="kpiRemPctBadge">100%</span>
+        </div>
+        <div class="kpi-val tabular" id="kpiTotalRemaining" style="color: var(--teal-dark);">Rp12.000.000</div>
+        <div class="kpi-sub" id="kpiRemStatus">Aman terkendali</div>
       </div>
     </section>
 
-    <!-- Bar Ringkasan Pengeluaran Suami vs Istri (Soft Indigo & Dusty Rose) -->
-    <section class="surface-card rounded-2xl p-4 sm:p-5 border border-stone-200/90 shadow-xs">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <!-- Ringkasan Pencatat: Suami vs Istri -->
+    <section class="person-card">
+      <div class="person-row">
         <div>
-          <h2 class="text-sm sm:text-base font-bold text-slate-800">Ringkasan Pengeluaran Suami vs Istri</h2>
-          <p class="text-xs text-slate-500">Proporsi pengeluaran tercatat per pencatat pada periode aktif</p>
+          <div class="person-title">Ringkasan Pengeluaran: Suami vs Istri</div>
+          <div style="font-size: 0.76rem; color: var(--text-muted);">Perbandingan otomatis berdasarkan transaksi bulan aktif</div>
         </div>
-
-        <div class="flex flex-wrap items-center gap-3">
-          <!-- Pill Suami: Soft Indigo -->
-          <div class="flex items-center gap-2.5 bg-indigo-50/80 border border-indigo-200/80 px-3.5 py-2 rounded-xl">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-600/90 text-white">Suami</span>
-            <div>
-              <span id="sumSuami" class="text-sm font-extrabold text-slate-800 tabular-nums">Rp0</span>
-              <span id="pctSuami" class="text-xs font-semibold text-indigo-700 ml-1">(0%)</span>
-            </div>
+        <div class="person-stats">
+          <div class="person-chip suami">
+            <span class="pill pill-indigo">Suami</span>
+            <strong class="tabular" id="statSuamiAmt">Rp0</strong>
+            <span class="tabular" style="font-size: 0.76rem; color: var(--indigo);" id="statSuamiMeta">(0 tx &bull; 0%)</span>
           </div>
-
-          <!-- Pill Istri: Dusty Rose -->
-          <div class="flex items-center gap-2.5 bg-rose-50/80 border border-rose-200/80 px-3.5 py-2 rounded-xl">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-600/85 text-white">Istri</span>
-            <div>
-              <span id="sumIstri" class="text-sm font-extrabold text-slate-800 tabular-nums">Rp0</span>
-              <span id="pctIstri" class="text-xs font-semibold text-rose-700 ml-1">(0%)</span>
-            </div>
+          <div class="person-chip istri">
+            <span class="pill pill-rose">Istri</span>
+            <strong class="tabular" id="statIstriAmt">Rp0</strong>
+            <span class="tabular" style="font-size: 0.76rem; color: var(--rose);" id="statIstriMeta">(0 tx &bull; 0%)</span>
           </div>
         </div>
       </div>
-
-      <!-- Progress Bar Gabungan Suami vs Istri -->
-      <div class="w-full h-2.5 bg-stone-200/80 rounded-full overflow-hidden flex mt-3.5" role="img" aria-label="Perbandingan pengeluaran Suami dan Istri">
-        <div id="barSuami" class="h-full bg-indigo-500 transition-all duration-300" style="width: 0%"></div>
-        <div id="barIstri" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
+      <div class="dual-bar" aria-hidden="true">
+        <div class="dual-bar-suami" id="barSuami" style="width: 0%;"></div>
+        <div class="dual-bar-istri" id="barIstri" style="width: 0%;"></div>
       </div>
     </section>
 
-    <!-- Daftar Kartu Per Pos Anggaran + Filter Kategori + Tambah Pos -->
+    <!-- Daftar Pos Anggaran -->
     <section>
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
+      <div class="section-head">
         <div>
-          <h2 class="text-base sm:text-lg font-extrabold text-slate-800">Rincian &amp; Sisa Pagu per Pos</h2>
-          <p class="text-xs text-slate-500">
-            Status Pagu: <span class="text-emerald-700 font-semibold">Sage Hijau (&lt;80%)</span> &bull;
-            <span class="text-amber-700 font-semibold">Amber Hangat (&ge;80%)</span> &bull;
-            <span class="text-rose-700 font-semibold">Terracotta Merah (&ge;100% / Overbudget)</span>
-          </p>
+          <h2>Rincian &amp; Sisa Pagu per Pos</h2>
+          <p>Klik nominal <strong>Pagu</strong> atau tombol <strong>Edit Pagu / Pos</strong> pada kartu mana pun untuk mengubah alokasi.</p>
         </div>
-
-        <div class="flex flex-wrap items-center gap-2">
-          <button id="btnAddPos" type="button" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-teal-800 hover:bg-teal-900 text-white shadow-xs transition cursor-pointer">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            + Tambah Pos
-          </button>
-        </div>
+        <button type="button" class="btn-teal" id="btnAddNewPos">+ Tambah Pos Baru</button>
       </div>
 
-      <!-- Filter Pills Kategori Pos -->
-      <div id="categoryFilterBar" class="flex flex-wrap items-center gap-1.5 mb-4">
-        <!-- Dirender dinamis berdasarkan kategori yang ada di bulan aktif -->
-      </div>
+      <div class="filter-pills" id="categoryFilterPills"></div>
 
-      <!-- Grid Kartu Pos Anggaran -->
-      <div id="posGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        <!-- Kartu pos dirender dinamis -->
-      </div>
+      <div class="pos-grid" id="posGrid"></div>
     </section>
 
-    <!-- Area Bawah: Form Input Harian & Tabel Riwayat Transaksi -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Area Input Harian & Tabel Riwayat -->
+    <section class="workspace-grid">
+      <!-- Form Input Pengeluaran -->
+      <div class="panel">
+        <h3>Catat Pengeluaran Harian</h3>
+        <p class="panel-sub">Otomatis memotong sisa pagu pada pos anggaran terpilih.</p>
 
-      <!-- Form Input Pengeluaran Harian (4 Kolom) -->
-      <div class="lg:col-span-4 surface-card rounded-2xl p-5 sm:p-6 border border-stone-200/90 shadow-xs">
-        <div class="flex items-center gap-2.5 mb-1">
-          <div class="w-8 h-8 rounded-xl bg-teal-800/10 text-teal-800 flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-          </div>
-          <h2 class="text-base sm:text-lg font-bold text-slate-800">Catat Pengeluaran Harian</h2>
-        </div>
-        <p class="text-xs text-slate-500 mb-4">Nominal otomatis memotong sisa pagu pada pos terkait.</p>
-
-        <form id="txForm" class="space-y-3.5">
-          <div>
-            <label for="txDate" class="block text-xs font-semibold text-slate-700 mb-1">Tanggal</label>
-            <input id="txDate" type="date" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+        <form id="expenseForm">
+          <div class="form-field">
+            <label for="txDate">Tanggal</label>
+            <input type="date" id="txDate" required />
           </div>
 
-          <div>
-            <label for="txPerson" class="block text-xs font-semibold text-slate-700 mb-1">Dicatat Oleh</label>
-            <select id="txPerson" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition cursor-pointer">
-              <option value="Suami">Suami</option>
-              <option value="Istri">Istri</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="txCategory" class="block text-xs font-semibold text-slate-700 mb-1">Pos Anggaran</label>
-            <select id="txCategory" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition cursor-pointer"></select>
-          </div>
-
-          <div>
-            <label for="txNote" class="block text-xs font-semibold text-slate-700 mb-1">Keterangan</label>
-            <input id="txNote" type="text" required placeholder="Contoh: Belanja mingguan / Bayar les" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
-          </div>
-
-          <div>
-            <label for="txAmount" class="block text-xs font-semibold text-slate-700 mb-1">Nominal (Rp)</label>
-            <div class="relative">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">Rp</span>
-              <input id="txAmount" type="text" inputmode="numeric" required placeholder="0" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-stone-300 text-sm font-bold tabular-nums bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 focus:border-teal-700 transition" />
+          <div class="form-field">
+            <label>Dicatat Oleh</label>
+            <div class="person-toggle">
+              <input type="radio" name="txPerson" id="radioSuami" value="Suami" checked />
+              <label for="radioSuami">Suami</label>
+              <input type="radio" name="txPerson" id="radioIstri" value="Istri" />
+              <label for="radioIstri">Istri</label>
             </div>
           </div>
 
-          <button type="submit" class="w-full py-3 px-4 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm shadow-xs transition cursor-pointer mt-1">
+          <div class="form-field">
+            <label for="txCategory">Pos Anggaran</label>
+            <select id="txCategory" required></select>
+          </div>
+
+          <div class="form-field">
+            <label for="txNote">Keterangan</label>
+            <input type="text" id="txNote" placeholder="Contoh: Belanja mingguan / Bayar les" required />
+          </div>
+
+          <div class="form-field">
+            <label for="txAmount">Nominal (Rp)</label>
+            <input type="text" id="txAmount" inputmode="numeric" placeholder="Contoh: 150.000" required />
+          </div>
+
+          <button type="submit" class="btn-teal" style="width: 100%; padding: 11px;">
             Simpan &amp; Potong Pagu
           </button>
         </form>
       </div>
 
-      <!-- Tabel Riwayat Transaksi (8 Kolom) -->
-      <div class="lg:col-span-8 surface-card rounded-2xl border border-stone-200/90 shadow-xs overflow-hidden">
-        <div class="p-5 sm:p-6 border-b border-stone-200/80 flex flex-col gap-3">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <div>
-              <h2 class="text-base sm:text-lg font-bold text-slate-800">Riwayat Transaksi Bulan Ini</h2>
-              <p class="text-xs text-slate-500">Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos terkait</p>
-            </div>
-          </div>
-
-          <!-- Filter Pencatat, Pos Anggaran & Pencarian Keterangan -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <select id="filterPerson" aria-label="Filter pencatat" class="px-3 py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 cursor-pointer">
-              <option value="ALL">Semua Pencatat</option>
-              <option value="Suami">Suami</option>
-              <option value="Istri">Istri</option>
-            </select>
-
-            <select id="filterCategory" aria-label="Filter pos anggaran" class="px-3 py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 cursor-pointer">
-              <option value="ALL">Semua Pos Anggaran</option>
-            </select>
-
-            <div class="relative">
-              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-              </svg>
-              <input id="filterSearch" type="text" placeholder="Cari keterangan..." class="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-700/40 transition" />
-            </div>
+      <!-- Riwayat Transaksi -->
+      <div class="panel">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px;">
+          <div>
+            <h3 style="margin-bottom:2px;">Riwayat Transaksi Bulan Ini</h3>
+            <p style="font-size:0.78rem; color:var(--text-muted);">Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.</p>
           </div>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
+        <div class="table-filters">
+          <select id="filterPerson" aria-label="Filter Pencatat">
+            <option value="ALL">Semua Pencatat</option>
+            <option value="Suami">Suami</option>
+            <option value="Istri">Istri</option>
+          </select>
+          <select id="filterPos" aria-label="Filter Pos Anggaran">
+            <option value="ALL">Semua Pos Anggaran</option>
+          </select>
+          <input type="text" id="filterSearch" placeholder="Cari keterangan..." aria-label="Cari keterangan" />
+        </div>
+
+        <div class="table-wrap">
+          <table>
             <thead>
-              <tr class="bg-stone-100/80 border-b border-stone-200 text-[11px] font-bold uppercase tracking-wider text-slate-600">
-                <th class="py-3 px-4">Tanggal</th>
-                <th class="py-3 px-3">Oleh</th>
-                <th class="py-3 px-3">Pos Anggaran</th>
-                <th class="py-3 px-3">Keterangan</th>
-                <th class="py-3 px-4 text-right">Nominal</th>
-                <th class="py-3 px-4 text-center">Aksi</th>
+              <tr>
+                <th>Tanggal</th>
+                <th>Oleh</th>
+                <th>Pos Anggaran</th>
+                <th>Keterangan</th>
+                <th class="text-right">Nominal</th>
+                <th class="text-center">Aksi</th>
               </tr>
             </thead>
-            <tbody id="txTableBody" class="divide-y divide-stone-200/70 text-xs sm:text-sm">
-              <!-- Baris transaksi dirender dinamis -->
-            </tbody>
+            <tbody id="txTableBody"></tbody>
           </table>
         </div>
       </div>
     </section>
+
   </main>
 
-  <footer class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 text-xs text-slate-500 border-t border-stone-200/90 flex flex-col sm:flex-row items-center justify-between gap-2 mt-8">
-    <span>Tracker Anggaran Keluarga &bull; Palet Kalem, Kustomisasi Pos &amp; Pencatatan Harian</span>
-    <span>Data tersimpan otomatis di browser (localStorage) — gunakan Backup JSON untuk cadangan file</span>
+  <footer>
+    <span>Tracker Anggaran Keluarga &bull; Siap untuk GitHub Pages &amp; Browser HP</span>
+    <span>Data tersimpan otomatis di browser (localStorage). Gunakan Backup JSON untuk cadangan file.</span>
   </footer>
 
+  <!-- MODAL 1: Tambah / Edit Pos & Pagu -->
+  <div class="modal-backdrop" id="posModal" role="dialog" aria-modal="true" aria-labelledby="posModalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="posModalTitle">Edit Pagu &amp; Pos Anggaran</h3>
+        <button type="button" class="btn-outline btn-sm" id="btnClosePosModal">Tutup</button>
+      </div>
+
+      <form id="posForm">
+        <input type="hidden" id="editPosId" />
+
+        <div class="form-field">
+          <label for="posNameInput">Nama Pos Anggaran</label>
+          <input type="text" id="posNameInput" required placeholder="Contoh: Jatah Istri / Dana Kesehatan" />
+        </div>
+
+        <div class="form-field">
+          <label for="posCategoryInput">Kelompok Kategori (pilih atau ketik baru)</label>
+          <input type="text" id="posCategoryInput" list="categoryDatalist" required placeholder="Contoh: Keluarga & Pendidikan" />
+          <datalist id="categoryDatalist"></datalist>
+        </div>
+
+        <div class="form-field">
+          <label for="posBudgetInput">Nominal Pagu Bulanan (Rp)</label>
+          <input type="text" id="posBudgetInput" inputmode="numeric" required placeholder="0" style="font-weight: 800; font-size: 1rem;" />
+          <div class="quick-adjust-row">
+            <button type="button" class="btn-outline btn-sm" data-adj="-100000">-100 rb</button>
+            <button type="button" class="btn-outline btn-sm" data-adj="-50000">-50 rb</button>
+            <button type="button" class="btn-outline btn-sm" data-adj="50000">+50 rb</button>
+            <button type="button" class="btn-outline btn-sm" data-adj="100000">+100 rb</button>
+            <button type="button" class="btn-outline btn-sm" data-adj="500000">+500 rb</button>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>Warna Aksen Kartu</label>
+          <div class="swatch-grid" id="swatchGrid"></div>
+        </div>
+
+        <!-- Opsi Hapus Pos (Muncul saat mode Edit) -->
+        <div id="deletePosSection" class="danger-zone-box" style="display:none;">
+          <div style="font-weight: 700; color: var(--danger); margin-bottom: 6px;">Hapus Pos Anggaran Ini</div>
+          <div id="deleteTxMoveBox" style="display:none; margin-bottom: 8px;">
+            <p id="deleteTxWarningText" style="margin-bottom: 6px; color: var(--text-main);"></p>
+            <select id="deleteMoveTargetSelect" style="margin-bottom: 6px;"></select>
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer;">
+              <input type="checkbox" id="chkDeleteTxToo" />
+              <span>Jangan pindahkan, ikut hapus semua transaksinya</span>
+            </label>
+          </div>
+          <button type="button" class="btn-danger btn-sm" id="btnConfirmDeletePos">Hapus Pos Sekarang</button>
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-footer-right">
+            <button type="button" class="btn-outline" id="btnCancelPosModal">Batal</button>
+            <button type="submit" class="btn-teal">Simpan Perubahan</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Edit Target Sisa Gaji Bulanan -->
+  <div class="modal-backdrop" id="targetModal" role="dialog" aria-modal="true" aria-labelledby="targetModalTitle">
+    <div class="modal-box" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 id="targetModalTitle">Ubah Target Sisa Gaji Bulanan</h3>
+        <button type="button" class="btn-outline btn-sm" id="btnCloseTargetModal">Tutup</button>
+      </div>
+      <form id="targetForm">
+        <div class="form-field">
+          <label for="targetIncomeInput">Total Dana Sisa Gaji Siap Bagi (Rp)</label>
+          <input type="text" id="targetIncomeInput" inputmode="numeric" required style="font-weight:800; font-size:1rem;" />
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">
+            Digunakan sebagai acuan pembanding terhadap total pagu seluruh pos anggaran Anda.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-footer-right">
+            <button type="button" class="btn-outline" id="btnCancelTargetModal">Batal</button>
+            <button type="submit" class="btn-teal">Simpan Target</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Konfirmasi Tindakan -->
+  <div class="modal-backdrop" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="modal-box" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 id="confirmModalTitle">Konfirmasi</h3>
+      </div>
+      <p id="confirmModalDesc" style="font-size: 0.88rem; color: var(--text-main); line-height: 1.55;"></p>
+      <div class="modal-footer">
+        <div class="modal-footer-right">
+          <button type="button" class="btn-outline" id="btnConfirmCancel">Batal</button>
+          <button type="button" class="btn-teal" id="btnConfirmOk">Ya, Lanjutkan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // =========================================================================
-    // 1. KONFIGURASI AWAL & PALET WARNA KALEM (MUTED & HARMONIOUS)
-    // =========================================================================
-    const STORAGE_KEY = 'tracker_anggaran_keluarga_custom_v1';
+    (function () {
+      'use strict';
 
-    const COLOR_PALETTE = [
-      { key: 'sage_teal', label: 'Sage Teal', hex: '#0f766e', badgeBg: 'bg-teal-50/90', badgeText: 'text-teal-800', badgeBorder: 'border-teal-200/90', accentBorder: 'border-t-teal-700', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'slate_blue', label: 'Slate Blue', hex: '#3b6084', badgeBg: 'bg-sky-50/90', badgeText: 'text-slate-700', badgeBorder: 'border-slate-300/80', accentBorder: 'border-t-[#3b6084]', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'warm_amber', label: 'Warm Amber', hex: '#b45309', badgeBg: 'bg-amber-50/90', badgeText: 'text-amber-800', badgeBorder: 'border-amber-200/90', accentBorder: 'border-t-amber-600', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'dusty_rose', label: 'Dusty Rose', hex: '#be4b68', badgeBg: 'bg-rose-50/90', badgeText: 'text-rose-800', badgeBorder: 'border-rose-200/90', accentBorder: 'border-t-[#be4b68]', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'muted_indigo', label: 'Muted Indigo', hex: '#4f5d95', badgeBg: 'bg-indigo-50/90', badgeText: 'text-indigo-800', badgeBorder: 'border-indigo-200/90', accentBorder: 'border-t-[#4f5d95]', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'terracotta', label: 'Terracotta', hex: '#b8543d', badgeBg: 'bg-orange-50/90', badgeText: 'text-orange-900', badgeBorder: 'border-orange-200/90', accentBorder: 'border-t-[#b8543d]', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'olive', label: 'Olive', hex: '#5c7246', badgeBg: 'bg-lime-50/80', badgeText: 'text-emerald-900', badgeBorder: 'border-emerald-200/90', accentBorder: 'border-t-[#5c7246]', cardTint: 'bg-[#fcfbf9]' },
-      { key: 'plum', label: 'Plum', hex: '#78517a', badgeBg: 'bg-purple-50/80', badgeText: 'text-purple-900', badgeBorder: 'border-purple-200/90', accentBorder: 'border-t-[#78517a]', cardTint: 'bg-[#fcfbf9]' }
-    ];
+      const STORAGE_KEY = 'jk_family_budgeting_v4';
 
-    // Kompatibilitas warna lama (jika restore dari backup versi sebelumnya)
-    const LEGACY_COLOR_MAP = {
-      blue: 'slate_blue',
-      indigo: 'muted_indigo',
-      teal: 'sage_teal',
-      emerald: 'olive',
-      amber: 'warm_amber',
-      pink: 'dusty_rose',
-      purple: 'plum',
-      slate: 'slate_blue'
-    };
+      const PALETTE = [
+        { key: 'rose', label: 'Dusty Rose', hex: '#a84a6b', soft: '#f8eaf0' },
+        { key: 'slate', label: 'Slate Blue', hex: '#476b8a', soft: '#ebf0f5' },
+        { key: 'teal', label: 'Sage Teal', hex: '#2f6f65', soft: '#e6f0ee' },
+        { key: 'amber', label: 'Warm Amber', hex: '#b4692e', soft: '#faefe6' },
+        { key: 'terracotta', label: 'Terracotta', hex: '#a6523b', soft: '#f7ece9' },
+        { key: 'indigo', label: 'Muted Indigo', hex: '#3b5998', soft: '#eaedf7' },
+        { key: 'olive', label: 'Olive Sage', hex: '#4c6b45', soft: '#ebf1ea' },
+        { key: 'purple', label: 'Plum', hex: '#6b5280', soft: '#f1edf5' }
+      ];
 
-    const BASE_CATEGORIES = [
-      'Keluarga & Pendidikan',
-      'Gaya Hidup & Rekreasi',
-      'Rumah & Utilitas',
-      'Tabungan & Investasi'
-    ];
+      const DEFAULT_CATEGORIES = [
+        { id: 'jatah_istri', name: 'Jatah Istri', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'rose' },
+        { id: 'les_anak', name: 'Les Anak', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'slate' },
+        { id: 'jatah_orang_tua', name: 'Jatah Orang Tua', category: 'Keluarga & Pendidikan', budget: 1500000, color: 'teal' },
+        { id: 'kesenangan_pribadi', name: 'Kesenangan Pribadi', category: 'Jalan-Jalan & Kesenangan', budget: 1500000, color: 'amber' },
+        { id: 'jalan_jalan_keluarga', name: 'Jalan-Jalan Keluarga', category: 'Jalan-Jalan & Kesenangan', budget: 1200000, color: 'terracotta' },
+        { id: 'spp_anak', name: 'SPP Anak', category: 'Keluarga & Pendidikan', budget: 1100000, color: 'indigo' },
+        { id: 'belanja_bulanan', name: 'Belanja Bulanan', category: 'Rumah & Utilitas', budget: 1000000, color: 'olive' },
+        { id: 'tabungan_sisa_dana', name: 'Tabungan / Sisa Dana', category: 'Tabungan & Investasi', budget: 990000, color: 'teal' },
+        { id: 'listrik_air_internet', name: 'Listrik, Air & Internet', category: 'Rumah & Utilitas', budget: 500000, color: 'slate' },
+        { id: 'cicilan_ipl', name: 'Cicilan IPL (Rp2,5 jt/thn)', category: 'Rumah & Utilitas', budget: 210000, color: 'purple' }
+      ];
 
-    // 10 Pos Anggaran Awal (Total Rp12.000.000) dengan warna kalem harmonis
-    const DEFAULT_POS_LIST = [
-      { id: 'jatah_istri', name: 'Jatah Istri', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'dusty_rose' },
-      { id: 'les_anak', name: 'Les Anak', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'muted_indigo' },
-      { id: 'jatah_orang_tua', name: 'Jatah Orang Tua', category: 'Keluarga & Pendidikan', budget: 1500000, color: 'slate_blue' },
-      { id: 'kesenangan_pribadi', name: 'Kesenangan Pribadi', category: 'Gaya Hidup & Rekreasi', budget: 1500000, color: 'warm_amber' },
-      { id: 'jalan_jalan_keluarga', name: 'Jalan-Jalan Keluarga', category: 'Gaya Hidup & Rekreasi', budget: 1200000, color: 'terracotta' },
-      { id: 'spp_anak', name: 'SPP Anak', category: 'Keluarga & Pendidikan', budget: 1100000, color: 'plum' },
-      { id: 'belanja_bulanan', name: 'Belanja Bulanan', category: 'Rumah & Utilitas', budget: 1000000, color: 'sage_teal' },
-      { id: 'tabungan_sisa_dana', name: 'Tabungan / Sisa Dana', category: 'Tabungan & Investasi', budget: 990000, color: 'olive' },
-      { id: 'listrik_air_internet', name: 'Listrik, Air & Internet', category: 'Rumah & Utilitas', budget: 500000, color: 'sage_teal' },
-      { id: 'cicilan_ipl', name: 'Cicilan IPL (Rp2,5 jt/thn)', category: 'Rumah & Utilitas', budget: 210000, color: 'slate_blue' }
-    ];
+      let activeCategoryTab = 'ALL';
+      let modalSelectedColor = 'teal';
 
-    let activePosCategoryFilter = 'ALL';
-    let selectedModalColor = 'sage_teal';
-
-    // =========================================================================
-    // 2. UTILITAS FORMAT RUPIAH, TANGGAL & PENYIMPANAN LOCALSTORAGE
-    // =========================================================================
-    function formatRupiah(amount) {
-      const num = Number(amount) || 0;
-      const isNegative = num < 0;
-      const formatted = Math.abs(Math.round(num)).toLocaleString('id-ID');
-      return `${isNegative ? '-Rp' : 'Rp'}${formatted}`;
-    }
-
-    function parseDigits(value) {
-      const cleaned = String(value ?? '').replace(/[^\d]/g, '');
-      return cleaned ? parseInt(cleaned, 10) : 0;
-    }
-
-    function formatInputThousands(inputEl) {
-      const num = parseDigits(inputEl.value);
-      inputEl.value = num > 0 ? num.toLocaleString('id-ID') : '';
-    }
-
-    function getCurrentMonthKey() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    }
-
-    function getDefaultDateForMonth(monthKey) {
-      const currentMonth = getCurrentMonthKey();
-      const todayIso = new Date().toISOString().split('T')[0];
-      if (monthKey === currentMonth && todayIso.startsWith(monthKey)) {
-        return todayIso;
+      // Helpers
+      function formatRp(num) {
+        const val = Number(num) || 0;
+        const sign = val < 0 ? '-Rp' : 'Rp';
+        return sign + Math.abs(Math.round(val)).toLocaleString('id-ID');
       }
-      return `${monthKey}-01`;
-    }
 
-    function escapeHtml(value) {
-      const div = document.createElement('div');
-      div.textContent = String(value ?? '');
-      return div.innerHTML;
-    }
+      function parseDigits(str) {
+        const cleaned = String(str || '').replace(/[^\d]/g, '');
+        return cleaned ? parseInt(cleaned, 10) : 0;
+      }
 
-    function getColorConfig(colorKey) {
-      const normalizedKey = LEGACY_COLOR_MAP[colorKey] || colorKey;
-      return COLOR_PALETTE.find((c) => c.key === normalizedKey) || COLOR_PALETTE[0];
-    }
+      function formatInputThousands(el) {
+        const val = parseDigits(el.value);
+        el.value = val > 0 ? val.toLocaleString('id-ID') : '';
+      }
 
-    function loadStore() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return { months: {} };
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === 'object' && parsed.months && typeof parsed.months === 'object') {
-          return parsed;
+      function getCurrentMonthStr() {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      }
+
+      function getDefaultDateForMonth(monthStr) {
+        const today = new Date().toISOString().split('T')[0];
+        if (monthStr === getCurrentMonthStr() && today.startsWith(monthStr)) {
+          return today;
         }
-        return { months: {} };
-      } catch (err) {
-        console.error('Gagal membaca localStorage:', err);
-        return { months: {} };
-      }
-    }
-
-    function saveStore(store) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-      } catch (err) {
-        console.error('Gagal menyimpan ke localStorage:', err);
-        showToast('Gagal menyimpan ke browser. Gunakan Backup JSON untuk cadangan.', 'error');
-      }
-    }
-
-    function ensureMonthData(store, monthKey) {
-      if (!store.months[monthKey]) {
-        store.months[monthKey] = {
-          categories: DEFAULT_POS_LIST.map((item) => ({ ...item })),
-          transactions: []
-        };
-        saveStore(store);
-      } else {
-        if (!Array.isArray(store.months[monthKey].categories)) {
-          store.months[monthKey].categories = DEFAULT_POS_LIST.map((item) => ({ ...item }));
-        }
-        store.months[monthKey].categories = store.months[monthKey].categories.map((c) => ({
-          id: c.id,
-          name: c.name || 'Pos Anggaran',
-          category: c.category || 'Lainnya',
-          budget: Number(c.budget) || 0,
-          color: LEGACY_COLOR_MAP[c.color] || c.color || 'sage_teal'
-        }));
-        if (!Array.isArray(store.months[monthKey].transactions)) {
-          store.months[monthKey].transactions = [];
-        }
-      }
-      return store.months[monthKey];
-    }
-
-    // =========================================================================
-    // 3. TOAST NOTIFICATION & MODAL KUSTOM
-    // =========================================================================
-    function showToast(message, variant = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      const styles = {
-        success: 'bg-[#182c34] text-stone-100 border-teal-500',
-        warn: 'bg-amber-950 text-amber-50 border-amber-400',
-        error: 'bg-rose-950 text-rose-50 border-rose-400'
-      };
-      toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg border-l-4 text-xs sm:text-sm font-medium transition-all duration-300 ${styles[variant] || styles.success}`;
-      toast.textContent = message;
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 250);
-      }, 3200);
-    }
-
-    function openConfirmModal({ title, desc, confirmText = 'Ya, Lanjutkan', isDanger = false, onConfirm }) {
-      const modal = document.getElementById('confirmModal');
-      const titleEl = document.getElementById('confirmTitle');
-      const descEl = document.getElementById('confirmDesc');
-      const cancelBtn = document.getElementById('confirmCancelBtn');
-      const okBtn = document.getElementById('confirmOkBtn');
-
-      titleEl.textContent = title;
-      descEl.textContent = desc;
-      okBtn.textContent = confirmText;
-      okBtn.className = isDanger
-        ? 'px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 transition cursor-pointer'
-        : 'px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-teal-800 hover:bg-teal-900 transition cursor-pointer';
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-
-      const close = () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        okBtn.onclick = null;
-        cancelBtn.onclick = null;
-      };
-
-      cancelBtn.onclick = close;
-      okBtn.onclick = () => {
-        close();
-        if (typeof onConfirm === 'function') onConfirm();
-      };
-    }
-
-    // =========================================================================
-    // 4. CRUD KUSTOMISASI POS ANGGARAN (TAMBAH, EDIT, HAPUS, URUTKAN)
-    // =========================================================================
-    function renderColorSwatches() {
-      const grid = document.getElementById('colorPickerGrid');
-      grid.innerHTML = COLOR_PALETTE.map((c) => {
-        const isSelected = selectedModalColor === c.key;
-        return `
-          <button type="button" data-swatch="${c.key}" title="${c.label}"
-            class="flex flex-col items-center justify-center p-2 rounded-xl border transition cursor-pointer ${
-              isSelected ? 'border-teal-800 bg-teal-50/70 ring-2 ring-teal-800/20' : 'border-stone-200 bg-white hover:bg-stone-50'
-            }">
-            <span class="w-5 h-5 rounded-full shadow-2xs" style="background-color: ${c.hex};"></span>
-            <span class="text-[10px] font-semibold text-slate-700 mt-1 text-center leading-tight">${c.label}</span>
-          </button>
-        `;
-      }).join('');
-
-      grid.querySelectorAll('[data-swatch]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          selectedModalColor = btn.getAttribute('data-swatch');
-          renderColorSwatches();
-        });
-      });
-    }
-
-    function openPosModal(editPosObj = null) {
-      const monthKey = document.getElementById('monthPicker').value;
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-
-      const modal = document.getElementById('posModal');
-      const titleEl = document.getElementById('posModalTitle');
-      const submitBtn = document.getElementById('posModalSubmitBtn');
-      const editIdInput = document.getElementById('posEditId');
-      const nameInput = document.getElementById('posNameInput');
-      const catSelect = document.getElementById('posCategorySelect');
-      const customCatWrap = document.getElementById('customCategoryWrap');
-      const customCatInput = document.getElementById('posCustomCategoryInput');
-      const budgetInput = document.getElementById('posBudgetInput');
-
-      const existingCats = new Set(BASE_CATEGORIES);
-      mData.categories.forEach((c) => {
-        if (c.category) existingCats.add(c.category);
-      });
-
-      catSelect.innerHTML =
-        Array.from(existingCats)
-          .map((cat) => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`)
-          .join('') + `<option value="__CUSTOM__">+ Ketik Kategori Baru...</option>`;
-
-      customCatWrap.classList.add('hidden');
-      customCatInput.value = '';
-
-      if (editPosObj) {
-        titleEl.textContent = 'Edit Pos Anggaran';
-        submitBtn.textContent = 'Simpan Perubahan';
-        editIdInput.value = editPosObj.id;
-        nameInput.value = editPosObj.name;
-        catSelect.value = existingCats.has(editPosObj.category) ? editPosObj.category : '__CUSTOM__';
-        if (catSelect.value === '__CUSTOM__') {
-          customCatWrap.classList.remove('hidden');
-          customCatInput.value = editPosObj.category;
-        }
-        budgetInput.value = editPosObj.budget > 0 ? editPosObj.budget.toLocaleString('id-ID') : '0';
-        selectedModalColor = LEGACY_COLOR_MAP[editPosObj.color] || editPosObj.color || 'sage_teal';
-      } else {
-        titleEl.textContent = 'Tambah Pos Anggaran Baru';
-        submitBtn.textContent = 'Tambah Pos';
-        editIdInput.value = '';
-        nameInput.value = '';
-        catSelect.value = BASE_CATEGORIES[0];
-        budgetInput.value = '';
-        selectedModalColor = 'sage_teal';
+        return `${monthStr}-01`;
       }
 
-      renderColorSwatches();
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      nameInput.focus();
-    }
-
-    function closePosModal() {
-      const modal = document.getElementById('posModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function handleSavePosForm(event) {
-      event.preventDefault();
-      const monthKey = document.getElementById('monthPicker').value;
-      const editId = document.getElementById('posEditId').value;
-      const name = document.getElementById('posNameInput').value.trim();
-      const catSelectVal = document.getElementById('posCategorySelect').value;
-      const customCatVal = document.getElementById('posCustomCategoryInput').value.trim();
-      const budget = parseDigits(document.getElementById('posBudgetInput').value);
-
-      const finalCategory = catSelectVal === '__CUSTOM__' ? customCatVal : catSelectVal;
-
-      if (!name) {
-        showToast('Nama pos anggaran wajib diisi.', 'warn');
-        return;
-      }
-      if (!finalCategory) {
-        showToast('Pilih kategori atau ketik nama kategori baru.', 'warn');
-        return;
+      function getPaletteObj(key) {
+        return PALETTE.find((p) => p.key === key) || PALETTE[2];
       }
 
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-
-      if (editId) {
-        const target = mData.categories.find((c) => c.id === editId);
-        if (target) {
-          target.name = name;
-          target.category = finalCategory;
-          target.budget = budget;
-          target.color = selectedModalColor;
-          saveStore(store);
-          closePosModal();
-          renderApp();
-          showToast(`Pos "${name}" berhasil diperbarui.`);
-        }
-      } else {
-        const newPos = {
-          id: `pos_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-          name,
-          category: finalCategory,
-          budget,
-          color: selectedModalColor
-        };
-        mData.categories.push(newPos);
-        saveStore(store);
-        closePosModal();
-        renderApp();
-        showToast(`Pos baru "${name}" (${formatRupiah(budget)}) ditambahkan.`);
-      }
-    }
-
-    function openDeletePosModal(posId) {
-      const monthKey = document.getElementById('monthPicker').value;
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-      const targetPos = mData.categories.find((c) => c.id === posId);
-      if (!targetPos) return;
-
-      if (mData.categories.length <= 1) {
-        showToast('Minimal harus tersisa 1 pos anggaran aktif.', 'warn');
-        return;
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str ?? '');
+        return div.innerHTML;
       }
 
-      const relatedTx = mData.transactions.filter((t) => t.categoryId === posId);
-      const otherPosList = mData.categories.filter((c) => c.id !== posId);
-
-      const modal = document.getElementById('deletePosModal');
-      const descEl = document.getElementById('delPosModalDesc');
-      const txOptionsBox = document.getElementById('delPosTxOptions');
-      const txWarningEl = document.getElementById('delPosTxWarning');
-      const targetSelect = document.getElementById('delPosTargetSelect');
-      const cancelBtn = document.getElementById('delPosCancelBtn');
-      const confirmBtn = document.getElementById('delPosConfirmBtn');
-
-      descEl.textContent = `Anda akan menghapus pos "${targetPos.name}" (Pagu: ${formatRupiah(targetPos.budget)}) dari periode ${monthKey}.`;
-
-      if (relatedTx.length > 0) {
-        const totalTxAmt = relatedTx.reduce((s, t) => s + t.amount, 0);
-        txOptionsBox.classList.remove('hidden');
-        txWarningEl.textContent = `Pos ini memiliki ${relatedTx.length} transaksi tercatat senilai ${formatRupiah(totalTxAmt)}. Pilih tindakan untuk transaksi tersebut:`;
-        targetSelect.innerHTML = otherPosList
-          .map((p) => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)} (${escapeHtml(p.category)})</option>`)
-          .join('');
-        const moveRadio = modal.querySelector('input[name="delTxAction"][value="move"]');
-        if (moveRadio) moveRadio.checked = true;
-      } else {
-        txOptionsBox.classList.add('hidden');
+      function showToast(msg, type = 'info') {
+        const stack = document.getElementById('toastStack');
+        const el = document.createElement('div');
+        el.className = `toast-item ${type === 'warn' ? 'warn' : type === 'error' ? 'error' : ''}`;
+        el.textContent = msg;
+        stack.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transition = 'opacity 0.25s';
+          setTimeout(() => el.remove(), 260);
+        }, 3000);
       }
 
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-
-      const closeDelModal = () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        confirmBtn.onclick = null;
-        cancelBtn.onclick = null;
-      };
-
-      cancelBtn.onclick = closeDelModal;
-      confirmBtn.onclick = () => {
-        const freshStore = loadStore();
-        const freshMonth = ensureMonthData(freshStore, monthKey);
-
-        if (relatedTx.length > 0) {
-          const selectedAction = modal.querySelector('input[name="delTxAction"]:checked')?.value || 'move';
-          if (selectedAction === 'move') {
-            const destPosId = targetSelect.value;
-            freshMonth.transactions.forEach((tx) => {
-              if (tx.categoryId === posId) {
-                tx.categoryId = destPosId;
-              }
-            });
-          } else {
-            freshMonth.transactions = freshMonth.transactions.filter((tx) => tx.categoryId !== posId);
-          }
-        }
-
-        freshMonth.categories = freshMonth.categories.filter((c) => c.id !== posId);
-        saveStore(freshStore);
-        closeDelModal();
-
-        const remainingCats = new Set(freshMonth.categories.map((c) => c.category));
-        if (activePosCategoryFilter !== 'ALL' && !remainingCats.has(activePosCategoryFilter)) {
-          activePosCategoryFilter = 'ALL';
-        }
-
-        renderApp();
-        showToast(`Pos "${targetPos.name}" berhasil dihapus.`, 'warn');
-      };
-    }
-
-    function handleMovePosOrder(posId, direction) {
-      const monthKey = document.getElementById('monthPicker').value;
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-      const idx = mData.categories.findIndex((c) => c.id === posId);
-      if (idx === -1) return;
-
-      const newIdx = idx + direction;
-      if (newIdx < 0 || newIdx >= mData.categories.length) return;
-
-      const temp = mData.categories[idx];
-      mData.categories[idx] = mData.categories[newIdx];
-      mData.categories[newIdx] = temp;
-
-      saveStore(store);
-      renderApp();
-    }
-
-    // =========================================================================
-    // 5. LOGIKA TRANSAKSI, BULAN LALU, BACKUP/RESTORE JSON, CSV & RESET
-    // =========================================================================
-    function handleAddTransaction(event) {
-      event.preventDefault();
-      const monthKey = document.getElementById('monthPicker').value;
-      const dateVal = document.getElementById('txDate').value;
-      const personVal = document.getElementById('txPerson').value === 'Istri' ? 'Istri' : 'Suami';
-      const categoryId = document.getElementById('txCategory').value;
-      const noteVal = document.getElementById('txNote').value.trim();
-      const amountVal = parseDigits(document.getElementById('txAmount').value);
-
-      if (!dateVal || !categoryId || !noteVal || amountVal <= 0) {
-        showToast('Lengkapi tanggal, pos anggaran, keterangan, dan nominal lebih dari 0.', 'warn');
-        return;
-      }
-
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-      const targetCat = mData.categories.find((c) => c.id === categoryId);
-
-      mData.transactions.unshift({
-        id: `tx_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-        date: dateVal,
-        person: personVal,
-        categoryId,
-        note: noteVal,
-        amount: amountVal
-      });
-
-      saveStore(store);
-      document.getElementById('txNote').value = '';
-      document.getElementById('txAmount').value = '';
-
-      renderApp();
-
-      if (targetCat) {
-        const spentNow = mData.transactions
-          .filter((t) => t.categoryId === targetCat.id)
-          .reduce((sum, t) => sum + t.amount, 0);
-        const remNow = targetCat.budget - spentNow;
-        if (remNow < 0) {
-          showToast(`Tercatat! Pos "${targetCat.name}" overbudget ${formatRupiah(Math.abs(remNow))}.`, 'error');
-        } else {
-          showToast(`Tercatat ${formatRupiah(amountVal)} (${personVal}) • Sisa ${targetCat.name}: ${formatRupiah(remNow)}`);
-        }
-      }
-    }
-
-    function handleDeleteTransaction(txId) {
-      const monthKey = document.getElementById('monthPicker').value;
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-      const txObj = mData.transactions.find((t) => t.id === txId);
-      if (!txObj) return;
-
-      openConfirmModal({
-        title: 'Hapus Transaksi Ini?',
-        desc: `Hapus "${txObj.note}" (${formatRupiah(txObj.amount)})? Nominal akan otomatis dikembalikan ke sisa pagu pos terkait.`,
-        confirmText: 'Hapus Transaksi',
-        isDanger: true,
-        onConfirm: () => {
-          const freshStore = loadStore();
-          const freshMonth = ensureMonthData(freshStore, monthKey);
-          freshMonth.transactions = freshMonth.transactions.filter((t) => t.id !== txId);
-          saveStore(freshStore);
-          renderApp();
-          showToast('Transaksi dihapus & sisa pagu dikembalikan.', 'warn');
-        }
-      });
-    }
-
-    function handleCopyPrevMonth() {
-      const currentKey = document.getElementById('monthPicker').value;
-      if (!currentKey || !/^\d{4}-\d{2}$/.test(currentKey)) return;
-
-      const [yearStr, monthStr] = currentKey.split('-');
-      const prevDate = new Date(Number(yearStr), Number(monthStr) - 2, 1);
-      const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
-
-      const store = loadStore();
-      const prevData = store.months[prevKey];
-      if (!prevData || !Array.isArray(prevData.categories) || prevData.categories.length === 0) {
-        showToast(`Data susunan pos bulan sebelumnya (${prevKey}) belum tersedia.`, 'warn');
-        return;
-      }
-
-      openConfirmModal({
-        title: `Salin Susunan Pos dari ${prevKey}?`,
-        desc: `Seluruh pos kustom, kategori, warna, dan nominal pagu dari ${prevKey} akan disalin ke ${currentKey}. Transaksi di bulan ${currentKey} tetap aman.`,
-        confirmText: 'Salin Susunan Pos',
-        onConfirm: () => {
-          const freshStore = loadStore();
-          const targetMonth = ensureMonthData(freshStore, currentKey);
-          targetMonth.categories = freshStore.months[prevKey].categories.map((c) => ({ ...c }));
-          saveStore(freshStore);
-          activePosCategoryFilter = 'ALL';
-          renderApp();
-          showToast(`Susunan pos dari ${prevKey} berhasil disalin ke ${currentKey}.`);
-        }
-      });
-    }
-
-    function handleResetDefault() {
-      const monthKey = document.getElementById('monthPicker').value;
-      openConfirmModal({
-        title: `Reset Bulan ${monthKey} ke Default?`,
-        desc: 'Susunan pos anggaran akan dikembalikan ke 10 pos awal senilai Rp12.000.000. Transaksi yang cocok dengan ID pos awal akan tetap terhubung.',
-        confirmText: 'Reset ke Default',
-        isDanger: true,
-        onConfirm: () => {
-          const store = loadStore();
-          const mData = ensureMonthData(store, monthKey);
-          mData.categories = DEFAULT_POS_LIST.map((item) => ({ ...item }));
-          saveStore(store);
-          activePosCategoryFilter = 'ALL';
-          renderApp();
-          showToast(`Susunan pos bulan ${monthKey} dikembalikan ke default Rp12.000.000.`);
-        }
-      });
-    }
-
-    function handleBackupJson() {
-      const monthKey = document.getElementById('monthPicker').value || getCurrentMonthKey();
-      const store = loadStore();
-      const payload = {
-        app: 'Tracker Anggaran Keluarga',
-        version: '2.1',
-        exportedAt: new Date().toISOString(),
-        months: store.months
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `backup_anggaran_keluarga_${monthKey}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      showToast('File Backup JSON berhasil diunduh.');
-    }
-
-    function handleRestoreJson(event) {
-      const file = event.target.files && event.target.files[0];
-      event.target.value = '';
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
+      // Storage
+      function loadStore() {
         try {
-          const parsed = JSON.parse(String(e.target.result || ''));
-          const monthsObj = parsed && parsed.months
-            ? parsed.months
-            : (parsed && parsed.data && parsed.data.months ? parsed.data.months : null);
-
-          if (!monthsObj || typeof monthsObj !== 'object') {
-            showToast('Format file JSON tidak valid.', 'error');
-            return;
-          }
-
-          openConfirmModal({
-            title: 'Restore Data dari File JSON?',
-            desc: 'Seluruh data pos kustom dan transaksi antarbulan akan dipulihkan dari file backup JSON yang dipilih.',
-            confirmText: 'Pulihkan Data',
-            onConfirm: () => {
-              const restoredStore = { months: monthsObj };
-              saveStore(restoredStore);
-              const keys = Object.keys(monthsObj).sort();
-              const picker = document.getElementById('monthPicker');
-              if (keys.length > 0 && !monthsObj[picker.value]) {
-                picker.value = keys[keys.length - 1];
-              }
-              activePosCategoryFilter = 'ALL';
-              renderApp();
-              showToast('Data berhasil dipulihkan dari file JSON!');
-            }
-          });
-        } catch (err) {
-          console.error('Restore JSON gagal:', err);
-          showToast('File JSON rusak atau tidak dapat dibaca.', 'error');
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return { months: {} };
+          const parsed = JSON.parse(raw);
+          return parsed && typeof parsed.months === 'object' ? parsed : { months: {} };
+        } catch (e) {
+          return { months: {} };
         }
-      };
-      reader.readAsText(file);
-    }
+      }
 
-    function handleExportCsv() {
-      const monthKey = document.getElementById('monthPicker').value || getCurrentMonthKey();
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-      const catMap = new Map(mData.categories.map((c) => [c.id, c]));
+      function saveStore(store) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+        } catch (e) {
+          showToast('Gagal menyimpan ke browser. Gunakan Backup JSON.', 'error');
+        }
+      }
 
-      const lines = [];
-      lines.push(['RINGKASAN PAGU BULAN', monthKey].join(','));
-      lines.push(['Pos Anggaran', 'Kategori', 'Pagu (Rp)', 'Terpakai (Rp)', 'Sisa Pagu (Rp)'].join(','));
-
-      mData.categories.forEach((cat) => {
-        const spent = mData.transactions
-          .filter((t) => t.categoryId === cat.id)
-          .reduce((sum, t) => sum + t.amount, 0);
-        const rem = cat.budget - spent;
-        lines.push([
-          `"${String(cat.name).replace(/"/g, '""')}"`,
-          `"${String(cat.category).replace(/"/g, '""')}"`,
-          cat.budget,
-          spent,
-          rem
-        ].join(','));
-      });
-
-      lines.push('');
-      lines.push(['RIWAYAT TRANSAKSI BULAN', monthKey].join(','));
-      lines.push(['Tanggal', 'Dicatat Oleh', 'Pos Anggaran', 'Kategori', 'Keterangan', 'Nominal (Rp)'].join(','));
-
-      mData.transactions.forEach((tx) => {
-        const posObj = catMap.get(tx.categoryId);
-        const posName = `"${String(posObj ? posObj.name : 'Pos Dihapus').replace(/"/g, '""')}"`;
-        const posCat = `"${String(posObj ? posObj.category : '-').replace(/"/g, '""')}"`;
-        const note = `"${String(tx.note).replace(/"/g, '""')}"`;
-        const person = `"${String(tx.person).replace(/"/g, '""')}"`;
-        lines.push([tx.date, person, posName, posCat, note, tx.amount].join(','));
-      });
-
-      const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `tracker_anggaran_keluarga_${monthKey}.csv`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      showToast(`File CSV bulan ${monthKey} berhasil diunduh.`);
-    }
-
-    // =========================================================================
-    // 6. RENDERING UI (KPI, SUAMI VS ISTRI, FILTER KATEGORI, KARTU & TABEL)
-    // =========================================================================
-    function renderApp() {
-      const monthPicker = document.getElementById('monthPicker');
-      const monthKey = monthPicker.value || getCurrentMonthKey();
-      monthPicker.value = monthKey;
-
-      const store = loadStore();
-      const mData = ensureMonthData(store, monthKey);
-
-      const spentByPos = new Map();
-      let totalSpent = 0;
-      let totalSuami = 0;
-      let totalIstri = 0;
-
-      mData.transactions.forEach((tx) => {
-        const amt = Number(tx.amount) || 0;
-        spentByPos.set(tx.categoryId, (spentByPos.get(tx.categoryId) || 0) + amt);
-        totalSpent += amt;
-        if (tx.person === 'Istri') {
-          totalIstri += amt;
+      function ensureMonth(store, monthKey) {
+        if (!store.months[monthKey]) {
+          store.months[monthKey] = {
+            targetIncome: 12000000,
+            categories: DEFAULT_CATEGORIES.map((c) => ({ ...c })),
+            transactions: []
+          };
+          saveStore(store);
         } else {
-          totalSuami += amt;
+          if (typeof store.months[monthKey].targetIncome !== 'number') {
+            store.months[monthKey].targetIncome = 12000000;
+          }
+          if (!Array.isArray(store.months[monthKey].categories)) {
+            store.months[monthKey].categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
+          }
+          if (!Array.isArray(store.months[monthKey].transactions)) {
+            store.months[monthKey].transactions = [];
+          }
         }
-      });
-
-      const totalBudget = mData.categories.reduce((sum, c) => sum + (Number(c.budget) || 0), 0);
-      const totalRemaining = totalBudget - totalSpent;
-      const spentPct = totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0;
-      const remPct = totalBudget > 0 ? Math.max(0, 100 - spentPct) : 0;
-
-      // 1. KPI Cards
-      document.getElementById('kpiBudget').textContent = formatRupiah(totalBudget);
-      document.getElementById('kpiBudgetNote').textContent = `${mData.categories.length} pos anggaran aktif (Periode ${monthKey})`;
-
-      document.getElementById('kpiSpent').textContent = formatRupiah(totalSpent);
-      document.getElementById('kpiSpentPct').textContent = `${spentPct}% dari total pagu terpakai`;
-      document.getElementById('kpiSpentBadge').textContent = `${spentPct}%`;
-
-      const remCard = document.getElementById('kpiRemainingCard');
-      const remBadge = document.getElementById('kpiRemainingBadge');
-      const remEl = document.getElementById('kpiRemaining');
-      const remStatusEl = document.getElementById('kpiRemainingStatus');
-      remEl.textContent = formatRupiah(totalRemaining);
-
-      if (totalRemaining < 0) {
-        remCard.className = 'surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-rose-700 shadow-xs';
-        remBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100/90 text-rose-800 tabular-nums';
-        remBadge.textContent = 'Minus';
-        remEl.className = 'text-2xl sm:text-3xl font-extrabold text-rose-700 tabular-nums mt-2';
-        remStatusEl.textContent = 'Overbudget — pengeluaran melebihi total pagu';
-        remStatusEl.className = 'text-xs font-semibold text-rose-700 mt-1';
-      } else if (spentPct >= 80) {
-        remCard.className = 'surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-amber-600 shadow-xs';
-        remBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100/90 text-amber-800 tabular-nums';
-        remBadge.textContent = `${remPct}%`;
-        remEl.className = 'text-2xl sm:text-3xl font-extrabold text-amber-700 tabular-nums mt-2';
-        remStatusEl.textContent = 'Waspada — pemakaian mencapai ≥80% pagu';
-        remStatusEl.className = 'text-xs font-semibold text-amber-700 mt-1';
-      } else {
-        remCard.className = 'surface-card rounded-2xl p-5 border border-stone-200/90 border-l-4 border-l-teal-700 shadow-xs';
-        remBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100/80 text-teal-800 tabular-nums';
-        remBadge.textContent = `${remPct}%`;
-        remEl.className = 'text-2xl sm:text-3xl font-extrabold text-teal-800 tabular-nums mt-2';
-        remStatusEl.textContent = 'Aman terkendali';
-        remStatusEl.className = 'text-xs font-medium text-teal-700 mt-1';
+        return store.months[monthKey];
       }
 
-      // 2. Ringkasan Suami vs Istri
-      const suamiPct = totalSpent > 0 ? Math.round((totalSuami / totalSpent) * 100) : 0;
-      const istriPct = totalSpent > 0 ? Math.round((totalIstri / totalSpent) * 100) : 0;
-      document.getElementById('sumSuami').textContent = formatRupiah(totalSuami);
-      document.getElementById('pctSuami').textContent = `(${suamiPct}%)`;
-      document.getElementById('sumIstri').textContent = formatRupiah(totalIstri);
-      document.getElementById('pctIstri').textContent = `(${istriPct}%)`;
-      document.getElementById('barSuami').style.width = `${totalSpent > 0 ? (totalSuami / totalSpent) * 100 : 0}%`;
-      document.getElementById('barIstri').style.width = `${totalSpent > 0 ? (totalIstri / totalSpent) * 100 : 0}%`;
+      // Custom Confirmation Modal
+      function openConfirm({ title, desc, okText = 'Ya, Lanjutkan', danger = false, onConfirm }) {
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('confirmModalTitle').textContent = title;
+        document.getElementById('confirmModalDesc').textContent = desc;
+        const okBtn = document.getElementById('btnConfirmOk');
+        const cancelBtn = document.getElementById('btnConfirmCancel');
+        okBtn.textContent = okText;
+        okBtn.className = danger ? 'btn-danger' : 'btn-teal';
 
-      // 3. Filter Pills Kategori Pos
-      const uniqueCategories = Array.from(new Set(mData.categories.map((c) => c.category)));
-      if (activePosCategoryFilter !== 'ALL' && !uniqueCategories.includes(activePosCategoryFilter)) {
-        activePosCategoryFilter = 'ALL';
+        modal.classList.add('open');
+
+        const cleanup = () => {
+          modal.classList.remove('open');
+          okBtn.onclick = null;
+          cancelBtn.onclick = null;
+        };
+
+        cancelBtn.onclick = cleanup;
+        okBtn.onclick = () => {
+          cleanup();
+          if (onConfirm) onConfirm();
+        };
       }
 
-      const catFilterBar = document.getElementById('categoryFilterBar');
-      const allBtnClass =
-        activePosCategoryFilter === 'ALL'
-          ? 'bg-teal-800 text-white border-teal-800 shadow-2xs'
-          : 'surface-card text-slate-700 border-stone-300/80 hover:bg-stone-100';
+      // Pos Modal (Add & Edit)
+      function renderSwatches() {
+        const grid = document.getElementById('swatchGrid');
+        grid.innerHTML = PALETTE.map((p) => {
+          const sel = p.key === modalSelectedColor ? 'selected' : '';
+          return `
+            <button type="button" class="swatch-btn ${sel}" data-color="${p.key}">
+              <span class="swatch-dot" style="background:${p.hex};"></span>
+              <span>${p.label}</span>
+            </button>
+          `;
+        }).join('');
 
-      catFilterBar.innerHTML =
-        `<button type="button" data-filter-cat="ALL" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${allBtnClass}">Semua (${mData.categories.length})</button>` +
-        uniqueCategories
-          .map((catName) => {
-            const count = mData.categories.filter((c) => c.category === catName).length;
-            const activeClass =
-              activePosCategoryFilter === catName
-                ? 'bg-teal-800 text-white border-teal-800 shadow-2xs'
-                : 'surface-card text-slate-700 border-stone-300/80 hover:bg-stone-100';
-            return `<button type="button" data-filter-cat="${escapeHtml(catName)}" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${activeClass}">${escapeHtml(catName)} (${count})</button>`;
+        grid.querySelectorAll('.swatch-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            modalSelectedColor = btn.getAttribute('data-color');
+            renderSwatches();
+          });
+        });
+      }
+
+      function openPosModal(posObj = null) {
+        const monthKey = document.getElementById('monthPicker').value;
+        const store = loadStore();
+        const mData = ensureMonth(store, monthKey);
+
+        // Populate category suggestions
+        const cats = new Set(['Keluarga & Pendidikan', 'Jalan-Jalan & Kesenangan', 'Rumah & Utilitas', 'Tabungan & Investasi']);
+        mData.categories.forEach((c) => cats.add(c.category));
+        document.getElementById('categoryDatalist').innerHTML = Array.from(cats)
+          .map((c) => `<option value="${escapeHtml(c)}"></option>`)
+          .join('');
+
+        const delSection = document.getElementById('deletePosSection');
+        const delTxBox = document.getElementById('deleteTxMoveBox');
+
+        if (posObj) {
+          document.getElementById('posModalTitle').textContent = 'Edit Pagu & Pos Anggaran';
+          document.getElementById('editPosId').value = posObj.id;
+          document.getElementById('posNameInput').value = posObj.name;
+          document.getElementById('posCategoryInput').value = posObj.category;
+          document.getElementById('posBudgetInput').value = posObj.budget > 0 ? posObj.budget.toLocaleString('id-ID') : '0';
+          modalSelectedColor = posObj.color || 'teal';
+
+          // Show delete option if more than 1 category exists
+          if (mData.categories.length > 1) {
+            delSection.style.display = 'block';
+            const relatedTx = mData.transactions.filter((t) => t.categoryId === posObj.id);
+            if (relatedTx.length > 0) {
+              delTxBox.style.display = 'block';
+              document.getElementById('deleteTxWarningText').textContent =
+                `Pos ini punya ${relatedTx.length} transaksi. Pindahkan transaksi tersebut ke:`;
+              document.getElementById('deleteMoveTargetSelect').innerHTML = mData.categories
+                .filter((c) => c.id !== posObj.id)
+                .map((c) => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)}</option>`)
+                .join('');
+              document.getElementById('chkDeleteTxToo').checked = false;
+            } else {
+              delTxBox.style.display = 'none';
+            }
+          } else {
+            delSection.style.display = 'none';
+          }
+        } else {
+          document.getElementById('posModalTitle').textContent = 'Tambah Pos Anggaran Baru';
+          document.getElementById('editPosId').value = '';
+          document.getElementById('posNameInput').value = '';
+          document.getElementById('posCategoryInput').value = 'Keluarga & Pendidikan';
+          document.getElementById('posBudgetInput').value = '';
+          modalSelectedColor = 'teal';
+          delSection.style.display = 'none';
+        }
+
+        renderSwatches();
+        document.getElementById('posModal').classList.add('open');
+        setTimeout(() => document.getElementById('posBudgetInput').focus(), 50);
+      }
+
+      function closePosModal() {
+        document.getElementById('posModal').classList.remove('open');
+      }
+
+      // Move category order
+      function movePosOrder(posId, delta) {
+        const monthKey = document.getElementById('monthPicker').value;
+        const store = loadStore();
+        const mData = ensureMonth(store, monthKey);
+        const idx = mData.categories.findIndex((c) => c.id === posId);
+        if (idx === -1) return;
+        const targetIdx = idx + delta;
+        if (targetIdx < 0 || targetIdx >= mData.categories.length) return;
+        const tmp = mData.categories[idx];
+        mData.categories[idx] = mData.categories[targetIdx];
+        mData.categories[targetIdx] = tmp;
+        saveStore(store);
+        render();
+      }
+
+      // Render entire UI
+      function render() {
+        const monthKey = document.getElementById('monthPicker').value || getCurrentMonthStr();
+        const store = loadStore();
+        const mData = ensureMonth(store, monthKey);
+
+        const spentByPos = {};
+        let totalSpent = 0;
+        let suamiSpent = 0;
+        let suamiTxCount = 0;
+        let istriSpent = 0;
+        let istriTxCount = 0;
+
+        mData.transactions.forEach((tx) => {
+          const amt = Number(tx.amount) || 0;
+          spentByPos[tx.categoryId] = (spentByPos[tx.categoryId] || 0) + amt;
+          totalSpent += amt;
+          if (tx.person === 'Istri') {
+            istriSpent += amt;
+            istriTxCount++;
+          } else {
+            suamiSpent += amt;
+            suamiTxCount++;
+          }
+        });
+
+        const totalPagu = mData.categories.reduce((sum, c) => sum + (Number(c.budget) || 0), 0);
+        const targetIncome = Number(mData.targetIncome) || 0;
+        const unallocated = targetIncome - totalPagu;
+        const totalRemaining = totalPagu - totalSpent;
+        const spentPct = totalPagu > 0 ? Math.round((totalSpent / totalPagu) * 100) : 0;
+        const remPct = totalPagu > 0 ? Math.max(0, 100 - spentPct) : 0;
+
+        // KPI 1: Target Sisa Gaji
+        document.getElementById('kpiTargetIncome').textContent = formatRp(targetIncome);
+        const unallocEl = document.getElementById('kpiUnallocatedNote');
+        if (unallocated === 0) {
+          unallocEl.textContent = 'Pas 100% teralokasi ke pos';
+          unallocEl.style.color = 'var(--teal-dark)';
+        } else if (unallocated > 0) {
+          unallocEl.textContent = `Belum dialokasikan: ${formatRp(unallocated)}`;
+          unallocEl.style.color = 'var(--amber)';
+        } else {
+          unallocEl.textContent = `Melebihi target: ${formatRp(Math.abs(unallocated))}`;
+          unallocEl.style.color = 'var(--danger)';
+        }
+
+        // KPI 2: Total Pagu Pos
+        document.getElementById('kpiTotalPagu').textContent = formatRp(totalPagu);
+        document.getElementById('kpiPosCountBadge').textContent = `${mData.categories.length} Pos`;
+
+        // KPI 3: Total Terpakai
+        document.getElementById('kpiTotalSpent').textContent = formatRp(totalSpent);
+        document.getElementById('kpiSpentPctBadge').textContent = `${spentPct}%`;
+        document.getElementById('kpiTxCountNote').textContent = `${mData.transactions.length} transaksi tercatat`;
+
+        // KPI 4: Sisa Pagu
+        const remCard = document.getElementById('kpiRemCard');
+        const remVal = document.getElementById('kpiTotalRemaining');
+        const remBadge = document.getElementById('kpiRemPctBadge');
+        const remStatus = document.getElementById('kpiRemStatus');
+        remVal.textContent = formatRp(totalRemaining);
+
+        if (totalRemaining < 0) {
+          remCard.className = 'kpi-card danger';
+          remVal.style.color = 'var(--danger)';
+          remBadge.className = 'pill pill-danger tabular';
+          remBadge.textContent = 'Overbudget';
+          remStatus.textContent = 'Pengeluaran melebihi total pagu';
+          remStatus.style.color = 'var(--danger)';
+        } else if (spentPct >= 80) {
+          remCard.className = 'kpi-card amber';
+          remVal.style.color = 'var(--amber)';
+          remBadge.className = 'pill pill-amber tabular';
+          remBadge.textContent = `${remPct}%`;
+          remStatus.textContent = 'Pemakaian sudah mencapai ≥80%';
+          remStatus.style.color = 'var(--amber)';
+        } else {
+          remCard.className = 'kpi-card teal';
+          remVal.style.color = 'var(--teal-dark)';
+          remBadge.className = 'pill pill-teal tabular';
+          remBadge.textContent = `${remPct}%`;
+          remStatus.textContent = 'Aman terkendali';
+          remStatus.style.color = 'var(--teal-dark)';
+        }
+
+        // Suami vs Istri Summary
+        const suamiPct = totalSpent > 0 ? Math.round((suamiSpent / totalSpent) * 100) : 0;
+        const istriPct = totalSpent > 0 ? Math.round((istriSpent / totalSpent) * 100) : 0;
+        document.getElementById('statSuamiAmt').textContent = formatRp(suamiSpent);
+        document.getElementById('statSuamiMeta').textContent = `(${suamiTxCount} tx • ${suamiPct}%)`;
+        document.getElementById('statIstriAmt').textContent = formatRp(istriSpent);
+        document.getElementById('statIstriMeta').textContent = `(${istriTxCount} tx • ${istriPct}%)`;
+        document.getElementById('barSuami').style.width = `${totalSpent > 0 ? (suamiSpent / totalSpent) * 100 : 0}%`;
+        document.getElementById('barIstri').style.width = `${totalSpent > 0 ? (istriSpent / totalSpent) * 100 : 0}%`;
+
+        // Category Filter Tabs
+        const uniqueGroups = Array.from(new Set(mData.categories.map((c) => c.category)));
+        if (activeCategoryTab !== 'ALL' && !uniqueGroups.includes(activeCategoryTab)) {
+          activeCategoryTab = 'ALL';
+        }
+
+        const pillContainer = document.getElementById('categoryFilterPills');
+        pillContainer.innerHTML =
+          `<button type="button" class="tab-pill ${activeCategoryTab === 'ALL' ? 'active' : ''}" data-tab="ALL">Semua (${mData.categories.length})</button>` +
+          uniqueGroups
+            .map((grp) => {
+              const cnt = mData.categories.filter((c) => c.category === grp).length;
+              return `<button type="button" class="tab-pill ${activeCategoryTab === grp ? 'active' : ''}" data-tab="${escapeHtml(grp)}">${escapeHtml(grp)} (${cnt})</button>`;
+            })
+            .join('');
+
+        pillContainer.querySelectorAll('.tab-pill').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            activeCategoryTab = btn.getAttribute('data-tab');
+            render();
+          });
+        });
+
+        // Render Category Cards
+        const posGrid = document.getElementById('posGrid');
+        const visibleCategories =
+          activeCategoryTab === 'ALL'
+            ? mData.categories
+            : mData.categories.filter((c) => c.category === activeCategoryTab);
+
+        posGrid.innerHTML = visibleCategories
+          .map((cat) => {
+            const globalIdx = mData.categories.findIndex((c) => c.id === cat.id);
+            const isFirst = globalIdx === 0;
+            const isLast = globalIdx === mData.categories.length - 1;
+            const pal = getPaletteObj(cat.color);
+            const spent = spentByPos[cat.id] || 0;
+            const rem = cat.budget - spent;
+            const ratio = cat.budget > 0 ? (spent / cat.budget) * 100 : spent > 0 ? 100 : 0;
+            const barWidth = Math.min(100, Math.max(0, ratio));
+
+            let barColor = 'var(--teal)';
+            let remColor = 'var(--teal-dark)';
+            let statusPill = `<span class="pill pill-teal">Aman</span>`;
+
+            if (ratio >= 100 || rem < 0) {
+              barColor = 'var(--danger)';
+              remColor = 'var(--danger)';
+              statusPill = `<span class="pill pill-danger">${rem < 0 ? 'Overbudget' : 'Habis'}</span>`;
+            } else if (ratio >= 80) {
+              barColor = 'var(--amber)';
+              remColor = 'var(--amber)';
+              statusPill = `<span class="pill pill-amber">${Math.round(ratio)}%</span>`;
+            }
+
+            return `
+              <div class="pos-card" style="border-top-color: ${pal.hex};">
+                <div>
+                  <div class="pos-card-top">
+                    <span class="cat-tag" style="background:${pal.soft}; color:${pal.hex};">${escapeHtml(cat.category)}</span>
+                    ${statusPill}
+                  </div>
+                  <div class="pos-title">${escapeHtml(cat.name)}</div>
+
+                  <div class="pos-metrics tabular">
+                    <div class="metric-row">
+                      <span>Pagu Bulanan:</span>
+                      <button type="button" class="pagu-clickable" data-edit-id="${escapeHtml(cat.id)}" title="Klik untuk edit pagu">
+                        ${formatRp(cat.budget)} &#9998;
+                      </button>
+                    </div>
+                    <div class="metric-row">
+                      <span>Terpakai:</span>
+                      <span style="font-weight:600;">${formatRp(spent)}</span>
+                    </div>
+                    <div class="metric-row metric-divider">
+                      <span>Sisa Pagu:</span>
+                      <span style="color:${remColor}; font-weight:800;">${formatRp(rem)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="prog-track">
+                    <div class="prog-fill" style="width:${barWidth}%; background:${barColor};"></div>
+                  </div>
+                  <div class="pos-card-actions">
+                    <div class="order-btns">
+                      <button type="button" class="btn-outline btn-sm" data-up="${escapeHtml(cat.id)}" ${isFirst ? 'disabled style="opacity:0.4;pointer-events:none;"' : ''} title="Geser naik">&uarr;</button>
+                      <button type="button" class="btn-outline btn-sm" data-down="${escapeHtml(cat.id)}" ${isLast ? 'disabled style="opacity:0.4;pointer-events:none;"' : ''} title="Geser turun">&darr;</button>
+                    </div>
+                    <button type="button" class="btn-outline btn-sm" data-edit-id="${escapeHtml(cat.id)}">Edit Pagu / Pos</button>
+                  </div>
+                </div>
+              </div>
+            `;
           })
           .join('');
 
-      catFilterBar.querySelectorAll('[data-filter-cat]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          activePosCategoryFilter = btn.getAttribute('data-filter-cat');
-          renderApp();
+        posGrid.querySelectorAll('[data-edit-id]').forEach((el) => {
+          el.addEventListener('click', () => {
+            const found = mData.categories.find((c) => c.id === el.getAttribute('data-edit-id'));
+            if (found) openPosModal(found);
+          });
         });
-      });
 
-      // 4. Grid Kartu Pos Anggaran
-      const posGrid = document.getElementById('posGrid');
-      posGrid.innerHTML = '';
+        posGrid.querySelectorAll('[data-up]').forEach((el) => {
+          el.addEventListener('click', () => movePosOrder(el.getAttribute('data-up'), -1));
+        });
 
-      const visiblePos =
-        activePosCategoryFilter === 'ALL'
-          ? mData.categories
-          : mData.categories.filter((c) => c.category === activePosCategoryFilter);
+        posGrid.querySelectorAll('[data-down]').forEach((el) => {
+          el.addEventListener('click', () => movePosOrder(el.getAttribute('data-down'), 1));
+        });
 
-      visiblePos.forEach((pos) => {
-        const globalIndex = mData.categories.findIndex((c) => c.id === pos.id);
-        const isFirst = globalIndex === 0;
-        const isLast = globalIndex === mData.categories.length - 1;
+        // Update Dropdowns
+        const txCatSelect = document.getElementById('txCategory');
+        const filterPosSelect = document.getElementById('filterPos');
+        const prevTxVal = txCatSelect.value;
+        const prevFilterVal = filterPosSelect.value;
 
-        const spent = spentByPos.get(pos.id) || 0;
-        const remaining = pos.budget - spent;
-        const ratioPct = pos.budget > 0 ? (spent / pos.budget) * 100 : (spent > 0 ? 100 : 0);
-        const barWidth = Math.min(100, Math.max(0, ratioPct));
-        const colorCfg = getColorConfig(pos.color);
+        txCatSelect.innerHTML = mData.categories
+          .map((c) => {
+            const rem = c.budget - (spentByPos[c.id] || 0);
+            return `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)} (Sisa: ${formatRp(rem)})</option>`;
+          })
+          .join('');
 
-        // Progress Bar Color Rules (Kalem & Jelas): Sage Hijau (<80%), Amber Hangat (>=80%), Terracotta/Merah (>=100% / overbudget)
-        let barColor = 'bg-[#4d7c6f]'; // Sage green lembut
-        let remTextClass = 'text-teal-800';
-        let statusTag = '';
+        filterPosSelect.innerHTML =
+          `<option value="ALL">Semua Pos Anggaran</option>` +
+          mData.categories.map((c) => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)}</option>`).join('');
 
-        if (ratioPct >= 100 || remaining < 0) {
-          barColor = 'bg-[#b84a39]'; // Muted terracotta red
-          remTextClass = 'text-rose-700';
-          statusTag = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100/80 text-rose-800 border border-rose-200/80">${remaining < 0 ? 'Overbudget' : '100% Habis'}</span>`;
-        } else if (ratioPct >= 80) {
-          barColor = 'bg-amber-600';
-          remTextClass = 'text-amber-700';
-          statusTag = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-800 border border-amber-200/80">${Math.round(ratioPct)}% Terpakai</span>`;
-        } else {
-          statusTag = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100/70 text-emerald-800 border border-emerald-200/80">Aman</span>`;
+        if (mData.categories.some((c) => c.id === prevTxVal)) txCatSelect.value = prevTxVal;
+        if (prevFilterVal === 'ALL' || mData.categories.some((c) => c.id === prevFilterVal)) {
+          filterPosSelect.value = prevFilterVal;
         }
 
-        const card = document.createElement('div');
-        card.className = `${colorCfg.cardTint} rounded-2xl p-4 border border-stone-200/90 border-t-4 ${colorCfg.accentBorder} shadow-xs flex flex-col justify-between transition hover:shadow-md`;
-        card.innerHTML = `
-          <div>
-            <!-- Header Kategori Badge & Tombol Urutan / Edit / Hapus -->
-            <div class="flex items-start justify-between gap-1.5">
-              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-md border ${colorCfg.badgeBg} ${colorCfg.badgeText} ${colorCfg.badgeBorder} leading-tight">
-                ${escapeHtml(pos.category)}
-              </span>
+        // Render Transaction Table
+        const fPerson = document.getElementById('filterPerson').value;
+        const fPos = filterPosSelect.value;
+        const fSearch = document.getElementById('filterSearch').value.trim().toLowerCase();
+        const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c]));
 
-              <div class="flex items-center gap-0.5 shrink-0">
-                <button type="button" data-move-up="${escapeHtml(pos.id)}" ${isFirst ? 'disabled' : ''} title="Geser naik"
-                  class="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-stone-200/60 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                  </svg>
-                </button>
-                <button type="button" data-move-down="${escapeHtml(pos.id)}" ${isLast ? 'disabled' : ''} title="Geser turun"
-                  class="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-stone-200/60 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </button>
-                <button type="button" data-edit-pos="${escapeHtml(pos.id)}" title="Edit pos anggaran"
-                  class="p-1 rounded-lg text-slate-500 hover:text-teal-800 hover:bg-teal-50 transition cursor-pointer">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z" />
-                  </svg>
-                </button>
-                <button type="button" data-del-pos="${escapeHtml(pos.id)}" title="Hapus pos anggaran"
-                  class="p-1 rounded-lg text-slate-400 hover:text-rose-700 hover:bg-rose-50 transition cursor-pointer">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Nama Pos & Status Badge -->
-            <div class="mt-2.5 flex items-start justify-between gap-2">
-              <h3 class="text-sm font-extrabold text-slate-800 leading-snug">${escapeHtml(pos.name)}</h3>
-            </div>
-            <div class="mt-1">${statusTag}</div>
-
-            <!-- Nominal Pagu, Terpakai, Sisa -->
-            <div class="mt-3 space-y-1 text-xs tabular-nums">
-              <div class="flex justify-between text-slate-500">
-                <span>Pagu:</span>
-                <span class="font-semibold text-slate-700">${formatRupiah(pos.budget)}</span>
-              </div>
-              <div class="flex justify-between text-slate-500">
-                <span>Terpakai:</span>
-                <span class="font-medium text-slate-600">${formatRupiah(spent)}</span>
-              </div>
-              <div class="flex justify-between pt-1.5 border-t border-stone-200/80">
-                <span class="font-semibold text-slate-600">Sisa Pagu:</span>
-                <span class="font-extrabold ${remTextClass}">${formatRupiah(remaining)}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Progress Bar -->
-          <div class="w-full h-2 bg-stone-200/80 rounded-full overflow-hidden mt-3">
-            <div class="h-full ${barColor} rounded-full transition-all duration-300" style="width: ${barWidth}%"></div>
-          </div>
-        `;
-        posGrid.appendChild(card);
-      });
-
-      // Bind aksi kartu pos
-      posGrid.querySelectorAll('[data-move-up]').forEach((btn) => {
-        btn.addEventListener('click', () => handleMovePosOrder(btn.getAttribute('data-move-up'), -1));
-      });
-      posGrid.querySelectorAll('[data-move-down]').forEach((btn) => {
-        btn.addEventListener('click', () => handleMovePosOrder(btn.getAttribute('data-move-down'), 1));
-      });
-      posGrid.querySelectorAll('[data-edit-pos]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const posObj = mData.categories.find((c) => c.id === btn.getAttribute('data-edit-pos'));
-          if (posObj) openPosModal(posObj);
+        const filteredTx = mData.transactions.filter((tx) => {
+          if (fPerson !== 'ALL' && tx.person !== fPerson) return false;
+          if (fPos !== 'ALL' && tx.categoryId !== fPos) return false;
+          if (fSearch) {
+            const posName = catMap[tx.categoryId] ? catMap[tx.categoryId].name.toLowerCase() : '';
+            if (!String(tx.note).toLowerCase().includes(fSearch) && !posName.includes(fSearch)) return false;
+          }
+          return true;
         });
-      });
-      posGrid.querySelectorAll('[data-del-pos]').forEach((btn) => {
-        btn.addEventListener('click', () => openDeletePosModal(btn.getAttribute('data-del-pos')));
-      });
 
-      // 5. Update Dropdown Form Transaksi & Filter Riwayat
-      const txCatSelect = document.getElementById('txCategory');
-      const filterCatSelect = document.getElementById('filterCategory');
-      const prevTxCat = txCatSelect.value;
-      const prevFilterCat = filterCatSelect.value;
-
-      txCatSelect.innerHTML = mData.categories
-        .map((c) => {
-          const rem = c.budget - (spentByPos.get(c.id) || 0);
-          return `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)} (Sisa: ${formatRupiah(rem)})</option>`;
-        })
-        .join('');
-
-      filterCatSelect.innerHTML =
-        `<option value="ALL">Semua Pos Anggaran</option>` +
-        mData.categories.map((c) => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.name)}</option>`).join('');
-
-      if (mData.categories.some((c) => c.id === prevTxCat)) {
-        txCatSelect.value = prevTxCat;
-      }
-      if (prevFilterCat === 'ALL' || mData.categories.some((c) => c.id === prevFilterCat)) {
-        filterCatSelect.value = prevFilterCat;
-      }
-
-      // 6. Render Tabel Riwayat Transaksi
-      const filterPersonVal = document.getElementById('filterPerson').value;
-      const filterCatVal = filterCatSelect.value;
-      const searchVal = document.getElementById('filterSearch').value.trim().toLowerCase();
-      const posObjMap = new Map(mData.categories.map((c) => [c.id, c]));
-
-      const filteredTx = mData.transactions.filter((tx) => {
-        if (filterPersonVal !== 'ALL' && tx.person !== filterPersonVal) return false;
-        if (filterCatVal !== 'ALL' && tx.categoryId !== filterCatVal) return false;
-        if (searchVal) {
-          const posObj = posObjMap.get(tx.categoryId);
-          const posName = posObj ? posObj.name.toLowerCase() : '';
-          const noteLower = String(tx.note || '').toLowerCase();
-          if (!noteLower.includes(searchVal) && !posName.includes(searchVal)) return false;
+        const tbody = document.getElementById('txTableBody');
+        if (filteredTx.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="empty-box">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</td></tr>`;
+          return;
         }
-        return true;
-      });
 
-      const tbody = document.getElementById('txTableBody');
-      if (filteredTx.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6" class="py-10 px-4 text-center text-xs sm:text-sm text-slate-500">
-              Belum ada transaksi pengeluaran tercatat untuk periode atau filter ini.
-            </td>
-          </tr>
-        `;
-        return;
-      }
+        tbody.innerHTML = filteredTx
+          .map((tx) => {
+            const isIstri = tx.person === 'Istri';
+            const personPill = isIstri
+              ? `<span class="pill pill-rose">Istri</span>`
+              : `<span class="pill pill-indigo">Suami</span>`;
+            const posObj = catMap[tx.categoryId];
+            const pal = getPaletteObj(posObj ? posObj.color : 'teal');
+            const posLabel = posObj
+              ? `<span class="cat-tag" style="background:${pal.soft}; color:${pal.hex};">${escapeHtml(posObj.name)}</span>`
+              : `<span style="color:var(--text-muted); font-style:italic;">Pos Dihapus</span>`;
 
-      tbody.innerHTML = filteredTx
-        .map((tx) => {
-          const isIstri = tx.person === 'Istri';
-          const personBadge = isIstri
-            ? `<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100/90 text-rose-800 border border-rose-200/70">Istri</span>`
-            : `<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100/90 text-indigo-800 border border-indigo-200/70">Suami</span>`;
+            return `
+              <tr>
+                <td class="tabular" style="white-space:nowrap;">${escapeHtml(tx.date)}</td>
+                <td>${personPill}</td>
+                <td>${posLabel}</td>
+                <td>${escapeHtml(tx.note)}</td>
+                <td class="text-right tabular" style="font-weight:700; white-space:nowrap;">${formatRp(tx.amount)}</td>
+                <td class="text-center">
+                  <button type="button" class="btn-danger-soft btn-sm" data-del-tx="${escapeHtml(tx.id)}">Hapus</button>
+                </td>
+              </tr>
+            `;
+          })
+          .join('');
 
-          const posObj = posObjMap.get(tx.categoryId);
-          const colorCfg = getColorConfig(posObj ? posObj.color : 'sage_teal');
-          const posBadge = posObj
-            ? `<span class="inline-block px-2 py-0.5 rounded-md text-xs font-semibold border ${colorCfg.badgeBg} ${colorCfg.badgeText} ${colorCfg.badgeBorder}">${escapeHtml(posObj.name)}</span>`
-            : `<span class="text-xs text-slate-400 italic">Pos Dihapus</span>`;
-
-          return `
-            <tr class="hover:bg-stone-100/60 transition">
-              <td class="py-3 px-4 whitespace-nowrap font-medium text-slate-600 tabular-nums">${escapeHtml(tx.date)}</td>
-              <td class="py-3 px-3 whitespace-nowrap">${personBadge}</td>
-              <td class="py-3 px-3 whitespace-nowrap">${posBadge}</td>
-              <td class="py-3 px-3 text-slate-700">${escapeHtml(tx.note)}</td>
-              <td class="py-3 px-4 whitespace-nowrap text-right font-bold text-slate-800 tabular-nums">${formatRupiah(tx.amount)}</td>
-              <td class="py-3 px-4 whitespace-nowrap text-center">
-                <button type="button" data-del-tx="${escapeHtml(tx.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/60 transition cursor-pointer">
-                  Hapus
-                </button>
-              </td>
-            </tr>
-          `;
-        })
-        .join('');
-
-      tbody.querySelectorAll('[data-del-tx]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          handleDeleteTransaction(btn.getAttribute('data-del-tx'));
+        tbody.querySelectorAll('[data-del-tx]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const txId = btn.getAttribute('data-del-tx');
+            const txObj = mData.transactions.find((t) => t.id === txId);
+            if (!txObj) return;
+            openConfirm({
+              title: 'Hapus Transaksi Ini?',
+              desc: `Hapus catatan "${txObj.note}" (${formatRp(txObj.amount)})? Saldo pagu pos akan otomatis dikembalikan.`,
+              okText: 'Hapus Transaksi',
+              danger: true,
+              onConfirm: () => {
+                const st = loadStore();
+                const md = ensureMonth(st, monthKey);
+                md.transactions = md.transactions.filter((t) => t.id !== txId);
+                saveStore(st);
+                render();
+                showToast('Transaksi dihapus & sisa pagu dikembalikan.', 'warn');
+              }
+            });
+          });
         });
+      }
+
+      // Initialize Events
+      document.addEventListener('DOMContentLoaded', () => {
+        const monthPicker = document.getElementById('monthPicker');
+        const initMonth = getCurrentMonthStr();
+        monthPicker.value = initMonth;
+        document.getElementById('txDate').value = getDefaultDateForMonth(initMonth);
+
+        monthPicker.addEventListener('change', () => {
+          document.getElementById('txDate').value = getDefaultDateForMonth(monthPicker.value);
+          activeCategoryTab = 'ALL';
+          render();
+        });
+
+        // Format inputs
+        const txAmountEl = document.getElementById('txAmount');
+        txAmountEl.addEventListener('input', () => formatInputThousands(txAmountEl));
+
+        const posBudgetEl = document.getElementById('posBudgetInput');
+        posBudgetEl.addEventListener('input', () => formatInputThousands(posBudgetEl));
+
+        const targetIncomeEl = document.getElementById('targetIncomeInput');
+        targetIncomeEl.addEventListener('input', () => formatInputThousands(targetIncomeEl));
+
+        // Quick +/- buttons in Pos Modal
+        document.querySelectorAll('[data-adj]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const delta = parseInt(btn.getAttribute('data-adj'), 10);
+            const currentVal = parseDigits(posBudgetEl.value);
+            const nextVal = Math.max(0, currentVal + delta);
+            posBudgetEl.value = nextVal > 0 ? nextVal.toLocaleString('id-ID') : '0';
+          });
+        });
+
+        // Open / Close Pos Modal
+        document.getElementById('btnAddNewPos').addEventListener('click', () => openPosModal(null));
+        document.getElementById('btnClosePosModal').addEventListener('click', closePosModal);
+        document.getElementById('btnCancelPosModal').addEventListener('click', closePosModal);
+
+        // Save Pos Form
+        document.getElementById('posForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const monthKey = monthPicker.value;
+          const editId = document.getElementById('editPosId').value;
+          const name = document.getElementById('posNameInput').value.trim();
+          const category = document.getElementById('posCategoryInput').value.trim() || 'Lainnya';
+          const budget = parseDigits(posBudgetEl.value);
+
+          if (!name) {
+            showToast('Nama pos anggaran wajib diisi.', 'warn');
+            return;
+          }
+
+          const store = loadStore();
+          const mData = ensureMonth(store, monthKey);
+
+          if (editId) {
+            const target = mData.categories.find((c) => c.id === editId);
+            if (target) {
+              target.name = name;
+              target.category = category;
+              target.budget = budget;
+              target.color = modalSelectedColor;
+              saveStore(store);
+              closePosModal();
+              render();
+              showToast(`Pagu "${name}" diperbarui menjadi ${formatRp(budget)}.`);
+            }
+          } else {
+            mData.categories.push({
+              id: `pos_${Date.now()}`,
+              name,
+              category,
+              budget,
+              color: modalSelectedColor
+            });
+            saveStore(store);
+            closePosModal();
+            render();
+            showToast(`Pos baru "${name}" (${formatRp(budget)}) ditambahkan.`);
+          }
+        });
+
+        // Delete Pos from inside Edit Modal
+        document.getElementById('btnConfirmDeletePos').addEventListener('click', () => {
+          const monthKey = monthPicker.value;
+          const editId = document.getElementById('editPosId').value;
+          if (!editId) return;
+
+          const store = loadStore();
+          const mData = ensureMonth(store, monthKey);
+          if (mData.categories.length <= 1) {
+            showToast('Minimal harus tersisa 1 pos anggaran.', 'warn');
+            return;
+          }
+
+          const posObj = mData.categories.find((c) => c.id === editId);
+          const relatedTx = mData.transactions.filter((t) => t.categoryId === editId);
+
+          if (relatedTx.length > 0) {
+            const deleteTxToo = document.getElementById('chkDeleteTxToo').checked;
+            if (deleteTxToo) {
+              mData.transactions = mData.transactions.filter((t) => t.categoryId !== editId);
+            } else {
+              const targetId = document.getElementById('deleteMoveTargetSelect').value;
+              mData.transactions.forEach((t) => {
+                if (t.categoryId === editId) t.categoryId = targetId;
+              });
+            }
+          }
+
+          mData.categories = mData.categories.filter((c) => c.id !== editId);
+          saveStore(store);
+          closePosModal();
+          render();
+          showToast(`Pos "${posObj ? posObj.name : ''}" dihapus.`, 'warn');
+        });
+
+        // Target Sisa Gaji Modal
+        document.getElementById('btnEditTargetIncome').addEventListener('click', () => {
+          const store = loadStore();
+          const mData = ensureMonth(store, monthPicker.value);
+          targetIncomeEl.value = mData.targetIncome > 0 ? mData.targetIncome.toLocaleString('id-ID') : '0';
+          document.getElementById('targetModal').classList.add('open');
+          setTimeout(() => targetIncomeEl.focus(), 50);
+        });
+
+        const closeTargetModal = () => document.getElementById('targetModal').classList.remove('open');
+        document.getElementById('btnCloseTargetModal').addEventListener('click', closeTargetModal);
+        document.getElementById('btnCancelTargetModal').addEventListener('click', closeTargetModal);
+
+        document.getElementById('targetForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const val = parseDigits(targetIncomeEl.value);
+          const store = loadStore();
+          const mData = ensureMonth(store, monthPicker.value);
+          mData.targetIncome = val;
+          saveStore(store);
+          closeTargetModal();
+          render();
+          showToast(`Target sisa gaji bulanan diubah ke ${formatRp(val)}.`);
+        });
+
+        // Add Daily Expense
+        document.getElementById('expenseForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const monthKey = monthPicker.value;
+          const date = document.getElementById('txDate').value;
+          const person = document.querySelector('input[name="txPerson"]:checked').value;
+          const categoryId = document.getElementById('txCategory').value;
+          const note = document.getElementById('txNote').value.trim();
+          const amount = parseDigits(txAmountEl.value);
+
+          if (!date || !categoryId || !note || amount <= 0) {
+            showToast('Lengkapi semua kolom dengan nominal lebih dari 0.', 'warn');
+            return;
+          }
+
+          const store = loadStore();
+          const mData = ensureMonth(store, monthKey);
+          const posObj = mData.categories.find((c) => c.id === categoryId);
+
+          mData.transactions.unshift({
+            id: `tx_${Date.now()}`,
+            date,
+            person,
+            categoryId,
+            note,
+            amount
+          });
+
+          saveStore(store);
+          document.getElementById('txNote').value = '';
+          txAmountEl.value = '';
+          render();
+
+          if (posObj) {
+            const spent = mData.transactions
+              .filter((t) => t.categoryId === categoryId)
+              .reduce((s, t) => s + t.amount, 0);
+            const rem = posObj.budget - spent;
+            if (rem < 0) {
+              showToast(`Tercatat! Pos "${posObj.name}" overbudget ${formatRp(Math.abs(rem))}.`, 'error');
+            } else {
+              showToast(`Tercatat ${formatRp(amount)} (${person}) • Sisa ${posObj.name}: ${formatRp(rem)}`);
+            }
+          }
+        });
+
+        // Copy Previous Month Budget
+        document.getElementById('btnCopyPrev').addEventListener('click', () => {
+          const curr = monthPicker.value;
+          const [y, m] = curr.split('-').map(Number);
+          const prevDate = new Date(y, m - 2, 1);
+          const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+          const store = loadStore();
+
+          if (!store.months[prevKey]) {
+            showToast(`Data bulan sebelumnya (${prevKey}) belum ada.`, 'warn');
+            return;
+          }
+
+          openConfirm({
+            title: `Salin Pagu dari ${prevKey}?`,
+            desc: `Susunan pos dan nominal pagu dari ${prevKey} akan disalin ke ${curr}. Transaksi di bulan ${curr} tidak terhapus.`,
+            okText: 'Salin Pagu',
+            onConfirm: () => {
+              const st = loadStore();
+              const targetMonth = ensureMonth(st, curr);
+              targetMonth.targetIncome = st.months[prevKey].targetIncome || 12000000;
+              targetMonth.categories = st.months[prevKey].categories.map((c) => ({ ...c }));
+              saveStore(st);
+              render();
+              showToast(`Pagu dari ${prevKey} berhasil disalin ke ${curr}.`);
+            }
+          });
+        });
+
+        // Reset Default
+        document.getElementById('btnResetDefault').addEventListener('click', () => {
+          const curr = monthPicker.value;
+          openConfirm({
+            title: `Reset Bulan ${curr} ke Default?`,
+            desc: 'Susunan pos akan dikembalikan ke 10 pos awal (Total Rp12.000.000).',
+            okText: 'Reset Default',
+            danger: true,
+            onConfirm: () => {
+              const st = loadStore();
+              const md = ensureMonth(st, curr);
+              md.targetIncome = 12000000;
+              md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
+              saveStore(st);
+              activeCategoryTab = 'ALL';
+              render();
+              showToast(`Bulan ${curr} dikembalikan ke pengaturan awal Rp12.000.000.`);
+            }
+          });
+        });
+
+        // Backup JSON
+        document.getElementById('btnBackupJson').addEventListener('click', () => {
+          const store = loadStore();
+          const blob = new Blob([JSON.stringify(store, null, 2)], { type: 'application/json' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `backup_anggaran_keluarga_${monthPicker.value}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(a.href);
+          showToast('File Backup JSON berhasil diunduh.');
+        });
+
+        // Restore JSON
+        const fileInput = document.getElementById('fileRestoreJson');
+        document.getElementById('btnRestoreJson').addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          e.target.value = '';
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            try {
+              const parsed = JSON.parse(ev.target.result);
+              if (!parsed || typeof parsed.months !== 'object') throw new Error('Invalid');
+              openConfirm({
+                title: 'Pulihkan Data dari Backup JSON?',
+                desc: 'Data pos dan transaksi di browser akan digantikan dengan isi file backup JSON ini.',
+                okText: 'Pulihkan Data',
+                onConfirm: () => {
+                  saveStore({ months: parsed.months });
+                  render();
+                  showToast('Data berhasil dipulihkan dari Backup JSON!');
+                }
+              });
+            } catch (err) {
+              showToast('File JSON tidak valid atau rusak.', 'error');
+            }
+          };
+          reader.readAsText(file);
+        });
+
+        // Export CSV
+        document.getElementById('btnExportCsv').addEventListener('click', () => {
+          const curr = monthPicker.value;
+          const store = loadStore();
+          const mData = ensureMonth(store, curr);
+          const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c.name]));
+
+          let csv = 'Tanggal,Dicatat Oleh,Pos Anggaran,Keterangan,Nominal\n';
+          mData.transactions.forEach((t) => {
+            const posName = (catMap[t.categoryId] || 'Lainnya').replace(/"/g, '""');
+            const note = String(t.note).replace(/"/g, '""');
+            csv += `${t.date},"${t.person}","${posName}","${note}",${t.amount}\n`;
+          });
+
+          const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `pengeluaran_${curr}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(a.href);
+          showToast(`CSV bulan ${curr} berhasil diunduh.`);
+        });
+
+        // Filters
+        document.getElementById('filterPerson').addEventListener('change', render);
+        document.getElementById('filterPos').addEventListener('change', render);
+        document.getElementById('filterSearch').addEventListener('input', render);
+
+        render();
       });
-    }
-
-    // =========================================================================
-    // 7. INISIALISASI EVENT LISTENER SAAT HALAMAN DIMUAT
-    // =========================================================================
-    document.addEventListener('DOMContentLoaded', () => {
-      const monthPicker = document.getElementById('monthPicker');
-      const initialMonth = getCurrentMonthKey();
-      monthPicker.value = initialMonth;
-      document.getElementById('txDate').value = getDefaultDateForMonth(initialMonth);
-
-      monthPicker.addEventListener('change', () => {
-        document.getElementById('txDate').value = getDefaultDateForMonth(monthPicker.value);
-        activePosCategoryFilter = 'ALL';
-        renderApp();
-      });
-
-      const txAmountInput = document.getElementById('txAmount');
-      txAmountInput.addEventListener('input', () => formatInputThousands(txAmountInput));
-
-      const posBudgetInput = document.getElementById('posBudgetInput');
-      posBudgetInput.addEventListener('input', () => formatInputThousands(posBudgetInput));
-
-      document.getElementById('posCategorySelect').addEventListener('change', (e) => {
-        const customWrap = document.getElementById('customCategoryWrap');
-        if (e.target.value === '__CUSTOM__') {
-          customWrap.classList.remove('hidden');
-          document.getElementById('posCustomCategoryInput').focus();
-        } else {
-          customWrap.classList.add('hidden');
-        }
-      });
-
-      document.getElementById('btnAddPos').addEventListener('click', () => openPosModal(null));
-      document.getElementById('posModalCloseX').addEventListener('click', closePosModal);
-      document.getElementById('posModalCancelBtn').addEventListener('click', closePosModal);
-      document.getElementById('posForm').addEventListener('submit', handleSavePosForm);
-
-      document.getElementById('txForm').addEventListener('submit', handleAddTransaction);
-
-      document.getElementById('btnCopyPrevMonth').addEventListener('click', handleCopyPrevMonth);
-      document.getElementById('btnBackupJson').addEventListener('click', handleBackupJson);
-      document.getElementById('btnRestoreJson').addEventListener('click', () => {
-        document.getElementById('restoreFileInput').click();
-      });
-      document.getElementById('restoreFileInput').addEventListener('change', handleRestoreJson);
-      document.getElementById('btnExportCsv').addEventListener('click', handleExportCsv);
-      document.getElementById('btnResetDefault').addEventListener('click', handleResetDefault);
-
-      document.getElementById('filterPerson').addEventListener('change', renderApp);
-      document.getElementById('filterCategory').addEventListener('change', renderApp);
-      document.getElementById('filterSearch').addEventListener('input', renderApp);
-
-      renderApp();
-    });
+    })();
   </script>
 </body>
 </html>
