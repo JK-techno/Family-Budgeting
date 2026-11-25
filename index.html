@@ -94,13 +94,13 @@
       width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 16px 14px;
+      padding: 15px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 12px;
+      gap: 11px;
       min-width: 0;
     }
 
@@ -129,8 +129,8 @@
     .brand p {
       font-size: 0.78rem;
       color: #cbd5d3;
-      margin-top: 4px;
-      max-width: 520px;
+      margin-top: 3px;
+      max-width: 540px;
       overflow-wrap: break-word;
       word-break: break-word;
     }
@@ -264,6 +264,31 @@
       font-size: 0.74rem;
     }
 
+    /* Tombol See More / See Less Full-Width Rapi */
+    .see-more-bar {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn-see-more {
+      width: 100%;
+      background: var(--card-elevated);
+      color: var(--primary);
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-see-more:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
     /* =====================================================================
        AUTO-BACKUP STATUS BADGE DI HEADER
        ===================================================================== */
@@ -305,7 +330,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     @media (max-width: 960px) {
@@ -524,7 +549,7 @@
     }
 
     /* =====================================================================
-       PIE CHART & POS SUMMARY VISUALIZATION
+       DIAGRAM PIE PRESISI SIMETRIS & LEGENDA ANTI-TABRAKAN
        ===================================================================== */
     .pie-summary-box {
       width: 100%;
@@ -533,29 +558,47 @@
       background: var(--input-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 14px;
+      padding: 16px;
       margin-bottom: 16px;
       display: grid;
-      grid-template-columns: 210px minmax(0, 1fr);
-      gap: 16px;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 20px;
       align-items: center;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 740px) {
       .pie-summary-box {
         grid-template-columns: minmax(0, 1fr);
-        justify-items: center;
+        gap: 16px;
+        padding: 14px;
       }
     }
 
+    .pie-visual-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+    }
+
     .pie-svg-wrap {
-      width: 190px;
-      height: 190px;
+      width: 216px;
+      height: 216px;
+      aspect-ratio: 1 / 1;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 0 auto;
       flex-shrink: 0;
+    }
+
+    .pie-svg-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     .pie-center-label {
@@ -567,28 +610,37 @@
       justify-content: center;
       text-align: center;
       pointer-events: none;
-      padding: 0 24px;
+      padding: 0 38px;
     }
 
-    .pie-center-label span:first-child {
-      font-size: 0.66rem;
+    .pie-center-label span {
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
       color: var(--muted);
+      line-height: 1.2;
     }
 
     .pie-center-label strong {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 800;
       color: var(--text);
-      margin-top: 2px;
-      word-break: break-word;
+      margin-top: 3px;
+      line-height: 1.2;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .pie-legend-wrap {
       width: 100%;
       max-width: 100%;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .pie-legend-head {
@@ -597,37 +649,40 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
 
     .pie-legend-head h3 {
       font-size: 0.88rem;
       font-weight: 800;
       color: var(--text);
+      line-height: 1.3;
     }
 
     .pie-legend-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 7px;
       width: 100%;
+      min-width: 0;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 540px) {
       .pie-legend-grid {
         grid-template-columns: minmax(0, 1fr);
       }
     }
 
     .pie-legend-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      justify-content: space-between;
       gap: 8px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 6px 9px;
+      padding: 7px 10px;
       font-size: 0.76rem;
       min-width: 0;
     }
@@ -635,9 +690,8 @@
     .pie-legend-left {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       min-width: 0;
-      flex: 1;
     }
 
     .pie-dot {
@@ -653,47 +707,35 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      min-width: 0;
     }
 
-    .pie-val {
-      font-weight: 700;
-      color: var(--muted);
+    .pie-val-group {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
       white-space: nowrap;
       flex-shrink: 0;
+      text-align: right;
     }
 
-    /* Section Header & Filter Tabs */
-    .section-head {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
+    .pie-pct-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 1px 6px;
+      border-radius: 4px;
     }
 
-    .section-head-text {
-      flex: 1 1 220px;
-      min-width: 0;
+    .pie-rp-val {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.75rem;
     }
 
-    .section-head h2 {
-      font-size: 1.04rem;
-      font-weight: 800;
-      overflow-wrap: break-word;
-    }
-
-    .section-head p {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 2px;
-      overflow-wrap: break-word;
-      word-break: break-word;
-    }
-
+    /* Filter Tabs */
     .filter-pills {
       width: 100%;
       max-width: 100%;
@@ -730,8 +772,14 @@
       width: 100%;
       max-width: 100%;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .pos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 560px) {
@@ -1262,7 +1310,7 @@
         background: #ffffff !important;
         color: #000000 !important;
       }
-      .topbar, .toolbar, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .toast-stack, footer, button {
+      .topbar, .toolbar, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .see-more-bar, .toast-stack, footer, button {
         display: none !important;
       }
       .page-module, .kpi-card, .pos-card {
@@ -1305,7 +1353,7 @@
     <div class="topbar-inner">
       <div class="brand">
         <h1>FAMILY EXPENSE TRACKER</h1>
-        <p>Pengelolaan anggaran keluarga &bull; Tata letak fleksibel &bull; Auto-backup otomatis</p>
+        <p>Pengelolaan anggaran keluarga &bull; Ringkas &amp; presisi &bull; Auto-backup otomatis</p>
       </div>
 
       <div class="toolbar">
@@ -1338,16 +1386,16 @@
           <span class="kpi-label">Target Sisa Gaji</span>
           <button type="button" class="btn-outline btn-sm" id="btnEditTargetIncome">Ubah Target</button>
         </div>
-        <div class="kpi-val tabular" id="kpiTargetIncome">Rp12.000.000</div>
+        <div class="kpi-val tabular" id="kpiTargetIncome">Rp18.000.000</div>
         <div class="kpi-sub tabular" id="kpiUnallocatedNote">Pas 100% teralokasi ke pos</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-top">
           <span class="kpi-label">Total Pagu Pos</span>
-          <span class="pill pill-teal" id="kpiPosCountBadge">10 Pos</span>
+          <span class="pill pill-teal" id="kpiPosCountBadge">13 Pos</span>
         </div>
-        <div class="kpi-val tabular" id="kpiTotalPagu">Rp12.000.000</div>
+        <div class="kpi-val tabular" id="kpiTotalPagu">Rp18.000.000</div>
         <div class="kpi-sub">Ketuk nominal pagu di kartu untuk edit</div>
       </div>
 
@@ -1365,7 +1413,7 @@
           <span class="kpi-label">Sisa Pagu Bulan Ini</span>
           <span class="pill pill-teal tabular" id="kpiRemPctBadge">100%</span>
         </div>
-        <div class="kpi-val tabular" id="kpiTotalRemaining" style="color: var(--accent-teal);">Rp12.000.000</div>
+        <div class="kpi-val tabular" id="kpiTotalRemaining" style="color: var(--accent-teal);">Rp18.000.000</div>
         <div class="kpi-sub" id="kpiRemStatus">Aman terkendali</div>
       </div>
     </section>
@@ -1425,7 +1473,7 @@
             <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
             <div class="module-title-text">
               <h2>Rincian &amp; Sisa Pagu per Pos</h2>
-              <p>Ketuk nominal <strong>Pagu</strong> atau tombol <strong>Edit Pagu / Pos</strong> pada kartu untuk mengubah alokasi.</p>
+              <p id="posSummarySubtitle">Menampilkan 3 pos teratas dengan sisa pagu terbanyak. Ketuk <strong>See More</strong> untuk semua pos.</p>
             </div>
           </div>
           <div class="module-controls">
@@ -1435,12 +1483,14 @@
           </div>
         </div>
 
-        <!-- Ringkasan Visual Diagram Pie -->
+        <!-- Ringkasan Visual Diagram Pie Presisi -->
         <div class="pie-summary-box">
-          <div class="pie-svg-wrap" id="pieChartContainer"></div>
+          <div class="pie-visual-col">
+            <div class="pie-svg-wrap" id="pieChartContainer"></div>
+          </div>
           <div class="pie-legend-wrap">
             <div class="pie-legend-head">
-              <h3 id="pieChartHeading">Distribusi Pengeluaran Terpakai per Pos</h3>
+              <h3 id="pieChartHeading">Proporsi Pos Anggaran Terpakai</h3>
               <button type="button" class="btn-outline btn-sm" id="btnDownloadPiePng">Unduh Diagram Pie (PNG)</button>
             </div>
             <div class="pie-legend-grid" id="pieLegendGrid"></div>
@@ -1450,6 +1500,10 @@
         <div class="filter-pills" id="categoryFilterPills"></div>
 
         <div class="pos-grid" id="posGrid"></div>
+
+        <div class="see-more-bar" id="posSeeMoreWrap" style="display: none;">
+          <button type="button" class="btn-see-more" id="btnTogglePosSeeMore">See More</button>
+        </div>
       </section>
 
       <!-- MODUL 3: Riwayat Transaksi Bulan Ini -->
@@ -1459,7 +1513,7 @@
             <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
             <div class="module-title-text">
               <h2>Riwayat Transaksi Bulan Ini</h2>
-              <p>Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.</p>
+              <p id="txHistorySubtitle">Menampilkan 3 transaksi terakhir. Ketuk <strong>See More</strong> untuk melihat seluruh transaksi.</p>
             </div>
           </div>
           <div class="module-controls">
@@ -1493,6 +1547,10 @@
 
         <!-- Tampilan Kartu Rapi untuk Layar HP (Anti-Terpotong) -->
         <div class="mobile-tx-list" id="mobileTxList"></div>
+
+        <div class="see-more-bar" id="txSeeMoreWrap" style="display: none;">
+          <button type="button" class="btn-see-more" id="btnToggleTxSeeMore">See More</button>
+        </div>
       </section>
 
     </div>
@@ -1713,6 +1771,8 @@
 
       let activeCategoryTab = 'ALL';
       let modalSelectedColor = 'teal';
+      let showAllPos = false;
+      let showAllTx = false;
 
       function formatRp(num) {
         const val = Number(num) || 0;
@@ -1777,7 +1837,6 @@
           if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed && typeof parsed.months === 'object' && Object.keys(parsed.months).length > 0) {
-              // Pastikan bulan bawaan 2026-11 dan 2026-12 tetap tersedia jika belum ada
               let updated = false;
               Object.keys(SEED_MONTHS).forEach((mKey) => {
                 if (!parsed.months[mKey]) {
@@ -1813,7 +1872,6 @@
             }
           }
 
-          // Jika penyimpanan baru, gunakan langsung data lengkap SEED_MONTHS
           const seeded = cloneSeedStore();
           localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
           return seeded;
@@ -2018,7 +2076,6 @@
           if (SEED_MONTHS[monthKey]) {
             store.months[monthKey] = JSON.parse(JSON.stringify(SEED_MONTHS[monthKey]));
           } else {
-            // Salin susunan pos terbaru dari bulan terakhir yang ada agar berkelanjutan
             const existingKeys = Object.keys(store.months).sort();
             const latestKey = existingKeys[existingKeys.length - 1];
             const template = latestKey ? store.months[latestKey] : null;
@@ -2094,7 +2151,7 @@
         const store = loadStore();
         const mData = ensureMonth(store, monthKey);
 
-        const cats = new Set(['Keluarga & Pendidikan', 'Jalan-Jalan & Kesenangan', 'Rumah & Utilitas', 'Tabungan & Investasi']);
+        const cats = new Set(['Keluarga & Pendidikan', 'Jalan-Jalan & Kesenangan', 'Rumah & Utilitas', 'Tabungan & Investasi', 'Hutang']);
         mData.categories.forEach((c) => cats.add(c.category));
         document.getElementById('categoryDatalist').innerHTML = Array.from(cats)
           .map((c) => `<option value="${escapeHtml(c)}"></option>`)
@@ -2186,6 +2243,9 @@
         });
       }
 
+      // =====================================================================
+      // DIAGRAM PIE SVG PRESISI & LEGENDA RAPI
+      // =====================================================================
       function getPieChartSlices(mData, spentByPos) {
         const spentItems = mData.categories
           .map((cat) => {
@@ -2228,14 +2288,14 @@
         };
       }
 
-      function buildPieSvgMarkup(pieData, size = 190) {
+      function buildPieSvgMarkup(pieData, size = 260) {
         const cx = size / 2;
         const cy = size / 2;
-        const r = size * 0.42;
-        const innerR = size * 0.25;
+        const r = 112;
+        const innerR = 64;
 
         if (!pieData.slices || pieData.slices.length === 0 || pieData.total <= 0) {
-          return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-label="Diagram Pie Kosong">
+          return `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="Diagram Pie Kosong">
             <circle cx="${cx}" cy="${cy}" r="${r}" fill="#dfdcd3" />
             <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#f8f7f4" />
           </svg>`;
@@ -2243,7 +2303,7 @@
 
         if (pieData.slices.length === 1) {
           const s = pieData.slices[0];
-          return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-label="Diagram Pie Anggaran">
+          return `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="Diagram Pie Anggaran">
             <circle cx="${cx}" cy="${cy}" r="${r}" fill="${s.color}" />
             <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#f8f7f4" />
           </svg>`;
@@ -2275,11 +2335,11 @@
             ].join(' ');
 
             startAngle = endAngle;
-            return `<path d="${d}" fill="${slice.color}" stroke="#f8f7f4" stroke-width="1.5"><title>${escapeHtml(slice.name)}: ${formatRp(slice.value)} (${slice.pct.toFixed(1)}%)</title></path>`;
+            return `<path d="${d}" fill="${slice.color}" stroke="#f8f7f4" stroke-width="2"><title>${escapeHtml(slice.name)}: ${formatRp(slice.value)} (${slice.pct.toFixed(1)}%)</title></path>`;
           })
           .join('');
 
-        return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-label="Diagram Pie Anggaran">${paths}</svg>`;
+        return `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="Diagram Pie Anggaran">${paths}</svg>`;
       }
 
       function renderPieSection(mData, spentByPos) {
@@ -2291,11 +2351,11 @@
         const centerTitle = pieData.mode === 'spent' ? 'Total Terpakai' : 'Alokasi Pagu';
         headingEl.textContent =
           pieData.mode === 'spent'
-            ? 'Proporsi Pos Anggaran Terpakai (Diagram Pie)'
+            ? `Proporsi Pos Terpakai (${pieData.slices.length} Pos)`
             : 'Proporsi Alokasi Pagu Awal (Belum Ada Pengeluaran)';
 
         container.innerHTML = `
-          ${buildPieSvgMarkup(pieData, 190)}
+          ${buildPieSvgMarkup(pieData, 260)}
           <div class="pie-center-label">
             <span>${centerTitle}</span>
             <strong class="tabular">${formatRp(pieData.total)}</strong>
@@ -2315,7 +2375,10 @@
                 <span class="pie-dot" style="background:${s.color};"></span>
                 <span class="pie-name" title="${escapeHtml(s.name)}">${escapeHtml(s.name)}</span>
               </div>
-              <span class="pie-val tabular">${s.pct.toFixed(1)}% &bull; ${formatRp(s.value)}</span>
+              <div class="pie-val-group tabular">
+                <span class="pie-pct-tag">${s.pct.toFixed(1)}%</span>
+                <span class="pie-rp-val">${formatRp(s.value)}</span>
+              </div>
             </div>
           `
           )
@@ -2546,7 +2609,7 @@
           remStatus.style.color = 'var(--accent-teal)';
         }
 
-        // Render Visual Diagram Pie
+        // Render Visual Diagram Pie Presisi
         renderPieSection(mData, spentByPos);
 
         // Filter Pills Kategori
@@ -2572,12 +2635,39 @@
           });
         });
 
-        // Kartu Pos Anggaran
+        // Kartu Pos Anggaran — Diurutkan berdasarkan Sisa Pagu Terbanyak & dibatasi 3 teratas secara default
         const posGrid = document.getElementById('posGrid');
-        const visibleCategories =
+        const filteredByGroup =
           activeCategoryTab === 'ALL'
             ? mData.categories
             : mData.categories.filter((c) => c.category === activeCategoryTab);
+
+        const sortedCategories = [...filteredByGroup].sort((a, b) => {
+          const remA = (Number(a.budget) || 0) - (spentByPos[a.id] || 0);
+          const remB = (Number(b.budget) || 0) - (spentByPos[b.id] || 0);
+          return remB - remA;
+        });
+
+        const totalFilteredPos = sortedCategories.length;
+        const visibleCategories = showAllPos ? sortedCategories : sortedCategories.slice(0, 3);
+
+        const posSubtitleEl = document.getElementById('posSummarySubtitle');
+        const posSeeMoreWrap = document.getElementById('posSeeMoreWrap');
+        const btnTogglePosSeeMore = document.getElementById('btnTogglePosSeeMore');
+
+        if (totalFilteredPos > 3) {
+          posSeeMoreWrap.style.display = 'flex';
+          if (showAllPos) {
+            btnTogglePosSeeMore.textContent = 'See Less (Tampilkan 3 Sisa Pagu Terbanyak)';
+            posSubtitleEl.innerHTML = `Menampilkan semua <strong>${totalFilteredPos} pos</strong> (diurutkan dari sisa pagu terbanyak).`;
+          } else {
+            btnTogglePosSeeMore.textContent = `See More (Tampilkan Semua ${totalFilteredPos} Pos)`;
+            posSubtitleEl.innerHTML = `Menampilkan <strong>3 pos teratas</strong> dengan sisa pagu terbanyak. Ketuk <strong>See More</strong> untuk semua pos.`;
+          }
+        } else {
+          posSeeMoreWrap.style.display = 'none';
+          posSubtitleEl.innerHTML = `Menampilkan <strong>${totalFilteredPos} pos</strong> anggaran (diurutkan dari sisa pagu terbanyak).`;
+        }
 
         posGrid.innerHTML = visibleCategories
           .map((cat) => {
@@ -2685,7 +2775,7 @@
           filterPosSelect.value = prevFilterVal;
         }
 
-        // Render Riwayat Transaksi (Desktop Table + Mobile Card List)
+        // Render Riwayat Transaksi — Default hanya 3 transaksi terakhir (terbaru) + tombol See More
         const fPos = filterPosSelect.value;
         const fSearch = document.getElementById('filterSearch').value.trim().toLowerCase();
         const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c]));
@@ -2699,16 +2789,37 @@
           return true;
         });
 
+        const totalFilteredTx = filteredTx.length;
+        const visibleTx = showAllTx ? filteredTx : filteredTx.slice(0, 3);
+
+        const txSubtitleEl = document.getElementById('txHistorySubtitle');
+        const txSeeMoreWrap = document.getElementById('txSeeMoreWrap');
+        const btnToggleTxSeeMore = document.getElementById('btnToggleTxSeeMore');
+
+        if (totalFilteredTx > 3) {
+          txSeeMoreWrap.style.display = 'flex';
+          if (showAllTx) {
+            btnToggleTxSeeMore.textContent = 'See Less (Tampilkan 3 Transaksi Terakhir)';
+            txSubtitleEl.innerHTML = `Menampilkan semua <strong>${totalFilteredTx} transaksi</strong>. Hapus transaksi untuk mengembalikan pagu.`;
+          } else {
+            btnToggleTxSeeMore.textContent = `See More (Lihat Semua ${totalFilteredTx} Transaksi)`;
+            txSubtitleEl.innerHTML = `Menampilkan <strong>3 transaksi terakhir</strong>. Ketuk <strong>See More</strong> untuk melihat seluruh riwayat.`;
+          }
+        } else {
+          txSeeMoreWrap.style.display = 'none';
+          txSubtitleEl.innerHTML = `Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.`;
+        }
+
         const tbody = document.getElementById('txTableBody');
         const mobileList = document.getElementById('mobileTxList');
 
-        if (filteredTx.length === 0) {
+        if (visibleTx.length === 0) {
           tbody.innerHTML = `<tr><td colspan="5" style="padding:26px 14px; text-align:center; color:var(--muted);">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</td></tr>`;
           mobileList.innerHTML = `<div class="empty-box">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</div>`;
           return;
         }
 
-        tbody.innerHTML = filteredTx
+        tbody.innerHTML = visibleTx
           .map((tx) => {
             const posObj = catMap[tx.categoryId];
             const pal = getPaletteObj(posObj ? posObj.color : 'teal');
@@ -2730,7 +2841,7 @@
           })
           .join('');
 
-        mobileList.innerHTML = filteredTx
+        mobileList.innerHTML = visibleTx
           .map((tx) => {
             const posObj = catMap[tx.categoryId];
             const pal = getPaletteObj(posObj ? posObj.color : 'teal');
@@ -2784,6 +2895,17 @@
           btn.addEventListener('click', () => moveModuleSection(btn.getAttribute('data-mod-down'), 1));
         });
 
+        // Tombol See More / See Less untuk Pos & Riwayat Transaksi
+        document.getElementById('btnTogglePosSeeMore').addEventListener('click', () => {
+          showAllPos = !showAllPos;
+          render();
+        });
+
+        document.getElementById('btnToggleTxSeeMore').addEventListener('click', () => {
+          showAllTx = !showAllTx;
+          render();
+        });
+
         // Inisialisasi Auto-Backup awal jika belum ada snapshot
         const existingBackups = loadAutoBackups();
         if (existingBackups.length === 0) {
@@ -2795,6 +2917,8 @@
         monthPicker.addEventListener('change', () => {
           document.getElementById('txDate').value = getDefaultDateForMonth(monthPicker.value);
           activeCategoryTab = 'ALL';
+          showAllPos = false;
+          showAllTx = false;
           render();
         });
 
@@ -2923,101 +3047,6 @@
 
         document.getElementById('expenseForm').addEventListener('submit', (e) => {
           e.preventDefault();
-          const monthKey = monthPicker.value;
-          const date = document.getElementById('txDate').value;
-          const categoryId = document.getElementById('txCategory').value;
-          const note = document.getElementById('txNote').value.trim();
-          const amount = parseDigits(txAmountEl.value);
-
-          if (!date || !categoryId || !note || amount <= 0) {
-            showToast('Lengkapi semua kolom dengan nominal lebih dari 0.', 'warn');
-            return;
-          }
-
-          const store = loadStore();
-          const mData = ensureMonth(store, monthKey);
-          const posObj = mData.categories.find((c) => c.id === categoryId);
-
-          mData.transactions.unshift({
-            id: `tx_${Date.now()}`,
-            date,
-            categoryId,
-            note,
-            amount
-          });
-
-          saveStore(store, false, `Catat pengeluaran: ${note} (${formatRp(amount)})`);
-          document.getElementById('txNote').value = '';
-          txAmountEl.value = '';
-          render();
-
-          if (posObj) {
-            const spent = mData.transactions
-              .filter((t) => t.categoryId === categoryId)
-              .reduce((s, t) => s + t.amount, 0);
-            const rem = posObj.budget - spent;
-            if (rem < 0) {
-              showToast(`Tercatat! Pos "${posObj.name}" overbudget ${formatRp(Math.abs(rem))}.`, 'error');
-            } else {
-              showToast(`Tercatat ${formatRp(amount)} • Sisa ${posObj.name}: ${formatRp(rem)}`);
-            }
-          }
-        });
-
-        document.getElementById('btnCopyPrev').addEventListener('click', () => {
-          const curr = monthPicker.value;
-          const [y, m] = curr.split('-').map(Number);
-          const prevDate = new Date(y, m - 2, 1);
-          const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
-          const store = loadStore();
-
-          if (!store.months[prevKey]) {
-            showToast(`Data bulan sebelumnya (${prevKey}) belum ada.`, 'warn');
-            return;
-          }
-
-          openConfirm({
-            title: `Salin Pagu dari ${prevKey}?`,
-            desc: `Susunan pos dan nominal pagu dari ${prevKey} akan disalin ke ${curr}. Transaksi di bulan ${curr} tidak terhapus.`,
-            okText: 'Salin Pagu',
-            onConfirm: () => {
-              const st = loadStore();
-              const targetMonth = ensureMonth(st, curr);
-              targetMonth.targetIncome = st.months[prevKey].targetIncome || 12000000;
-              targetMonth.categories = st.months[prevKey].categories.map((c) => ({ ...c }));
-              saveStore(st, false, `Salin pagu dari ${prevKey} ke ${curr}`);
-              render();
-              showToast(`Pagu dari ${prevKey} berhasil disalin ke ${curr}.`);
-            }
-          });
-        });
-
-        document.getElementById('btnResetDefault').addEventListener('click', () => {
-          const curr = monthPicker.value;
-          openConfirm({
-            title: `Reset Bulan ${curr} ke Data Cadangan Awal?`,
-            desc: 'Data pos dan transaksi bulan ini akan dikembalikan ke data cadangan awal Anda.',
-            okText: 'Reset Default',
-            danger: true,
-            onConfirm: () => {
-              const st = loadStore();
-              if (SEED_MONTHS[curr]) {
-                st.months[curr] = JSON.parse(JSON.stringify(SEED_MONTHS[curr]));
-              } else {
-                const md = ensureMonth(st, curr);
-                md.targetIncome = 18000000;
-                md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
-                md.transactions = [];
-              }
-              saveStore(st, false, `Reset default bulan ${curr}`);
-              activeCategoryTab = 'ALL';
-              render();
-              showToast(`Bulan ${curr} dikembalikan ke data cadangan awal.`);
-            }
-          });
-        });
-        document.getElementById('expenseForm').addEventListener('submit', (e) => {
-          e.preventDefault();
           const monthKey = monthPicker.value || getCurrentMonthStr();
           const date = document.getElementById('txDate').value || getDefaultDateForMonth(monthKey);
           const categoryId = document.getElementById('txCategory').value;
@@ -3057,6 +3086,66 @@
               showToast(`Tercatat ${formatRp(amount)} • Sisa ${posObj.name}: ${formatRp(rem)}`);
             }
           }
+        });
+
+        document.getElementById('btnCopyPrev').addEventListener('click', () => {
+          const curr = monthPicker.value;
+          const [y, m] = curr.split('-').map(Number);
+          const prevDate = new Date(y, m - 2, 1);
+          const prevKey = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
+          const store = loadStore();
+
+          if (!store.months[prevKey]) {
+            showToast(`Data bulan sebelumnya (${prevKey}) belum ada.`, 'warn');
+            return;
+          }
+
+          openConfirm({
+            title: `Salin Pagu dari ${prevKey}?`,
+            desc: `Susunan pos dan nominal pagu dari ${prevKey} akan disalin ke ${curr}. Transaksi di bulan ${curr} tidak terhapus.`,
+            okText: 'Salin Pagu',
+            onConfirm: () => {
+              const st = loadStore();
+              const targetMonth = ensureMonth(st, curr);
+              targetMonth.targetIncome = st.months[prevKey].targetIncome || 18000000;
+              targetMonth.categories = st.months[prevKey].categories.map((c) => ({ ...c }));
+              saveStore(st, false, `Salin pagu dari ${prevKey} ke ${curr}`);
+              render();
+              showToast(`Pagu dari ${prevKey} berhasil disalin ke ${curr}.`);
+            }
+          });
+        });
+
+        document.getElementById('btnResetDefault').addEventListener('click', () => {
+          const curr = monthPicker.value;
+          openConfirm({
+            title: `Reset Bulan ${curr} ke Data Cadangan Awal?`,
+            desc: 'Data pos dan transaksi bulan ini akan dikembalikan ke data cadangan awal Anda.',
+            okText: 'Reset Default',
+            danger: true,
+            onConfirm: () => {
+              const st = loadStore();
+              if (SEED_MONTHS[curr]) {
+                st.months[curr] = JSON.parse(JSON.stringify(SEED_MONTHS[curr]));
+              } else {
+                const md = ensureMonth(st, curr);
+                md.targetIncome = 18000000;
+                md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
+                md.transactions = [];
+              }
+              saveStore(st, false, `Reset default bulan ${curr}`);
+              activeCategoryTab = 'ALL';
+              showAllPos = false;
+              showAllTx = false;
+              render();
+              showToast(`Bulan ${curr} dikembalikan ke data cadangan awal.`);
+            }
+          });
+        });
+
+        document.getElementById('btnOpenRestoreModal').addEventListener('click', openRestoreModal);
+        document.getElementById('btnCloseRestoreModal').addEventListener('click', () => {
+          document.getElementById('restoreModal').classList.remove('open');
         });
         document.getElementById('btnDoneRestoreModal').addEventListener('click', () => {
           document.getElementById('restoreModal').classList.remove('open');
@@ -3112,6 +3201,9 @@
         document.getElementById('btnDownloadPiePng').addEventListener('click', downloadPieChartPng);
 
         document.getElementById('btnExportReport').addEventListener('click', () => {
+          showAllPos = true;
+          showAllTx = true;
+          render();
           showToast('Membuka pratinjau cetak laporan lengkap beserta Diagram Pie...');
           setTimeout(() => window.print(), 250);
         });
