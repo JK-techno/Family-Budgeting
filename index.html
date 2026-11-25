@@ -265,6 +265,30 @@
     }
 
     /* =====================================================================
+       AUTO-BACKUP STATUS BADGE DI HEADER
+       ===================================================================== */
+    .autobackup-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #d6e4e1;
+      background: rgba(53, 94, 88, 0.42);
+      border: 1px solid rgba(136, 184, 176, 0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .autobackup-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #88c4b8;
+      flex-shrink: 0;
+    }
+
+    /* =====================================================================
        CONTAINER & SYMMETRIC MOBILE-SAFE GRID
        ===================================================================== */
     .container {
@@ -362,6 +386,282 @@
     .pill-ochre { background: var(--accent-ochre-soft); color: var(--accent-ochre); }
     .pill-danger { background: var(--danger-soft); color: var(--danger); }
 
+    /* =====================================================================
+       FLEXIBLE / REORDERABLE PAGE MODULES
+       ===================================================================== */
+    .modules-stack {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .page-module {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .page-module.dragging {
+      opacity: 0.55;
+      border-color: var(--primary);
+    }
+
+    .page-module.drag-over {
+      border: 2px dashed var(--primary);
+      background: #efede7;
+    }
+
+    .module-header {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .module-title-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+
+    .drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: var(--card-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: grab;
+      flex-shrink: 0;
+      user-select: none;
+      margin-top: 1px;
+    }
+
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .module-title-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .module-title-text h2 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .module-title-text p {
+      font-size: 0.77rem;
+      color: var(--muted);
+      margin-top: 2px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .module-controls {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* =====================================================================
+       FORM HORIZONTAL / COMPACT TOP LAYOUT
+       ===================================================================== */
+    .expense-form-grid {
+      width: 100%;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1.2fr) minmax(0, 1.4fr) 165px auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    @media (max-width: 960px) {
+      .expense-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .expense-form-grid .submit-col {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .expense-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .expense-form-grid .form-field {
+      margin-bottom: 0;
+    }
+
+    /* =====================================================================
+       PIE CHART & POS SUMMARY VISUALIZATION
+       ===================================================================== */
+    .pie-summary-box {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 680px) {
+      .pie-summary-box {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+      }
+    }
+
+    .pie-svg-wrap {
+      width: 190px;
+      height: 190px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pie-center-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      padding: 0 24px;
+    }
+
+    .pie-center-label span:first-child {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pie-center-label strong {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .pie-legend-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .pie-legend-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pie-legend-head h3 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .pie-legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      gap: 7px;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .pie-legend-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pie-legend-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 9px;
+      font-size: 0.76rem;
+      min-width: 0;
+    }
+
+    .pie-legend-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .pie-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .pie-name {
+      font-weight: 700;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pie-val {
+      font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
     /* Section Header & Filter Tabs */
     .section-head {
       width: 100%;
@@ -432,7 +732,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
       gap: 12px;
-      margin-bottom: 24px;
     }
 
     @media (max-width: 560px) {
@@ -560,50 +859,6 @@
       display: inline-flex;
       gap: 4px;
       flex-shrink: 0;
-    }
-
-    /* =====================================================================
-       WORKSPACE BOTTOM (FORM + RIWAYAT TRANSAKSI) — ANTI-TERPOTONG MOBILE
-       ===================================================================== */
-    .workspace-grid {
-      width: 100%;
-      max-width: 100%;
-      display: grid;
-      grid-template-columns: minmax(0, 350px) minmax(0, 1fr);
-      gap: 16px;
-      align-items: start;
-    }
-
-    @media (max-width: 880px) {
-      .workspace-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .panel {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .panel h3 {
-      font-size: 0.98rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-      overflow-wrap: break-word;
-    }
-
-    .panel-sub {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 14px;
-      overflow-wrap: break-word;
-      word-break: break-word;
     }
 
     .form-field {
@@ -914,6 +1169,50 @@
       font-size: 0.8rem;
     }
 
+    /* Auto-Backup Snapshot List Inside Restore Modal */
+    .snapshot-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0 14px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .snapshot-card {
+      background: var(--input-bg);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .snapshot-card.latest {
+      border-left: 4px solid var(--primary);
+      background: #eef3f1;
+    }
+
+    .snapshot-meta {
+      min-width: 0;
+      flex: 1 1 190px;
+    }
+
+    .snapshot-time {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .snapshot-desc {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
     .toast-stack {
       position: fixed;
       bottom: 16px;
@@ -957,6 +1256,29 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Print Styling untuk Laporan Visual + Pie Chart */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .topbar, .toolbar, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .toast-stack, footer, button {
+        display: none !important;
+      }
+      .page-module, .kpi-card, .pos-card {
+        box-shadow: none !important;
+        border: 1px solid #cccccc !important;
+        background: #ffffff !important;
+        break-inside: avoid;
+      }
+      .table-wrap {
+        display: block !important;
+      }
+      .mobile-tx-list {
+        display: none !important;
+      }
+    }
+
     footer {
       width: 100%;
       max-width: 1120px;
@@ -983,7 +1305,7 @@
     <div class="topbar-inner">
       <div class="brand">
         <h1>FAMILY EXPENSE TRACKER</h1>
-        <p>Pengelolaan anggaran keluarga &bull; Edit pagu langsung per pos &bull; Nyaman di mata</p>
+        <p>Pengelolaan anggaran keluarga &bull; Tata letak fleksibel &bull; Auto-backup otomatis</p>
       </div>
 
       <div class="toolbar">
@@ -992,11 +1314,16 @@
           <input type="month" id="monthPicker" />
         </div>
         <button type="button" class="btn-ghost-light" id="btnCopyPrev">Salin Pagu Bln Lalu</button>
-        <button type="button" class="btn-ghost-light" id="btnBackupJson">Backup JSON</button>
-        <button type="button" class="btn-ghost-light" id="btnRestoreJson">Restore JSON</button>
+        <button type="button" class="btn-ghost-light" id="btnOpenRestoreModal">Restore / Cadangan</button>
         <input type="file" id="fileRestoreJson" accept=".json,application/json" style="display:none" />
         <button type="button" class="btn-primary" id="btnExportCsv">Unduh CSV</button>
+        <button type="button" class="btn-ghost-light" id="btnExportReport">Laporan + Pie</button>
         <button type="button" class="btn-ghost-light" id="btnResetDefault">Reset Default</button>
+      </div>
+
+      <div class="autobackup-badge" id="autoBackupStatus" title="Setiap perubahan otomatis disimpan ke titik pemulihan browser">
+        <span class="autobackup-dot"></span>
+        <span id="autoBackupStatusText">Auto-backup aktif</span>
       </div>
     </div>
   </header>
@@ -1043,29 +1370,26 @@
       </div>
     </section>
 
-    <!-- Daftar Pos Anggaran -->
-    <section>
-      <div class="section-head">
-        <div class="section-head-text">
-          <h2>Rincian &amp; Sisa Pagu per Pos</h2>
-          <p>Ketuk nominal <strong>Pagu</strong> atau tombol <strong>Edit Pagu / Pos</strong> pada kartu mana pun untuk mengubah alokasi.</p>
+    <!-- Kontainer Bagian Fleksibel (Bisa Digeser Naik/Turun atau Drag-and-Drop) -->
+    <div class="modules-stack" id="modulesContainer">
+
+      <!-- MODUL 1 (DEFAULT PALING ATAS): Catat Pengeluaran Harian -->
+      <section class="page-module" id="module-expense-form" data-module-id="expense-form" draggable="true">
+        <div class="module-header">
+          <div class="module-title-wrap">
+            <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
+            <div class="module-title-text">
+              <h2>Catat Pengeluaran Harian</h2>
+              <p>Otomatis memotong sisa pagu pada pos anggaran terpilih.</p>
+            </div>
+          </div>
+          <div class="module-controls">
+            <button type="button" class="btn-outline btn-sm" data-mod-up="expense-form" title="Geser bagian ke atas">&uarr; Naik</button>
+            <button type="button" class="btn-outline btn-sm" data-mod-down="expense-form" title="Geser bagian ke bawah">&darr; Turun</button>
+          </div>
         </div>
-        <button type="button" class="btn-primary" id="btnAddNewPos">+ Tambah Pos Baru</button>
-      </div>
 
-      <div class="filter-pills" id="categoryFilterPills"></div>
-
-      <div class="pos-grid" id="posGrid"></div>
-    </section>
-
-    <!-- Area Input Harian & Riwayat Transaksi -->
-    <section class="workspace-grid">
-      <!-- Form Catat Pengeluaran -->
-      <div class="panel">
-        <h3>Catat Pengeluaran Harian</h3>
-        <p class="panel-sub">Otomatis memotong sisa pagu pada pos anggaran terpilih.</p>
-
-        <form id="expenseForm">
+        <form id="expenseForm" class="expense-form-grid">
           <div class="form-field">
             <label for="txDate">Tanggal</label>
             <input type="date" id="txDate" required />
@@ -1086,16 +1410,63 @@
             <input type="text" id="txAmount" inputmode="numeric" placeholder="Contoh: 150.000" required />
           </div>
 
-          <button type="submit" class="btn-primary" style="width: 100%; height: 42px;">
-            Simpan &amp; Potong Pagu
-          </button>
+          <div class="form-field submit-col">
+            <button type="submit" class="btn-primary" style="width: 100%; height: 42px; padding: 0 18px; white-space: nowrap;">
+              Simpan &amp; Potong Pagu
+            </button>
+          </div>
         </form>
-      </div>
+      </section>
 
-      <!-- Riwayat Transaksi -->
-      <div class="panel">
-        <h3>Riwayat Transaksi Bulan Ini</h3>
-        <p class="panel-sub">Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.</p>
+      <!-- MODUL 2: Rincian & Sisa Pagu per Pos + Diagram Pie -->
+      <section class="page-module" id="module-pos-summary" data-module-id="pos-summary" draggable="true">
+        <div class="module-header">
+          <div class="module-title-wrap">
+            <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
+            <div class="module-title-text">
+              <h2>Rincian &amp; Sisa Pagu per Pos</h2>
+              <p>Ketuk nominal <strong>Pagu</strong> atau tombol <strong>Edit Pagu / Pos</strong> pada kartu untuk mengubah alokasi.</p>
+            </div>
+          </div>
+          <div class="module-controls">
+            <button type="button" class="btn-primary btn-sm" id="btnAddNewPos">+ Tambah Pos</button>
+            <button type="button" class="btn-outline btn-sm" data-mod-up="pos-summary" title="Geser bagian ke atas">&uarr; Naik</button>
+            <button type="button" class="btn-outline btn-sm" data-mod-down="pos-summary" title="Geser bagian ke bawah">&darr; Turun</button>
+          </div>
+        </div>
+
+        <!-- Ringkasan Visual Diagram Pie -->
+        <div class="pie-summary-box">
+          <div class="pie-svg-wrap" id="pieChartContainer"></div>
+          <div class="pie-legend-wrap">
+            <div class="pie-legend-head">
+              <h3 id="pieChartHeading">Distribusi Pengeluaran Terpakai per Pos</h3>
+              <button type="button" class="btn-outline btn-sm" id="btnDownloadPiePng">Unduh Diagram Pie (PNG)</button>
+            </div>
+            <div class="pie-legend-grid" id="pieLegendGrid"></div>
+          </div>
+        </div>
+
+        <div class="filter-pills" id="categoryFilterPills"></div>
+
+        <div class="pos-grid" id="posGrid"></div>
+      </section>
+
+      <!-- MODUL 3: Riwayat Transaksi Bulan Ini -->
+      <section class="page-module" id="module-tx-history" data-module-id="tx-history" draggable="true">
+        <div class="module-header">
+          <div class="module-title-wrap">
+            <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
+            <div class="module-title-text">
+              <h2>Riwayat Transaksi Bulan Ini</h2>
+              <p>Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.</p>
+            </div>
+          </div>
+          <div class="module-controls">
+            <button type="button" class="btn-outline btn-sm" data-mod-up="tx-history" title="Geser bagian ke atas">&uarr; Naik</button>
+            <button type="button" class="btn-outline btn-sm" data-mod-down="tx-history" title="Geser bagian ke bawah">&darr; Turun</button>
+          </div>
+        </div>
 
         <div class="table-filters">
           <select id="filterPos" aria-label="Filter Pos Anggaran">
@@ -1122,14 +1493,15 @@
 
         <!-- Tampilan Kartu Rapi untuk Layar HP (Anti-Terpotong) -->
         <div class="mobile-tx-list" id="mobileTxList"></div>
-      </div>
-    </section>
+      </section>
+
+    </div>
 
   </main>
 
   <footer>
     <span>FAMILY EXPENSE TRACKER &bull; Pengelolaan Anggaran Bulanan Keluarga</span>
-    <span>Data tersimpan otomatis di browser (localStorage). Gunakan Backup JSON untuk cadangan file.</span>
+    <span>Auto-backup tersimpan otomatis di browser setiap ada perubahan.</span>
   </footer>
 
   <!-- MODAL 1: Tambah / Edit Pos & Pagu -->
@@ -1229,108 +1601,236 @@
     </div>
   </div>
 
+  <!-- MODAL 4: Auto-Backup & Restore Instan Tanpa Upload File -->
+  <div class="modal-backdrop" id="restoreModal" role="dialog" aria-modal="true" aria-labelledby="restoreModalTitle">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 id="restoreModalTitle">Auto-Backup &amp; Restore Instan</h3>
+        <button type="button" class="btn-outline btn-sm" id="btnCloseRestoreModal">Tutup</button>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--muted); line-height: 1.5;">
+        Setiap perubahan data otomatis dicadangkan di browser (maks. 10 titik pemulihan terakhir). Ketuk <strong>Pulihkan Sekarang</strong> untuk mengembalikan kondisi data secara instan tanpa upload file.
+      </p>
+
+      <div class="snapshot-list" id="snapshotListContainer"></div>
+
+      <div style="border-top: 1px solid var(--border); padding-top: 12px; margin-top: 8px;">
+        <div style="font-size: 0.74rem; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">
+          Opsi Cadangan File Eksternal (Pindah Perangkat)
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <button type="button" class="btn-outline btn-sm" id="btnBackupJson">Ekspor File JSON</button>
+          <button type="button" class="btn-outline btn-sm" id="btnRestoreJson">Impor File JSON</button>
+          <button type="button" class="btn-outline btn-sm" id="btnResetLayoutOrder">Reset Urutan Tata Letak</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" id="btnDoneRestoreModal">Selesai</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function () {
       'use strict';
 
       const STORAGE_KEY = 'family_expense_tracker_v6';
+      const AUTOBACKUP_KEY = 'family_expense_autobackups_v1';
+      const LAYOUT_KEY = 'family_expense_layout_order_v1';
+      const DEFAULT_MODULE_ORDER = ['expense-form', 'pos-summary', 'tx-history'];
 
       const PALETTE = [
-        { key: 'teal', label: 'Muted Teal', hex: '#355e58', soft: '#dfeae7' },
-        { key: 'blue', label: 'Dusty Blue', hex: '#46637d', soft: '#e2e9ef' },
-        { key: 'ochre', label: 'Warm Ochre', hex: '#9c6631', soft: '#f2e7dc' },
-        { key: 'terracotta', label: 'Terracotta', hex: '#9c5243', soft: '#f2e3e0' },
-        { key: 'olive', label: 'Muted Olive', hex: '#536947', soft: '#e4eae0' },
-        { key: 'plum', label: 'Dusty Plum', hex: '#695375', soft: '#eae4ed' },
-        { key: 'slate', label: 'Slate Gray', hex: '#4f5d66', soft: '#e4e8eb' },
-        { key: 'bronze', label: 'Warm Bronze', hex: '#7c6244', soft: '#ede7df' }
-      ];
-
-      const DEFAULT_CATEGORIES = [
-        { id: 'jatah_istri', name: 'Jatah Istri', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'terracotta' },
-        { id: 'les_anak', name: 'Les Anak', category: 'Keluarga & Pendidikan', budget: 2000000, color: 'blue' },
-        { id: 'jatah_orang_tua', name: 'Jatah Orang Tua', category: 'Keluarga & Pendidikan', budget: 1500000, color: 'teal' },
-        { id: 'kesenangan_pribadi', name: 'Kesenangan Pribadi', category: 'Jalan-Jalan & Kesenangan', budget: 1500000, color: 'ochre' },
-        { id: 'jalan_jalan_keluarga', name: 'Jalan-Jalan Keluarga', category: 'Jalan-Jalan & Kesenangan', budget: 1200000, color: 'bronze' },
-        { id: 'spp_anak', name: 'SPP Anak', category: 'Keluarga & Pendidikan', budget: 1100000, color: 'plum' },
-        { id: 'belanja_bulanan', name: 'Belanja Bulanan', category: 'Rumah & Utilitas', budget: 1000000, color: 'olive' },
-        { id: 'tabungan_sisa_dana', name: 'Tabungan / Sisa Dana', category: 'Tabungan & Investasi', budget: 990000, color: 'teal' },
-        { id: 'listrik_air_internet', name: 'Listrik, Air & Internet', category: 'Rumah & Utilitas', budget: 500000, color: 'slate' },
-        { id: 'cicilan_ipl', name: 'Cicilan IPL (Rp2,5 jt/thn)', category: 'Rumah & Utilitas', budget: 210000, color: 'blue' }
-      ];
-
-      let activeCategoryTab = 'ALL';
-      let modalSelectedColor = 'teal';
-
-      function formatRp(num) {
-        const val = Number(num) || 0;
-        const sign = val < 0 ? '-Rp' : 'Rp';
-        return sign + Math.abs(Math.round(val)).toLocaleString('id-ID');
-      }
-
-      function parseDigits(str) {
-        const cleaned = String(str || '').replace(/[^\d]/g, '');
-        return cleaned ? parseInt(cleaned, 10) : 0;
-      }
-
-      function formatInputThousands(el) {
-        const val = parseDigits(el.value);
-        el.value = val > 0 ? val.toLocaleString('id-ID') : '';
-      }
-
-      function getCurrentMonthStr() {
-        const d = new Date();
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-      }
-
-      function getDefaultDateForMonth(monthStr) {
-        const today = new Date().toISOString().split('T')[0];
-        if (monthStr === getCurrentMonthStr() && today.startsWith(monthStr)) {
-          return today;
-        }
-        return `${monthStr}-01`;
-      }
-
-      function getPaletteObj(key) {
-        return PALETTE.find((p) => p.key === key) || PALETTE[0];
-      }
-
-      function escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = String(str ?? '');
-        return div.innerHTML;
-      }
-
-      function showToast(msg, type = 'info') {
-        const stack = document.getElementById('toastStack');
-        const el = document.createElement('div');
-        el.className = `toast-item ${type === 'warn' ? 'warn' : type === 'error' ? 'error' : ''}`;
-        el.textContent = msg;
-        stack.appendChild(el);
-        setTimeout(() => {
-          el.style.opacity = '0';
-          el.style.transition = 'opacity 0.25s';
-          setTimeout(() => el.remove(), 260);
-        }, 3000);
-      }
-
-      function loadStore() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return { months: {} };
-          const parsed = JSON.parse(raw);
-          return parsed && typeof parsed.months === 'object' ? parsed : { months: {} };
-        } catch (e) {
-          return { months: {} };
-        }
-      }
-
-      function saveStore(store) {
+      function saveStore(store, skipAutoBackup = false, backupLabel = 'Perubahan data') {
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+          if (!skipAutoBackup) {
+            recordAutoBackup(store, backupLabel);
+          }
         } catch (e) {
-          showToast('Gagal menyimpan ke browser. Gunakan Backup JSON.', 'error');
+          showToast('Gagal menyimpan ke browser. Gunakan Ekspor File JSON.', 'error');
         }
+      }
+
+      function loadAutoBackups() {
+        try {
+          const raw = localStorage.getItem(AUTOBACKUP_KEY);
+          const arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function formatTimestampId(isoStr) {
+        try {
+          const d = new Date(isoStr);
+          return d.toLocaleString('id-ID', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
+        } catch (e) {
+          return isoStr;
+        }
+      }
+
+      function updateAutoBackupBadge(latestSnap) {
+        const textEl = document.getElementById('autoBackupStatusText');
+        if (!textEl) return;
+        if (!latestSnap) {
+          textEl.textContent = 'Auto-backup aktif';
+          return;
+        }
+        try {
+          const d = new Date(latestSnap.timestamp);
+          const timeStr = d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+          textEl.textContent = `Auto-backup tersimpan ${timeStr}`;
+        } catch (e) {
+          textEl.textContent = 'Auto-backup tersimpan';
+        }
+      }
+
+      function recordAutoBackup(store, reason = 'Perubahan otomatis') {
+        try {
+          const list = loadAutoBackups();
+          const monthKeys = Object.keys(store.months || {});
+          let totalTx = 0;
+          monthKeys.forEach((k) => {
+            totalTx += Array.isArray(store.months[k].transactions) ? store.months[k].transactions.length : 0;
+          });
+
+          const snap = {
+            id: `snap_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
+            timestamp: new Date().toISOString(),
+            reason,
+            monthCount: monthKeys.length,
+            txCount: totalTx,
+            data: JSON.parse(JSON.stringify(store))
+          };
+
+          list.unshift(snap);
+          const trimmed = list.slice(0, 10);
+          localStorage.setItem(AUTOBACKUP_KEY, JSON.stringify(trimmed));
+          updateAutoBackupBadge(trimmed[0]);
+        } catch (e) {
+          // Abaikan jika kuota storage penuh
+        }
+      }
+
+      function getSavedModuleOrder() {
+        try {
+          const raw = localStorage.getItem(LAYOUT_KEY);
+          const parsed = raw ? JSON.parse(raw) : null;
+          if (Array.isArray(parsed) && parsed.length === DEFAULT_MODULE_ORDER.length) {
+            const valid = DEFAULT_MODULE_ORDER.every((id) => parsed.includes(id));
+            if (valid) return parsed;
+          }
+        } catch (e) {}
+        return [...DEFAULT_MODULE_ORDER];
+      }
+
+      function applyModuleOrder(orderArr) {
+        const container = document.getElementById('modulesContainer');
+        if (!container) return;
+        orderArr.forEach((modId) => {
+          const el = document.getElementById(`module-${modId}`);
+          if (el) container.appendChild(el);
+        });
+        updateModuleOrderButtons();
+      }
+
+      function saveAndApplyModuleOrder(orderArr, notify = true) {
+        localStorage.setItem(LAYOUT_KEY, JSON.stringify(orderArr));
+        applyModuleOrder(orderArr);
+        if (notify) {
+          showToast('Urutan tata letak bagian berhasil diperbarui.');
+        }
+      }
+
+      function moveModuleSection(modId, delta) {
+        const currentOrder = getSavedModuleOrder();
+        const idx = currentOrder.indexOf(modId);
+        if (idx === -1) return;
+        const targetIdx = idx + delta;
+        if (targetIdx < 0 || targetIdx >= currentOrder.length) return;
+        const tmp = currentOrder[idx];
+        currentOrder[idx] = currentOrder[targetIdx];
+        currentOrder[targetIdx] = tmp;
+        saveAndApplyModuleOrder(currentOrder, true);
+      }
+
+      function updateModuleOrderButtons() {
+        const order = getSavedModuleOrder();
+        order.forEach((modId, idx) => {
+          const upBtn = document.querySelector(`[data-mod-up="${modId}"]`);
+          const downBtn = document.querySelector(`[data-mod-down="${modId}"]`);
+          if (upBtn) {
+            upBtn.disabled = idx === 0;
+            upBtn.style.opacity = idx === 0 ? '0.4' : '1';
+            upBtn.style.pointerEvents = idx === 0 ? 'none' : 'auto';
+          }
+          if (downBtn) {
+            downBtn.disabled = idx === order.length - 1;
+            downBtn.style.opacity = idx === order.length - 1 ? '0.4' : '1';
+            downBtn.style.pointerEvents = idx === order.length - 1 ? 'none' : 'auto';
+          }
+        });
+      }
+
+      function setupModuleDragAndDrop() {
+        const container = document.getElementById('modulesContainer');
+        if (!container) return;
+        let draggedId = null;
+
+        container.querySelectorAll('.page-module').forEach((modEl) => {
+          modEl.addEventListener('dragstart', (e) => {
+            if (e.target && ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(e.target.tagName)) {
+              e.preventDefault();
+              return;
+            }
+            draggedId = modEl.getAttribute('data-module-id');
+            modEl.classList.add('dragging');
+            if (e.dataTransfer) {
+              e.dataTransfer.effectAllowed = 'move';
+              e.dataTransfer.setData('text/plain', draggedId);
+            }
+          });
+
+          modEl.addEventListener('dragend', () => {
+            modEl.classList.remove('dragging');
+            container.querySelectorAll('.page-module').forEach((el) => el.classList.remove('drag-over'));
+            draggedId = null;
+          });
+
+          modEl.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (!draggedId || draggedId === modEl.getAttribute('data-module-id')) return;
+            modEl.classList.add('drag-over');
+          });
+
+          modEl.addEventListener('dragleave', () => {
+            modEl.classList.remove('drag-over');
+          });
+
+          modEl.addEventListener('drop', (e) => {
+            e.preventDefault();
+            modEl.classList.remove('drag-over');
+            const targetId = modEl.getAttribute('data-module-id');
+            if (!draggedId || !targetId || draggedId === targetId) return;
+            const order = getSavedModuleOrder();
+            const fromIdx = order.indexOf(draggedId);
+            const toIdx = order.indexOf(targetId);
+            if (fromIdx === -1 || toIdx === -1) return;
+            order.splice(fromIdx, 1);
+            order.splice(toIdx, 0, draggedId);
+            saveAndApplyModuleOrder(order, true);
+          });
+        });
       }
 
       function ensureMonth(store, monthKey) {
@@ -1340,7 +1840,7 @@
             categories: DEFAULT_CATEGORIES.map((c) => ({ ...c })),
             transactions: []
           };
-          saveStore(store);
+          saveStore(store, true);
         } else {
           if (typeof store.months[monthKey].targetIncome !== 'number') {
             store.months[monthKey].targetIncome = 12000000;
@@ -1469,7 +1969,7 @@
         const tmp = mData.categories[idx];
         mData.categories[idx] = mData.categories[targetIdx];
         mData.categories[targetIdx] = tmp;
-        saveStore(store);
+        saveStore(store, false, 'Ubah urutan kartu pos');
         render();
       }
 
@@ -1489,11 +1989,297 @@
             const st = loadStore();
             const md = ensureMonth(st, monthKey);
             md.transactions = md.transactions.filter((t) => t.id !== txId);
-            saveStore(st);
+            saveStore(st, false, `Hapus transaksi: ${txObj.note}`);
             render();
             showToast('Transaksi dihapus & sisa pagu dikembalikan.', 'warn');
           }
         });
+      }
+
+      function getPieChartSlices(mData, spentByPos) {
+        const spentItems = mData.categories
+          .map((cat) => {
+            const val = spentByPos[cat.id] || 0;
+            const pal = getPaletteObj(cat.color);
+            return { id: cat.id, name: cat.name, value: val, color: pal.hex };
+          })
+          .filter((item) => item.value > 0)
+          .sort((a, b) => b.value - a.value);
+
+        const totalVal = spentItems.reduce((s, item) => s + item.value, 0);
+        if (totalVal > 0) {
+          return {
+            mode: 'spent',
+            total: totalVal,
+            slices: spentItems.map((item) => ({
+              ...item,
+              pct: (item.value / totalVal) * 100
+            }))
+          };
+        }
+
+        const budgetItems = mData.categories
+          .map((cat) => {
+            const val = Number(cat.budget) || 0;
+            const pal = getPaletteObj(cat.color);
+            return { id: cat.id, name: cat.name, value: val, color: pal.hex };
+          })
+          .filter((item) => item.value > 0)
+          .sort((a, b) => b.value - a.value);
+
+        const totalPagu = budgetItems.reduce((s, item) => s + item.value, 0);
+        return {
+          mode: 'budget',
+          total: totalPagu,
+          slices: budgetItems.map((item) => ({
+            ...item,
+            pct: totalPagu > 0 ? (item.value / totalPagu) * 100 : 0
+          }))
+        };
+      }
+
+      function buildPieSvgMarkup(pieData, size = 190) {
+        const cx = size / 2;
+        const cy = size / 2;
+        const r = size * 0.42;
+        const innerR = size * 0.25;
+
+        if (!pieData.slices || pieData.slices.length === 0 || pieData.total <= 0) {
+          return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-label="Diagram Pie Kosong">
+            <circle cx="${cx}" cy="${cy}" r="${r}" fill="#dfdcd3" />
+            <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#f8f7f4" />
+          </svg>`;
+        }
+
+        if (pieData.slices.length === 1) {
+          const s = pieData.slices[0];
+          return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-label="Diagram Pie Anggaran">
+            <circle cx="${cx}" cy="${cy}" r="${r}" fill="${s.color}" />
+            <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#f8f7f4" />
+          </svg>`;
+        }
+
+        let startAngle = -Math.PI / 2;
+        const paths = pieData.slices
+          .map((slice) => {
+            const angle = (slice.pct / 100) * Math.PI * 2;
+            const endAngle = startAngle + angle;
+            const largeArc = angle > Math.PI ? 1 : 0;
+
+            const x1 = cx + r * Math.cos(startAngle);
+            const y1 = cy + r * Math.sin(startAngle);
+            const x2 = cx + r * Math.cos(endAngle);
+            const y2 = cy + r * Math.sin(endAngle);
+
+            const ix1 = cx + innerR * Math.cos(endAngle);
+            const iy1 = cy + innerR * Math.sin(endAngle);
+            const ix2 = cx + innerR * Math.cos(startAngle);
+            const iy2 = cy + innerR * Math.sin(startAngle);
+
+            const d = [
+              `M ${x1.toFixed(2)} ${y1.toFixed(2)}`,
+              `A ${r} ${r} 0 ${largeArc} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`,
+              `L ${ix1.toFixed(2)} ${iy1.toFixed(2)}`,
+              `A ${innerR} ${innerR} 0 ${largeArc} 0 ${ix2.toFixed(2)} ${iy2.toFixed(2)}`,
+              'Z'
+            ].join(' ');
+
+            startAngle = endAngle;
+            return `<path d="${d}" fill="${slice.color}" stroke="#f8f7f4" stroke-width="1.5"><title>${escapeHtml(slice.name)}: ${formatRp(slice.value)} (${slice.pct.toFixed(1)}%)</title></path>`;
+          })
+          .join('');
+
+        return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-label="Diagram Pie Anggaran">${paths}</svg>`;
+      }
+
+      function renderPieSection(mData, spentByPos) {
+        const pieData = getPieChartSlices(mData, spentByPos);
+        const container = document.getElementById('pieChartContainer');
+        const headingEl = document.getElementById('pieChartHeading');
+        const legendGrid = document.getElementById('pieLegendGrid');
+
+        const centerTitle = pieData.mode === 'spent' ? 'Total Terpakai' : 'Alokasi Pagu';
+        headingEl.textContent =
+          pieData.mode === 'spent'
+            ? 'Proporsi Pos Anggaran Terpakai (Diagram Pie)'
+            : 'Proporsi Alokasi Pagu Awal (Belum Ada Pengeluaran)';
+
+        container.innerHTML = `
+          ${buildPieSvgMarkup(pieData, 190)}
+          <div class="pie-center-label">
+            <span>${centerTitle}</span>
+            <strong class="tabular">${formatRp(pieData.total)}</strong>
+          </div>
+        `;
+
+        if (pieData.slices.length === 0) {
+          legendGrid.innerHTML = `<div style="font-size:0.78rem; color:var(--muted);">Belum ada data pos untuk ditampilkan.</div>`;
+          return;
+        }
+
+        legendGrid.innerHTML = pieData.slices
+          .map(
+            (s) => `
+            <div class="pie-legend-item">
+              <div class="pie-legend-left">
+                <span class="pie-dot" style="background:${s.color};"></span>
+                <span class="pie-name" title="${escapeHtml(s.name)}">${escapeHtml(s.name)}</span>
+              </div>
+              <span class="pie-val tabular">${s.pct.toFixed(1)}% &bull; ${formatRp(s.value)}</span>
+            </div>
+          `
+          )
+          .join('');
+      }
+
+      function downloadPieChartPng() {
+        const monthKey = document.getElementById('monthPicker').value || getCurrentMonthStr();
+        const store = loadStore();
+        const mData = ensureMonth(store, monthKey);
+        const spentByPos = {};
+        mData.transactions.forEach((tx) => {
+          spentByPos[tx.categoryId] = (spentByPos[tx.categoryId] || 0) + (Number(tx.amount) || 0);
+        });
+        const pieData = getPieChartSlices(mData, spentByPos);
+
+        const canvas = document.createElement('canvas');
+        const rowHeight = 28;
+        const height = Math.max(360, 140 + pieData.slices.length * rowHeight);
+        canvas.width = 760;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#f4f3ef';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#26383a';
+        ctx.fillRect(0, 0, canvas.width, 64);
+
+        ctx.fillStyle = '#f8f7f4';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText(`FAMILY EXPENSE TRACKER — RINGKASAN POS (${monthKey})`, 24, 30);
+        ctx.font = '13px sans-serif';
+        ctx.fillStyle = '#cbd5d3';
+        ctx.fillText(
+          pieData.mode === 'spent'
+            ? `Proporsi Pengeluaran Terpakai • Total: ${formatRp(pieData.total)}`
+            : `Proporsi Alokasi Pagu Bulanan • Total: ${formatRp(pieData.total)}`,
+          24,
+          50
+        );
+
+        const cx = 145;
+        const cy = 205;
+        const r = 100;
+        const innerR = 54;
+
+        if (pieData.slices.length === 0 || pieData.total <= 0) {
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fillStyle = '#d5d2c8';
+          ctx.fill();
+        } else {
+          let startAngle = -Math.PI / 2;
+          pieData.slices.forEach((s) => {
+            const angle = (s.pct / 100) * Math.PI * 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, startAngle, startAngle + angle);
+            ctx.closePath();
+            ctx.fillStyle = s.color;
+            ctx.fill();
+            ctx.strokeStyle = '#f4f3ef';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            startAngle += angle;
+          });
+        }
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, innerR, 0, Math.PI * 2);
+        ctx.fillStyle = '#f4f3ef';
+        ctx.fill();
+
+        ctx.fillStyle = '#5c6664';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(pieData.mode === 'spent' ? 'TERPAKAI' : 'TOTAL PAGU', cx, cy - 4);
+        ctx.fillStyle = '#222928';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText(formatRp(pieData.total), cx, cy + 14);
+        ctx.textAlign = 'left';
+
+        let ly = 104;
+        pieData.slices.forEach((s) => {
+          ctx.fillStyle = s.color;
+          ctx.fillRect(285, ly - 10, 12, 12);
+          ctx.fillStyle = '#222928';
+          ctx.font = 'bold 13px sans-serif';
+          ctx.fillText(s.name, 305, ly);
+          ctx.fillStyle = '#5c6664';
+          ctx.font = '13px sans-serif';
+          ctx.fillText(`${s.pct.toFixed(1)}% (${formatRp(s.value)})`, 520, ly);
+          ly += rowHeight;
+        });
+
+        canvas.toBlob((blob) => {
+          if (!blob) return;
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `diagram_pie_anggaran_${monthKey}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(a.href);
+          showToast('Gambar Diagram Pie (PNG) berhasil diunduh.');
+        });
+      }
+
+      function openRestoreModal() {
+        const listContainer = document.getElementById('snapshotListContainer');
+        const backups = loadAutoBackups();
+
+        if (backups.length === 0) {
+          listContainer.innerHTML = `<div class="empty-box">Belum ada titik auto-backup tersimpan. Lakukan perubahan atau simpan transaksi untuk membuat cadangan otomatis.</div>`;
+        } else {
+          listContainer.innerHTML = backups
+            .map((snap, idx) => {
+              const badge = idx === 0 ? `<span class="pill pill-teal" style="margin-left:6px;">Terbaru</span>` : '';
+              return `
+                <div class="snapshot-card ${idx === 0 ? 'latest' : ''}">
+                  <div class="snapshot-meta">
+                    <div class="snapshot-time">${escapeHtml(formatTimestampId(snap.timestamp))}${badge}</div>
+                    <div class="snapshot-desc">${escapeHtml(snap.reason)} &bull; ${snap.monthCount} bulan, ${snap.txCount} transaksi</div>
+                  </div>
+                  <button type="button" class="btn-primary btn-sm" data-restore-snap="${escapeHtml(snap.id)}">Pulihkan Sekarang</button>
+                </div>
+              `;
+            })
+            .join('');
+
+          listContainer.querySelectorAll('[data-restore-snap]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const snapId = btn.getAttribute('data-restore-snap');
+              const targetSnap = loadAutoBackups().find((s) => s.id === snapId);
+              if (!targetSnap || !targetSnap.data) return;
+
+              document.getElementById('restoreModal').classList.remove('open');
+              openConfirm({
+                title: 'Pulihkan Titik Auto-Backup Ini?',
+                desc: `Kembalikan seluruh data ke kondisi pada ${formatTimestampId(targetSnap.timestamp)} (${targetSnap.reason})?`,
+                okText: 'Pulihkan Sekarang',
+                onConfirm: () => {
+                  saveStore(targetSnap.data, false, `Pulihkan backup (${formatTimestampId(targetSnap.timestamp)})`);
+                  activeCategoryTab = 'ALL';
+                  render();
+                  showToast('Data berhasil dipulihkan secara instan!');
+                }
+              });
+            });
+          });
+        }
+
+        document.getElementById('restoreModal').classList.add('open');
       }
 
       function render() {
@@ -1569,6 +2355,9 @@
           remStatus.textContent = 'Aman terkendali';
           remStatus.style.color = 'var(--accent-teal)';
         }
+
+        // Render Visual Diagram Pie
+        renderPieSection(mData, spentByPos);
 
         // Filter Pills Kategori
         const uniqueGroups = Array.from(new Set(mData.categories.map((c) => c.category)));
@@ -1788,6 +2577,25 @@
         monthPicker.value = initMonth;
         document.getElementById('txDate').value = getDefaultDateForMonth(initMonth);
 
+        // Terapkan urutan tata letak fleksibel tersimpan (default: Catat Pengeluaran Harian di atas)
+        applyModuleOrder(getSavedModuleOrder());
+        setupModuleDragAndDrop();
+
+        document.querySelectorAll('[data-mod-up]').forEach((btn) => {
+          btn.addEventListener('click', () => moveModuleSection(btn.getAttribute('data-mod-up'), -1));
+        });
+        document.querySelectorAll('[data-mod-down]').forEach((btn) => {
+          btn.addEventListener('click', () => moveModuleSection(btn.getAttribute('data-mod-down'), 1));
+        });
+
+        // Inisialisasi Auto-Backup awal jika belum ada snapshot
+        const existingBackups = loadAutoBackups();
+        if (existingBackups.length === 0) {
+          recordAutoBackup(loadStore(), 'Inisialisasi awal');
+        } else {
+          updateAutoBackupBadge(existingBackups[0]);
+        }
+
         monthPicker.addEventListener('change', () => {
           document.getElementById('txDate').value = getDefaultDateForMonth(monthPicker.value);
           activeCategoryTab = 'ALL';
@@ -1839,7 +2647,7 @@
               target.category = category;
               target.budget = budget;
               target.color = modalSelectedColor;
-              saveStore(store);
+              saveStore(store, false, `Edit pos: ${name}`);
               closePosModal();
               render();
               showToast(`Pagu "${name}" diperbarui menjadi ${formatRp(budget)}.`);
@@ -1852,7 +2660,7 @@
               budget,
               color: modalSelectedColor
             });
-            saveStore(store);
+            saveStore(store, false, `Tambah pos: ${name}`);
             closePosModal();
             render();
             showToast(`Pos baru "${name}" (${formatRp(budget)}) ditambahkan.`);
@@ -1887,7 +2695,7 @@
           }
 
           mData.categories = mData.categories.filter((c) => c.id !== editId);
-          saveStore(store);
+          saveStore(store, false, `Hapus pos: ${posObj ? posObj.name : ''}`);
           closePosModal();
           render();
           showToast(`Pos "${posObj ? posObj.name : ''}" dihapus.`, 'warn');
@@ -1911,7 +2719,7 @@
           const store = loadStore();
           const mData = ensureMonth(store, monthPicker.value);
           mData.targetIncome = val;
-          saveStore(store);
+          saveStore(store, false, `Ubah target gaji: ${formatRp(val)}`);
           closeTargetModal();
           render();
           showToast(`Target sisa gaji bulanan diubah ke ${formatRp(val)}.`);
@@ -1942,7 +2750,7 @@
             amount
           });
 
-          saveStore(store);
+          saveStore(store, false, `Catat pengeluaran: ${note} (${formatRp(amount)})`);
           document.getElementById('txNote').value = '';
           txAmountEl.value = '';
           render();
@@ -1981,7 +2789,7 @@
               const targetMonth = ensureMonth(st, curr);
               targetMonth.targetIncome = st.months[prevKey].targetIncome || 12000000;
               targetMonth.categories = st.months[prevKey].categories.map((c) => ({ ...c }));
-              saveStore(st);
+              saveStore(st, false, `Salin pagu dari ${prevKey} ke ${curr}`);
               render();
               showToast(`Pagu dari ${prevKey} berhasil disalin ke ${curr}.`);
             }
@@ -2000,12 +2808,25 @@
               const md = ensureMonth(st, curr);
               md.targetIncome = 12000000;
               md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
-              saveStore(st);
+              saveStore(st, false, `Reset default bulan ${curr}`);
               activeCategoryTab = 'ALL';
               render();
               showToast(`Bulan ${curr} dikembalikan ke pengaturan awal Rp12.000.000.`);
             }
           });
+        });
+
+        document.getElementById('btnOpenRestoreModal').addEventListener('click', openRestoreModal);
+        document.getElementById('btnCloseRestoreModal').addEventListener('click', () => {
+          document.getElementById('restoreModal').classList.remove('open');
+        });
+        document.getElementById('btnDoneRestoreModal').addEventListener('click', () => {
+          document.getElementById('restoreModal').classList.remove('open');
+        });
+
+        document.getElementById('btnResetLayoutOrder').addEventListener('click', () => {
+          saveAndApplyModuleOrder([...DEFAULT_MODULE_ORDER], false);
+          showToast('Urutan tata letak dikembalikan ke posisi awal.');
         });
 
         document.getElementById('btnBackupJson').addEventListener('click', () => {
@@ -2032,14 +2853,15 @@
             try {
               const parsed = JSON.parse(ev.target.result);
               if (!parsed || typeof parsed.months !== 'object') throw new Error('Invalid');
+              document.getElementById('restoreModal').classList.remove('open');
               openConfirm({
-                title: 'Pulihkan Data dari Backup JSON?',
+                title: 'Pulihkan Data dari File JSON?',
                 desc: 'Data pos dan transaksi di browser akan digantikan dengan isi file backup JSON ini.',
                 okText: 'Pulihkan Data',
                 onConfirm: () => {
-                  saveStore({ months: parsed.months });
+                  saveStore({ months: parsed.months }, false, 'Impor file JSON eksternal');
                   render();
-                  showToast('Data berhasil dipulihkan dari Backup JSON!');
+                  showToast('Data berhasil dipulihkan dari file JSON!');
                 }
               });
             } catch (err) {
@@ -2049,28 +2871,77 @@
           reader.readAsText(file);
         });
 
+        document.getElementById('btnDownloadPiePng').addEventListener('click', downloadPieChartPng);
+
+        document.getElementById('btnExportReport').addEventListener('click', () => {
+          showToast('Membuka pratinjau cetak laporan lengkap beserta Diagram Pie...');
+          setTimeout(() => window.print(), 250);
+        });
+
         document.getElementById('btnExportCsv').addEventListener('click', () => {
           const curr = monthPicker.value;
           const store = loadStore();
           const mData = ensureMonth(store, curr);
           const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c.name]));
 
-          let csv = 'Tanggal,Pos Anggaran,Keterangan,Nominal\n';
+          const spentByPos = {};
+          mData.transactions.forEach((t) => {
+            spentByPos[t.categoryId] = (spentByPos[t.categoryId] || 0) + (Number(t.amount) || 0);
+          });
+
+          const rows = [];
+          // BAGIAN 1: RINGKASAN POS ANGGARAN & TOTAL
+          rows.push(`"RINGKASAN POS ANGGARAN BULAN ${curr}"`);
+          rows.push('Pos Anggaran,Kelompok Kategori,Pagu Bulanan (Rp),Terpakai (Rp),Sisa Pagu (Rp),Persentase Terpakai');
+
+          let sumPagu = 0;
+          let sumSpent = 0;
+          let sumRem = 0;
+
+          mData.categories.forEach((cat) => {
+            const pagu = Number(cat.budget) || 0;
+            const spent = spentByPos[cat.id] || 0;
+            const rem = pagu - spent;
+            const pct = pagu > 0 ? ((spent / pagu) * 100).toFixed(1) + '%' : (spent > 0 ? '100.0%' : '0.0%');
+
+            sumPagu += pagu;
+            sumSpent += spent;
+            sumRem += rem;
+
+            rows.push(
+              `"${String(cat.name).replace(/"/g, '""')}","${String(cat.category).replace(/"/g, '""')}",${pagu},${spent},${rem},"${pct}"`
+            );
+          });
+
+          const totalPct = sumPagu > 0 ? ((sumSpent / sumPagu) * 100).toFixed(1) + '%' : '0.0%';
+          rows.push(`"TOTAL KESELURUHAN","",${sumPagu},${sumSpent},${sumRem},"${totalPct}"`);
+          rows.push('');
+
+          // BAGIAN 2: RINCIAN CATATAN PENGELUARAN HARIAN & TOTAL
+          rows.push(`"RINCIAN CATATAN PENGELUARAN HARIAN BULAN ${curr}"`);
+          rows.push('Tanggal,Pos Anggaran,Keterangan,Nominal (Rp)');
+
+          let totalDailyExpense = 0;
           mData.transactions.forEach((t) => {
             const posName = (catMap[t.categoryId] || 'Lainnya').replace(/"/g, '""');
             const note = String(t.note).replace(/"/g, '""');
-            csv += `${t.date},"${posName}","${note}",${t.amount}\n`;
+            const amt = Number(t.amount) || 0;
+            totalDailyExpense += amt;
+            rows.push(`${t.date},"${posName}","${note}",${amt}`);
           });
 
-          const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+          rows.push(`"TOTAL PENGELUARAN HARIAN","","",${totalDailyExpense}`);
+
+          const csvContent = '\uFEFF' + rows.join('\n');
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
           const a = document.createElement('a');
           a.href = URL.createObjectURL(blob);
-          a.download = `family_expense_${curr}.csv`;
+          a.download = `family_expense_lengkap_${curr}.csv`;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
           URL.revokeObjectURL(a.href);
-          showToast(`CSV bulan ${curr} berhasil diunduh.`);
+          showToast(`CSV lengkap & terjumlahkan (${curr}) berhasil diunduh.`);
         });
 
         document.getElementById('filterPos').addEventListener('change', render);
