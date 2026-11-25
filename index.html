@@ -100,7 +100,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 11px;
+      gap: 10px;
       min-width: 0;
     }
 
@@ -130,7 +130,7 @@
       font-size: 0.78rem;
       color: #cbd5d3;
       margin-top: 3px;
-      max-width: 540px;
+      max-width: 580px;
       overflow-wrap: break-word;
       word-break: break-word;
     }
@@ -182,6 +182,57 @@
       -webkit-appearance: none;
     }
 
+    /* Rentang Siklus Pembukuan Aktif & Status Auto-Backup */
+    .header-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .cycle-range-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #f8f7f4;
+      background: rgba(156, 102, 49, 0.42);
+      border: 1px solid rgba(226, 184, 135, 0.42);
+      padding: 4px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .cycle-range-pill:hover {
+      background: rgba(156, 102, 49, 0.62);
+    }
+
+    .autobackup-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #d6e4e1;
+      background: rgba(53, 94, 88, 0.45);
+      border: 1px solid rgba(136, 184, 176, 0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .autobackup-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #88c4b8;
+      flex-shrink: 0;
+    }
+
     /* =====================================================================
        BUTTONS (FLUID & TOUCH FRIENDLY)
        ===================================================================== */
@@ -218,6 +269,16 @@
 
     .btn-ghost-light:hover {
       background: rgba(255, 255, 255, 0.16);
+    }
+
+    .btn-cycle-light {
+      background: rgba(226, 184, 135, 0.18);
+      color: #f9eedf;
+      border-color: rgba(226, 184, 135, 0.38);
+    }
+
+    .btn-cycle-light:hover {
+      background: rgba(226, 184, 135, 0.28);
     }
 
     .btn-primary {
@@ -264,7 +325,6 @@
       font-size: 0.74rem;
     }
 
-    /* Tombol See More / See Less Full-Width Rapi */
     .see-more-bar {
       margin-top: 14px;
       display: flex;
@@ -290,30 +350,6 @@
     }
 
     /* =====================================================================
-       AUTO-BACKUP STATUS BADGE DI HEADER
-       ===================================================================== */
-    .autobackup-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #d6e4e1;
-      background: rgba(53, 94, 88, 0.42);
-      border: 1px solid rgba(136, 184, 176, 0.35);
-      padding: 4px 10px;
-      border-radius: 999px;
-    }
-
-    .autobackup-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #88c4b8;
-      flex-shrink: 0;
-    }
-
-    /* =====================================================================
        CONTAINER & SYMMETRIC MOBILE-SAFE GRID
        ===================================================================== */
     .container {
@@ -322,6 +358,56 @@
       margin: 0 auto;
       padding: 16px 14px 36px;
       min-width: 0;
+    }
+
+    /* Banner Setup Siklus Pembukuan (Bisa ditutup atau dibuka ulang kapan saja) */
+    .cycle-setup-banner {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-left: 4px solid var(--accent-ochre);
+      border-radius: var(--radius-lg);
+      padding: 13px 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .cycle-setup-info {
+      flex: 1 1 240px;
+      min-width: 0;
+    }
+
+    .cycle-setup-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cycle-setup-desc {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 2px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .cycle-setup-actions {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
     }
 
     .kpi-grid {
@@ -524,7 +610,7 @@
       width: 100%;
       max-width: 100%;
       display: grid;
-      grid-template-columns: 150px minmax(0, 1.2fr) minmax(0, 1.4fr) 165px auto;
+      grid-template-columns: 155px minmax(0, 1.2fr) minmax(0, 1.4fr) 165px auto;
       gap: 10px;
       align-items: end;
     }
@@ -546,6 +632,17 @@
 
     .expense-form-grid .form-field {
       margin-bottom: 0;
+    }
+
+    .date-range-hint {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
     }
 
     /* =====================================================================
@@ -1136,7 +1233,7 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
       width: 100%;
-      max-width: 440px;
+      max-width: 450px;
       padding: 18px;
       max-height: 90vh;
       overflow-y: auto;
@@ -1163,6 +1260,36 @@
       flex-wrap: wrap;
       gap: 6px;
       margin-top: 8px;
+    }
+
+    .cycle-preview-card {
+      background: var(--primary-soft);
+      border: 1px solid #b8d1cc;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .cycle-preview-card .label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+    }
+
+    .cycle-preview-card .value {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 3px;
+    }
+
+    .cycle-preview-card .hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.45;
     }
 
     .swatch-grid {
@@ -1272,7 +1399,7 @@
       align-items: center;
       gap: 8px;
       width: calc(100% - 28px);
-      max-width: 380px;
+      max-width: 390px;
       pointer-events: none;
     }
 
@@ -1310,7 +1437,7 @@
         background: #ffffff !important;
         color: #000000 !important;
       }
-      .topbar, .toolbar, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .see-more-bar, .toast-stack, footer, button {
+      .topbar, .toolbar, .cycle-setup-banner, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .see-more-bar, .toast-stack, footer, button {
         display: none !important;
       }
       .page-module, .kpi-card, .pos-card {
@@ -1353,14 +1480,17 @@
     <div class="topbar-inner">
       <div class="brand">
         <h1>FAMILY EXPENSE TRACKER</h1>
-        <p>Pengelolaan anggaran keluarga &bull; Ringkas &amp; presisi &bull; Auto-backup otomatis</p>
+        <p>Pengelolaan anggaran keluarga &bull; Siklus gajian fleksibel &bull; Auto-backup otomatis</p>
       </div>
 
       <div class="toolbar">
         <div class="month-box">
-          <label for="monthPicker">Bulan:</label>
+          <label for="monthPicker">Buku Periode:</label>
           <input type="month" id="monthPicker" />
         </div>
+        <button type="button" class="btn-cycle-light" id="btnOpenCycleModal" title="Atur tanggal mulai dan berakhir siklus pembukuan">
+          &#9881; <span id="btnCycleLabel">Siklus: Tgl 25 – 24</span>
+        </button>
         <button type="button" class="btn-ghost-light" id="btnCopyPrev">Salin Pagu Bln Lalu</button>
         <button type="button" class="btn-ghost-light" id="btnOpenRestoreModal">Restore / Cadangan</button>
         <input type="file" id="fileRestoreJson" accept=".json,application/json" style="display:none" />
@@ -1369,15 +1499,39 @@
         <button type="button" class="btn-ghost-light" id="btnResetDefault">Reset Default</button>
       </div>
 
-      <div class="autobackup-badge" id="autoBackupStatus" title="Setiap perubahan otomatis disimpan ke titik pemulihan browser">
-        <span class="autobackup-dot"></span>
-        <span id="autoBackupStatusText">Auto-backup aktif</span>
+      <div class="header-meta-row">
+        <button type="button" class="cycle-range-pill" id="headerCycleRangePill" title="Ketuk untuk mengubah tanggal mulai pembukuan">
+          &#128197; <span id="headerCycleRangeText">Periode: 25 Nov 2026 – 24 Des 2026</span>
+        </button>
+        <div class="autobackup-badge" id="autoBackupStatus" title="Setiap perubahan otomatis disimpan ke titik pemulihan browser">
+          <span class="autobackup-dot"></span>
+          <span id="autoBackupStatusText">Auto-backup aktif</span>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- Main Container -->
   <main class="container">
+
+    <!-- Banner Pengaturan Siklus Pembukuan (Set Up Awal & Penarikan Transaksi) -->
+    <section class="cycle-setup-banner" id="cycleSetupBanner">
+      <div class="cycle-setup-info">
+        <div class="cycle-setup-title">
+          <span>&#128198; Siklus Pembukuan Aktif:</span>
+          <span class="pill pill-ochre" id="bannerCycleBadge">Tgl 25 s/d Tgl 24 Bln Berikutnya</span>
+        </div>
+        <p class="cycle-setup-desc" id="bannerCycleDesc">
+          Periode buku <strong>2026-11</strong> mencakup transaksi <strong>25 Nov 2026 – 24 Des 2026</strong>. Saat masuk tanggal 1 Des, catatan dan pagu tidak akan hilang.
+        </p>
+      </div>
+      <div class="cycle-setup-actions">
+        <button type="button" class="btn-outline btn-sm" id="btnSyncMisplacedTx" title="Tarik transaksi dari buku periode lain yang tanggalnya masuk dalam rentang siklus aktif">
+          Tarik Transaksi Masuk Siklus
+        </button>
+        <button type="button" class="btn-primary btn-sm" id="btnBannerEditCycle">Atur Tgl Mulai Buku</button>
+      </div>
+    </section>
 
     <!-- 4 KPI Cards -->
     <section class="kpi-grid">
@@ -1410,7 +1564,7 @@
 
       <div class="kpi-card teal" id="kpiRemCard">
         <div class="kpi-top">
-          <span class="kpi-label">Sisa Pagu Bulan Ini</span>
+          <span class="kpi-label">Sisa Pagu Periode Ini</span>
           <span class="pill pill-teal tabular" id="kpiRemPctBadge">100%</span>
         </div>
         <div class="kpi-val tabular" id="kpiTotalRemaining" style="color: var(--accent-teal);">Rp18.000.000</div>
@@ -1428,7 +1582,7 @@
             <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
             <div class="module-title-text">
               <h2>Catat Pengeluaran Harian</h2>
-              <p>Otomatis memotong sisa pagu pada pos anggaran terpilih.</p>
+              <p>Otomatis memotong sisa pagu pada pos anggaran terpilih (lintas bulan kalender dalam 1 siklus aman).</p>
             </div>
           </div>
           <div class="module-controls">
@@ -1464,6 +1618,11 @@
             </button>
           </div>
         </form>
+
+        <div class="date-range-hint">
+          <span id="formCycleRangeHint">Rentang siklus buku aktif: <strong>25 Nov 2026 – 24 Des 2026</strong></span>
+          <span id="autoRouteInfoHint">Tanggal di luar siklus aktif akan otomatis diarahkan ke buku periode yang sesuai.</span>
+        </div>
       </section>
 
       <!-- MODUL 2: Rincian & Sisa Pagu per Pos + Diagram Pie -->
@@ -1506,13 +1665,13 @@
         </div>
       </section>
 
-      <!-- MODUL 3: Riwayat Transaksi Bulan Ini -->
+      <!-- MODUL 3: Riwayat Transaksi Periode Ini -->
       <section class="page-module" id="module-tx-history" data-module-id="tx-history" draggable="true">
         <div class="module-header">
           <div class="module-title-wrap">
             <span class="drag-handle" title="Seret atau gunakan panah untuk menggeser urutan bagian">&#9776;</span>
             <div class="module-title-text">
-              <h2>Riwayat Transaksi Bulan Ini</h2>
+              <h2>Riwayat Transaksi Periode Ini</h2>
               <p id="txHistorySubtitle">Menampilkan 3 transaksi terakhir. Ketuk <strong>See More</strong> untuk melihat seluruh transaksi.</p>
             </div>
           </div>
@@ -1562,6 +1721,48 @@
     <span>Auto-backup tersimpan otomatis di browser setiap ada perubahan.</span>
   </footer>
 
+  <!-- MODAL 0: Set Up Awal & Pengaturan Siklus Pembukuan (Cut-Off Gajian) -->
+  <div class="modal-backdrop" id="cycleModal" role="dialog" aria-modal="true" aria-labelledby="cycleModalTitle">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 id="cycleModalTitle">Set Up Siklus Pembukuan (Gajian)</h3>
+        <button type="button" class="btn-outline btn-sm" id="btnCloseCycleModal">Tutup</button>
+      </div>
+
+      <form id="cycleForm">
+        <div class="form-field">
+          <label for="cycleStartDaySelect">Tanggal Pembukuan Dimulai Setiap Bulan</label>
+          <select id="cycleStartDaySelect" required></select>
+          <div class="quick-adjust-row">
+            <button type="button" class="btn-outline btn-sm" data-preset-day="25">Gajian Tgl 25 (25 – 24)</button>
+            <button type="button" class="btn-outline btn-sm" data-preset-day="1">Awal Bulan (Tgl 1 – Akhir Bln)</button>
+            <button type="button" class="btn-outline btn-sm" data-preset-day="20">Tgl 20 (20 – 19)</button>
+          </div>
+        </div>
+
+        <div class="cycle-preview-card">
+          <div class="label">Pratinjau Siklus Pembukuan</div>
+          <div class="value" id="cycleModalPreviewTitle">Tanggal 25 s/d Tanggal 24 bulan berikutnya</div>
+          <div class="hint" id="cycleModalPreviewExample">
+            Contoh: Buku periode <strong>2026-11</strong> akan mencatat transaksi mulai <strong>25 Nov 2026</strong> sampai <strong>24 Des 2026</strong>. Saat tanggal 1 Des 2026 tiba, buku 2026-11 tetap terbuka dan seluruh riwayat tetap aman.
+          </div>
+        </div>
+
+        <div class="form-field" style="margin-top: 12px; margin-bottom: 0;">
+          <label style="display:flex; align-items:flex-start; gap:8px; font-weight:600; cursor:pointer; font-size:0.8rem;">
+            <input type="checkbox" id="chkAutoReorganizeTx" checked style="width:auto; height:auto; margin-top:3px; -webkit-appearance:checkbox; appearance:checkbox;" />
+            <span>Otomatis kelompokkan ulang transaksi yang sudah ada agar sesuai tanggal siklus pembukuan baru</span>
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-outline" id="btnCancelCycleModal">Batal</button>
+          <button type="submit" class="btn-primary">Simpan Pengaturan Siklus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL 1: Tambah / Edit Pos & Pagu -->
   <div class="modal-backdrop" id="posModal" role="dialog" aria-modal="true" aria-labelledby="posModalTitle">
     <div class="modal-box">
@@ -1585,7 +1786,7 @@
         </div>
 
         <div class="form-field">
-          <label for="posBudgetInput">Nominal Pagu Bulanan (Rp)</label>
+          <label for="posBudgetInput">Nominal Pagu Periode (Rp)</label>
           <input type="text" id="posBudgetInput" inputmode="numeric" required placeholder="0" style="font-weight: 800; font-size: 1rem;" />
           <div class="quick-adjust-row">
             <button type="button" class="btn-outline btn-sm" data-adj="-100000">-100 rb</button>
@@ -1626,7 +1827,7 @@
   <div class="modal-backdrop" id="targetModal" role="dialog" aria-modal="true" aria-labelledby="targetModalTitle">
     <div class="modal-box" style="max-width: 400px;">
       <div class="modal-header">
-        <h3 id="targetModalTitle">Ubah Target Sisa Gaji Bulanan</h3>
+        <h3 id="targetModalTitle">Ubah Target Sisa Gaji Periode</h3>
         <button type="button" class="btn-outline btn-sm" id="btnCloseTargetModal">Tutup</button>
       </div>
       <form id="targetForm">
@@ -1634,7 +1835,7 @@
           <label for="targetIncomeInput">Total Dana Sisa Gaji Siap Bagi (Rp)</label>
           <input type="text" id="targetIncomeInput" inputmode="numeric" required style="font-weight:800; font-size:1rem;" />
           <p style="font-size: 0.75rem; color: var(--muted); margin-top: 6px;">
-            Acuan pembanding terhadap total pagu seluruh pos anggaran Anda.
+            Acuan pembanding terhadap total pagu seluruh pos anggaran Anda pada periode ini.
           </p>
         </div>
         <div class="modal-footer">
@@ -1694,11 +1895,14 @@
     (function () {
       'use strict';
 
-      const STORAGE_KEY = 'family_expense_tracker_v7';
-      const LEGACY_KEYS = ['family_expense_tracker_v6', 'family_expense_tracker_v5'];
+      const STORAGE_KEY = 'family_expense_tracker_v8';
+      const LEGACY_KEYS = ['family_expense_tracker_v7', 'family_expense_tracker_v6', 'family_expense_tracker_v5'];
       const AUTOBACKUP_KEY = 'family_expense_autobackups_v1';
       const LAYOUT_KEY = 'family_expense_layout_order_v1';
       const DEFAULT_MODULE_ORDER = ['expense-form', 'pos-summary', 'tx-history'];
+      const DEFAULT_CYCLE_START_DAY = 25; // Default siklus gajian tanggal 25 s/d 24 bulan berikutnya
+
+      const MONTH_NAMES_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
       const PALETTE = [
         { key: 'teal', label: 'Muted Teal', hex: '#355e58', soft: '#dfeae7' },
@@ -1774,6 +1978,108 @@
       let showAllPos = false;
       let showAllTx = false;
 
+      // =====================================================================
+      // UTILITAS SIKLUS TANGGAL PEMBUKUAN (CUT-OFF GAJIAN)
+      // =====================================================================
+      function clampStartDay(day) {
+        const n = parseInt(day, 10);
+        if (isNaN(n) || n < 1) return DEFAULT_CYCLE_START_DAY;
+        return Math.min(28, n);
+      }
+
+      function toIsoDate(year, month1to12, day) {
+        return `${year}-${String(month1to12).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      }
+
+      function getTodayIsoLocal() {
+        const d = new Date();
+        return toIsoDate(d.getFullYear(), d.getMonth() + 1, d.getDate());
+      }
+
+      function formatShortDateId(isoStr) {
+        const parts = String(isoStr || '').split('-').map(Number);
+        if (parts.length !== 3 || !parts[0]) return isoStr;
+        const [y, m, d] = parts;
+        return `${d} ${MONTH_NAMES_ID[m - 1] || m} ${y}`;
+      }
+
+      /**
+       * Menghitung rentang tanggal mulai & berakhir untuk buku periode (YYYY-MM)
+       * Jika startDay = 25 & monthKey = '2026-11' => 2026-11-25 s/d 2026-12-24
+       * Jika startDay = 1  & monthKey = '2026-11' => 2026-11-01 s/d 2026-11-30
+       */
+      function getCycleRange(monthKey, startDayRaw) {
+        const startDay = clampStartDay(startDayRaw);
+        const [year, month] = String(monthKey).split('-').map(Number);
+        const startIso = toIsoDate(year, month, startDay);
+
+        if (startDay === 1) {
+          const lastDayOfMonth = new Date(year, month, 0).getDate();
+          const endIso = toIsoDate(year, month, lastDayOfMonth);
+          return {
+            startDay: 1,
+            endDay: lastDayOfMonth,
+            startIso,
+            endIso,
+            labelShort: `Tgl 1 – Akhir Bln`,
+            labelRange: `${formatShortDateId(startIso)} – ${formatShortDateId(endIso)}`
+          };
+        }
+
+        const nextDate = new Date(year, month, 1); // month sudah 1-based sehingga ini adalah bulan berikutnya
+        const nextYear = nextDate.getFullYear();
+        const nextMonth = nextDate.getMonth() + 1;
+        const endDay = startDay - 1;
+        const endIso = toIsoDate(nextYear, nextMonth, endDay);
+
+        return {
+          startDay,
+          endDay,
+          startIso,
+          endIso,
+          labelShort: `Tgl ${startDay} – ${endDay}`,
+          labelRange: `${formatShortDateId(startIso)} – ${formatShortDateId(endIso)}`
+        };
+      }
+
+      /**
+       * Menentukan kunci buku periode (YYYY-MM) dari tanggal transaksi (YYYY-MM-DD)
+       * Contoh startDay = 25:
+       * - 2026-11-25 -> '2026-11'
+       * - 2026-12-01 -> '2026-11' (belum masuk tgl 25 Des, jadi tetap di buku Nov!)
+       * - 2026-12-24 -> '2026-11'
+       * - 2026-12-25 -> '2026-12'
+       */
+      function getPeriodKeyForDate(isoDateStr, startDayRaw) {
+        const startDay = clampStartDay(startDayRaw);
+        const parts = String(isoDateStr || '').split('-').map(Number);
+        if (parts.length !== 3 || !parts[0]) return getCurrentCyclePeriodKey(startDay);
+        const [y, m, d] = parts;
+
+        if (startDay === 1 || d >= startDay) {
+          return `${y}-${String(m).padStart(2, '0')}`;
+        }
+
+        const prev = new Date(y, m - 2, 1);
+        return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}`;
+      }
+
+      function getCurrentCyclePeriodKey(startDayRaw) {
+        return getPeriodKeyForDate(getTodayIsoLocal(), startDayRaw);
+      }
+
+      function getDefaultDateForCycle(monthKey, startDayRaw) {
+        const todayIso = getTodayIsoLocal();
+        const range = getCycleRange(monthKey, startDayRaw);
+        if (todayIso >= range.startIso && todayIso <= range.endIso) {
+          return todayIso;
+        }
+        return range.startIso;
+      }
+
+      // =====================================================================
+      // FORMAT RUPIAH & PENYIMPANAN
+      // =====================================================================
       function formatRp(num) {
         const val = Number(num) || 0;
         const sign = val < 0 ? '-Rp' : 'Rp';
@@ -1788,19 +2094,6 @@
       function formatInputThousands(el) {
         const val = parseDigits(el.value);
         el.value = val > 0 ? val.toLocaleString('id-ID') : '';
-      }
-
-      function getCurrentMonthStr() {
-        const d = new Date();
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-      }
-
-      function getDefaultDateForMonth(monthStr) {
-        const today = new Date().toISOString().split('T')[0];
-        if (monthStr === getCurrentMonthStr() && today.startsWith(monthStr)) {
-          return today;
-        }
-        return `${monthStr}-01`;
       }
 
       function getPaletteObj(key) {
@@ -1824,11 +2117,33 @@
           el.style.opacity = '0';
           el.style.transition = 'opacity 0.25s';
           setTimeout(() => el.remove(), 260);
-        }, 3000);
+        }, 3400);
       }
 
       function cloneSeedStore() {
-        return { months: JSON.parse(JSON.stringify(SEED_MONTHS)) };
+        return {
+          cycleStartDay: DEFAULT_CYCLE_START_DAY,
+          months: JSON.parse(JSON.stringify(SEED_MONTHS))
+        };
+      }
+
+      function normalizeStore(rawObj) {
+        const base = cloneSeedStore();
+        if (!rawObj || typeof rawObj !== 'object') return base;
+
+        const cycleDay = clampStartDay(rawObj.cycleStartDay || DEFAULT_CYCLE_START_DAY);
+        const months = rawObj.months && typeof rawObj.months === 'object' ? rawObj.months : {};
+
+        Object.keys(SEED_MONTHS).forEach((mKey) => {
+          if (!months[mKey]) {
+            months[mKey] = JSON.parse(JSON.stringify(SEED_MONTHS[mKey]));
+          }
+        });
+
+        return {
+          cycleStartDay: cycleDay,
+          months
+        };
       }
 
       function loadStore() {
@@ -1837,27 +2152,21 @@
           if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed && typeof parsed.months === 'object' && Object.keys(parsed.months).length > 0) {
-              let updated = false;
-              Object.keys(SEED_MONTHS).forEach((mKey) => {
-                if (!parsed.months[mKey]) {
-                  parsed.months[mKey] = JSON.parse(JSON.stringify(SEED_MONTHS[mKey]));
-                  updated = true;
-                }
-              });
-              if (updated) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-              }
-              return parsed;
+              const normalized = normalizeStore(parsed);
+              return normalized;
             }
           }
 
-          // Migrasi otomatis dari versi localStorage sebelumnya (v6 / v5)
+          // Migrasi otomatis dari versi localStorage sebelumnya (v7 / v6 / v5)
           for (const legacyKey of LEGACY_KEYS) {
             const legacyRaw = localStorage.getItem(legacyKey);
             if (legacyRaw) {
               const legacyParsed = JSON.parse(legacyRaw);
               if (legacyParsed && typeof legacyParsed.months === 'object' && Object.keys(legacyParsed.months).length > 0) {
                 const merged = cloneSeedStore();
+                if (legacyParsed.cycleStartDay) {
+                  merged.cycleStartDay = clampStartDay(legacyParsed.cycleStartDay);
+                }
                 Object.keys(legacyParsed.months).forEach((mKey) => {
                   const legMonth = legacyParsed.months[mKey];
                   if (legMonth && Array.isArray(legMonth.transactions) && legMonth.transactions.length > 0) {
@@ -1882,6 +2191,7 @@
 
       function saveStore(store, skipAutoBackup = false, backupLabel = 'Perubahan data') {
         try {
+          store.cycleStartDay = clampStartDay(store.cycleStartDay);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
           if (!skipAutoBackup) {
             recordAutoBackup(store, backupLabel);
@@ -1955,9 +2265,7 @@
           const trimmed = list.slice(0, 10);
           localStorage.setItem(AUTOBACKUP_KEY, JSON.stringify(trimmed));
           updateAutoBackupBadge(trimmed[0]);
-        } catch (e) {
-          // Abaikan jika kuota storage penuh
-        }
+        } catch (e) {}
       }
 
       function getSavedModuleOrder() {
@@ -2102,6 +2410,45 @@
         return store.months[monthKey];
       }
 
+      /**
+       * Mengelompokkan ulang transaksi lintas buku agar sesuai dengan cycleStartDay
+       */
+      function reorganizeTransactionsByCycle(store, startDay) {
+        const allTx = [];
+        const seenIds = new Set();
+
+        Object.keys(store.months).forEach((mKey) => {
+          const list = Array.isArray(store.months[mKey].transactions) ? store.months[mKey].transactions : [];
+          list.forEach((tx) => {
+            if (tx && !seenIds.has(tx.id)) {
+              seenIds.add(tx.id);
+              allTx.push({ ...tx });
+            }
+          });
+          store.months[mKey].transactions = [];
+        });
+
+        let movedCount = 0;
+        allTx.forEach((tx) => {
+          const targetPeriod = getPeriodKeyForDate(tx.date, startDay);
+          const targetMonth = ensureMonth(store, targetPeriod);
+
+          // Pastikan categoryId ada di buku tujuan; jika belum ada, coba cocokkan nama pos
+          const hasCat = targetMonth.categories.some((c) => c.id === tx.categoryId);
+          if (!hasCat && targetMonth.categories.length > 0) {
+            tx.categoryId = targetMonth.categories[0].id;
+          }
+          targetMonth.transactions.push(tx);
+          movedCount++;
+        });
+
+        Object.keys(store.months).forEach((mKey) => {
+          store.months[mKey].transactions.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+        });
+
+        return movedCount;
+      }
+
       function openConfirm({ title, desc, okText = 'Ya, Lanjutkan', danger = false, onConfirm }) {
         const modal = document.getElementById('confirmModal');
         document.getElementById('confirmModalTitle').textContent = title;
@@ -2124,6 +2471,46 @@
           cleanup();
           if (onConfirm) onConfirm();
         };
+      }
+
+      // =====================================================================
+      // MODAL SIKLUS PEMBUKUAN (SET UP AWAL)
+      // =====================================================================
+      function updateCycleModalPreview(dayVal) {
+        const monthKey = document.getElementById('monthPicker').value || '2026-11';
+        const range = getCycleRange(monthKey, dayVal);
+        const titleEl = document.getElementById('cycleModalPreviewTitle');
+        const exEl = document.getElementById('cycleModalPreviewExample');
+
+        if (range.startDay === 1) {
+          titleEl.textContent = 'Tanggal 1 s/d Akhir Bulan Kalender';
+          exEl.innerHTML = `Contoh: Buku periode <strong>${escapeHtml(monthKey)}</strong> mencakup transaksi <strong>${escapeHtml(range.labelRange)}</strong> (standar kalender bulanan).`;
+        } else {
+          titleEl.textContent = `Tanggal ${range.startDay} s/d Tanggal ${range.endDay} bulan berikutnya`;
+          exEl.innerHTML = `Contoh: Buku periode <strong>${escapeHtml(monthKey)}</strong> mencakup transaksi <strong>${escapeHtml(range.labelRange)}</strong>. Saat tanggal 1 bulan berikutnya tiba, buku <strong>${escapeHtml(monthKey)}</strong> tetap aktif dan seluruh catatan serta pagu tidak akan hilang.`;
+        }
+      }
+
+      function openCycleModal() {
+        const store = loadStore();
+        const selectEl = document.getElementById('cycleStartDaySelect');
+        if (selectEl.options.length === 0) {
+          for (let d = 1; d <= 28; d++) {
+            const opt = document.createElement('option');
+            opt.value = String(d);
+            opt.textContent = d === 1
+              ? 'Tanggal 1 (s/d akhir bulan kalender)'
+              : `Tanggal ${d} (s/d tanggal ${d - 1} bulan berikutnya)`;
+            selectEl.appendChild(opt);
+          }
+        }
+        selectEl.value = String(store.cycleStartDay || DEFAULT_CYCLE_START_DAY);
+        updateCycleModalPreview(selectEl.value);
+        document.getElementById('cycleModal').classList.add('open');
+      }
+
+      function closeCycleModal() {
+        document.getElementById('cycleModal').classList.remove('open');
       }
 
       function renderSwatches() {
@@ -2221,8 +2608,8 @@
       }
 
       function askDeleteTransaction(txId) {
-        const monthKey = document.getElementById('monthPicker').value || getCurrentMonthStr();
         const store = loadStore();
+        const monthKey = document.getElementById('monthPicker').value || getCurrentCyclePeriodKey(store.cycleStartDay);
         const mData = ensureMonth(store, monthKey);
         const txObj = mData.transactions.find((t) => t.id === txId);
         if (!txObj) return;
@@ -2386,8 +2773,9 @@
       }
 
       function downloadPieChartPng() {
-        const monthKey = document.getElementById('monthPicker').value || getCurrentMonthStr();
         const store = loadStore();
+        const monthKey = document.getElementById('monthPicker').value || getCurrentCyclePeriodKey(store.cycleStartDay);
+        const cycleRange = getCycleRange(monthKey, store.cycleStartDay);
         const mData = ensureMonth(store, monthKey);
         const spentByPos = {};
         mData.transactions.forEach((tx) => {
@@ -2398,7 +2786,7 @@
         const canvas = document.createElement('canvas');
         const rowHeight = 28;
         const height = Math.max(360, 140 + pieData.slices.length * rowHeight);
-        canvas.width = 760;
+        canvas.width = 780;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
 
@@ -2406,17 +2794,17 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = '#26383a';
-        ctx.fillRect(0, 0, canvas.width, 64);
+        ctx.fillRect(0, 0, canvas.width, 66);
 
         ctx.fillStyle = '#f8f7f4';
-        ctx.font = 'bold 18px sans-serif';
-        ctx.fillText(`FAMILY EXPENSE TRACKER — RINGKASAN POS (${monthKey})`, 24, 30);
+        ctx.font = 'bold 17px sans-serif';
+        ctx.fillText(`FAMILY EXPENSE TRACKER — BUKU ${monthKey} (${cycleRange.labelRange})`, 24, 29);
         ctx.font = '13px sans-serif';
         ctx.fillStyle = '#cbd5d3';
         ctx.fillText(
           pieData.mode === 'spent'
             ? `Proporsi Pengeluaran Terpakai • Total: ${formatRp(pieData.total)}`
-            : `Proporsi Alokasi Pagu Bulanan • Total: ${formatRp(pieData.total)}`,
+            : `Proporsi Alokasi Pagu Periode • Total: ${formatRp(pieData.total)}`,
           24,
           50
         );
@@ -2471,7 +2859,7 @@
           ctx.fillText(s.name, 305, ly);
           ctx.fillStyle = '#5c6664';
           ctx.font = '13px sans-serif';
-          ctx.fillText(`${s.pct.toFixed(1)}% (${formatRp(s.value)})`, 520, ly);
+          ctx.fillText(`${s.pct.toFixed(1)}% (${formatRp(s.value)})`, 530, ly);
           ly += rowHeight;
         });
 
@@ -2502,7 +2890,7 @@
                 <div class="snapshot-card ${idx === 0 ? 'latest' : ''}">
                   <div class="snapshot-meta">
                     <div class="snapshot-time">${escapeHtml(formatTimestampId(snap.timestamp))}${badge}</div>
-                    <div class="snapshot-desc">${escapeHtml(snap.reason)} &bull; ${snap.monthCount} bulan, ${snap.txCount} transaksi</div>
+                    <div class="snapshot-desc">${escapeHtml(snap.reason)} &bull; ${snap.monthCount} periode, ${snap.txCount} transaksi</div>
                   </div>
                   <button type="button" class="btn-primary btn-sm" data-restore-snap="${escapeHtml(snap.id)}">Pulihkan Sekarang</button>
                 </div>
@@ -2522,7 +2910,8 @@
                 desc: `Kembalikan seluruh data ke kondisi pada ${formatTimestampId(targetSnap.timestamp)} (${targetSnap.reason})?`,
                 okText: 'Pulihkan Sekarang',
                 onConfirm: () => {
-                  saveStore(targetSnap.data, false, `Pulihkan backup (${formatTimestampId(targetSnap.timestamp)})`);
+                  const normalized = normalizeStore(targetSnap.data);
+                  saveStore(normalized, false, `Pulihkan backup (${formatTimestampId(targetSnap.timestamp)})`);
                   activeCategoryTab = 'ALL';
                   render();
                   showToast('Data berhasil dipulihkan secara instan!');
@@ -2536,9 +2925,30 @@
       }
 
       function render() {
-        const monthKey = document.getElementById('monthPicker').value || getCurrentMonthStr();
         const store = loadStore();
+        const cycleStartDay = clampStartDay(store.cycleStartDay);
+        const monthPicker = document.getElementById('monthPicker');
+        const monthKey = monthPicker.value || getCurrentCyclePeriodKey(cycleStartDay);
+        monthPicker.value = monthKey;
+
+        const cycleRange = getCycleRange(monthKey, cycleStartDay);
         const mData = ensureMonth(store, monthKey);
+
+        // Update indikator siklus pembukuan di Header, Banner & Form
+        document.getElementById('btnCycleLabel').textContent = `Siklus: ${cycleRange.labelShort}`;
+        document.getElementById('headerCycleRangeText').textContent = `Periode: ${cycleRange.labelRange}`;
+        document.getElementById('bannerCycleBadge').textContent =
+          cycleStartDay === 1
+            ? 'Tgl 1 s/d Akhir Bulan Kalender'
+            : `Tgl ${cycleRange.startDay} s/d Tgl ${cycleRange.endDay} Bln Berikutnya`;
+
+        document.getElementById('bannerCycleDesc').innerHTML =
+          cycleStartDay === 1
+            ? `Buku periode <strong>${escapeHtml(monthKey)}</strong> mencakup transaksi <strong>${escapeHtml(cycleRange.labelRange)}</strong>.`
+            : `Buku periode <strong>${escapeHtml(monthKey)}</strong> mencakup transaksi <strong>${escapeHtml(cycleRange.labelRange)}</strong>. Saat masuk tanggal 1 bulan berikutnya, catatan dan pagu tidak akan hilang.`;
+
+        document.getElementById('formCycleRangeHint').innerHTML =
+          `Rentang siklus buku aktif (${escapeHtml(monthKey)}): <strong>${escapeHtml(cycleRange.labelRange)}</strong>`;
 
         const spentByPos = {};
         let totalSpent = 0;
@@ -2705,7 +3115,7 @@
 
                   <div class="pos-metrics tabular">
                     <div class="metric-row">
-                      <span>Pagu Bulanan:</span>
+                      <span>Pagu Periode:</span>
                       <button type="button" class="pagu-clickable" data-edit-id="${escapeHtml(cat.id)}" title="Ketuk untuk edit pagu">
                         ${formatRp(cat.budget)} &#9998;
                       </button>
@@ -2775,7 +3185,7 @@
           filterPosSelect.value = prevFilterVal;
         }
 
-        // Render Riwayat Transaksi — Default hanya 3 transaksi terakhir (terbaru) + tombol See More
+        // Render Riwayat Transaksi — Default hanya 3 transaksi terakhir + tombol See More
         const fPos = filterPosSelect.value;
         const fSearch = document.getElementById('filterSearch').value.trim().toLowerCase();
         const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c]));
@@ -2800,22 +3210,22 @@
           txSeeMoreWrap.style.display = 'flex';
           if (showAllTx) {
             btnToggleTxSeeMore.textContent = 'See Less (Tampilkan 3 Transaksi Terakhir)';
-            txSubtitleEl.innerHTML = `Menampilkan semua <strong>${totalFilteredTx} transaksi</strong>. Hapus transaksi untuk mengembalikan pagu.`;
+            txSubtitleEl.innerHTML = `Menampilkan semua <strong>${totalFilteredTx} transaksi</strong> (${escapeHtml(cycleRange.labelRange)}).`;
           } else {
             btnToggleTxSeeMore.textContent = `See More (Lihat Semua ${totalFilteredTx} Transaksi)`;
-            txSubtitleEl.innerHTML = `Menampilkan <strong>3 transaksi terakhir</strong>. Ketuk <strong>See More</strong> untuk melihat seluruh riwayat.`;
+            txSubtitleEl.innerHTML = `Menampilkan <strong>3 transaksi terakhir</strong> (${escapeHtml(cycleRange.labelRange)}). Ketuk <strong>See More</strong> untuk semua riwayat.`;
           }
         } else {
           txSeeMoreWrap.style.display = 'none';
-          txSubtitleEl.innerHTML = `Hapus transaksi untuk mengembalikan nominal ke sisa pagu pos.`;
+          txSubtitleEl.innerHTML = `Menampilkan transaksi pada siklus <strong>${escapeHtml(cycleRange.labelRange)}</strong>.`;
         }
 
         const tbody = document.getElementById('txTableBody');
         const mobileList = document.getElementById('mobileTxList');
 
         if (visibleTx.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="padding:26px 14px; text-align:center; color:var(--muted);">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</td></tr>`;
-          mobileList.innerHTML = `<div class="empty-box">Belum ada transaksi pengeluaran untuk bulan atau filter ini.</div>`;
+          tbody.innerHTML = `<tr><td colspan="5" style="padding:26px 14px; text-align:center; color:var(--muted);">Belum ada transaksi pengeluaran untuk siklus periode atau filter ini.</td></tr>`;
+          mobileList.innerHTML = `<div class="empty-box">Belum ada transaksi pengeluaran untuk siklus periode atau filter ini.</div>`;
           return;
         }
 
@@ -2875,14 +3285,12 @@
       document.addEventListener('DOMContentLoaded', () => {
         const monthPicker = document.getElementById('monthPicker');
         const storeInit = loadStore();
-        const currentSysMonth = getCurrentMonthStr();
-        const availableMonths = Object.keys(storeInit.months).sort();
-        const initMonth = storeInit.months[currentSysMonth]
-          ? currentSysMonth
-          : (availableMonths.includes('2026-11') ? '2026-11' : (availableMonths[availableMonths.length - 1] || currentSysMonth));
+        const cycleStartDay = clampStartDay(storeInit.cycleStartDay);
 
-        monthPicker.value = initMonth;
-        document.getElementById('txDate').value = getDefaultDateForMonth(initMonth);
+        // Tentukan periode buku aktif otomatis berdasarkan siklus gajian (misal tgl 25 Nov - 24 Des -> '2026-11')
+        const activeCyclePeriod = getCurrentCyclePeriodKey(cycleStartDay);
+        monthPicker.value = activeCyclePeriod;
+        document.getElementById('txDate').value = getDefaultDateForCycle(activeCyclePeriod, cycleStartDay);
 
         // Terapkan urutan tata letak fleksibel tersimpan (default: Catat Pengeluaran Harian di atas)
         applyModuleOrder(getSavedModuleOrder());
@@ -2906,6 +3314,98 @@
           render();
         });
 
+        // Modal Pengaturan Siklus Pembukuan (Set Up Awal)
+        document.getElementById('btnOpenCycleModal').addEventListener('click', openCycleModal);
+        document.getElementById('headerCycleRangePill').addEventListener('click', openCycleModal);
+        document.getElementById('btnBannerEditCycle').addEventListener('click', openCycleModal);
+        document.getElementById('btnCloseCycleModal').addEventListener('click', closeCycleModal);
+        document.getElementById('btnCancelCycleModal').addEventListener('click', closeCycleModal);
+
+        document.getElementById('cycleStartDaySelect').addEventListener('change', (e) => {
+          updateCycleModalPreview(e.target.value);
+        });
+
+        document.querySelectorAll('[data-preset-day]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const d = btn.getAttribute('data-preset-day');
+            const sel = document.getElementById('cycleStartDaySelect');
+            sel.value = d;
+            updateCycleModalPreview(d);
+          });
+        });
+
+        document.getElementById('cycleForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newStartDay = clampStartDay(document.getElementById('cycleStartDaySelect').value);
+          const autoReorg = document.getElementById('chkAutoReorganizeTx').checked;
+
+          const store = loadStore();
+          store.cycleStartDay = newStartDay;
+
+          if (autoReorg) {
+            reorganizeTransactionsByCycle(store, newStartDay);
+          }
+
+          const newActivePeriod = getCurrentCyclePeriodKey(newStartDay);
+          monthPicker.value = newActivePeriod;
+          document.getElementById('txDate').value = getDefaultDateForCycle(newActivePeriod, newStartDay);
+
+          saveStore(store, false, `Atur siklus pembukuan mulai Tgl ${newStartDay}`);
+          closeCycleModal();
+          render();
+          showToast(
+            newStartDay === 1
+              ? 'Siklus pembukuan diatur ke Tgl 1 s/d akhir bulan.'
+              : `Siklus pembukuan diatur ke Tgl ${newStartDay} s/d Tgl ${newStartDay - 1} bln berikutnya.`
+          );
+        });
+
+        // Tombol Tarik Transaksi Masuk Siklus Aktif (jika sebelumnya terinput di periode berbeda)
+        document.getElementById('btnSyncMisplacedTx').addEventListener('click', () => {
+          const store = loadStore();
+          const startDay = clampStartDay(store.cycleStartDay);
+          const currPeriod = monthPicker.value || getCurrentCyclePeriodKey(startDay);
+          const range = getCycleRange(currPeriod, startDay);
+          const targetMonth = ensureMonth(store, currPeriod);
+
+          const existingIds = new Set(targetMonth.transactions.map((t) => t.id));
+          let pulledCount = 0;
+
+          Object.keys(store.months).forEach((mKey) => {
+            if (mKey === currPeriod) return;
+            const otherList = store.months[mKey].transactions || [];
+            const keepInOther = [];
+
+            otherList.forEach((tx) => {
+              if (tx && tx.date >= range.startIso && tx.date <= range.endIso) {
+                if (!existingIds.has(tx.id)) {
+                  const hasCat = targetMonth.categories.some((c) => c.id === tx.categoryId);
+                  if (!hasCat && targetMonth.categories.length > 0) {
+                    tx.categoryId = targetMonth.categories[0].id;
+                  }
+                  targetMonth.transactions.push(tx);
+                  existingIds.add(tx.id);
+                  pulledCount++;
+                }
+              } else {
+                keepInOther.push(tx);
+              }
+            });
+
+            store.months[mKey].transactions = keepInOther;
+          });
+
+          if (pulledCount === 0) {
+            showToast(`Semua transaksi rentang ${range.labelRange} sudah berada di buku ${currPeriod}.`);
+            return;
+          }
+
+          targetMonth.transactions.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+          saveStore(store, false, `Tarik ${pulledCount} transaksi ke siklus ${currPeriod}`);
+          render();
+          showToast(`Berhasil menarik ${pulledCount} transaksi masuk ke buku periode ${currPeriod}!`);
+        });
+
         // Inisialisasi Auto-Backup awal jika belum ada snapshot
         const existingBackups = loadAutoBackups();
         if (existingBackups.length === 0) {
@@ -2915,7 +3415,8 @@
         }
 
         monthPicker.addEventListener('change', () => {
-          document.getElementById('txDate').value = getDefaultDateForMonth(monthPicker.value);
+          const st = loadStore();
+          document.getElementById('txDate').value = getDefaultDateForCycle(monthPicker.value, st.cycleStartDay);
           activeCategoryTab = 'ALL';
           showAllPos = false;
           showAllTx = false;
@@ -3042,13 +3543,15 @@
           saveStore(store, false, `Ubah target gaji: ${formatRp(val)}`);
           closeTargetModal();
           render();
-          showToast(`Target sisa gaji bulanan diubah ke ${formatRp(val)}.`);
+          showToast(`Target sisa gaji periode diubah ke ${formatRp(val)}.`);
         });
 
         document.getElementById('expenseForm').addEventListener('submit', (e) => {
           e.preventDefault();
-          const monthKey = monthPicker.value || getCurrentMonthStr();
-          const date = document.getElementById('txDate').value || getDefaultDateForMonth(monthKey);
+          const store = loadStore();
+          const startDay = clampStartDay(store.cycleStartDay);
+          const activePeriod = monthPicker.value || getCurrentCyclePeriodKey(startDay);
+          const date = document.getElementById('txDate').value || getDefaultDateForCycle(activePeriod, startDay);
           const categoryId = document.getElementById('txCategory').value;
           const note = document.getElementById('txNote').value.trim();
           const amount = parseDigits(txAmountEl.value);
@@ -3058,17 +3561,30 @@
             return;
           }
 
-          const store = loadStore();
-          const mData = ensureMonth(store, monthKey);
-          const posObj = mData.categories.find((c) => c.id === categoryId);
+          // Otomatis tentukan buku periode berdasarkan siklus pembukuan (misal 25 Nov - 24 Des -> '2026-11')
+          const targetPeriod = getPeriodKeyForDate(date, startDay);
+          const targetMonthData = ensureMonth(store, targetPeriod);
 
-          mData.transactions.unshift({
+          let resolvedCategoryId = categoryId;
+          if (!targetMonthData.categories.some((c) => c.id === resolvedCategoryId) && targetMonthData.categories.length > 0) {
+            resolvedCategoryId = targetMonthData.categories[0].id;
+          }
+
+          const posObj = targetMonthData.categories.find((c) => c.id === resolvedCategoryId);
+
+          targetMonthData.transactions.unshift({
             id: `tx_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
             date,
-            categoryId,
+            categoryId: resolvedCategoryId,
             note,
             amount
           });
+
+          targetMonthData.transactions.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+
+          if (targetPeriod !== activePeriod) {
+            monthPicker.value = targetPeriod;
+          }
 
           saveStore(store, false, `Catat pengeluaran: ${note} (${formatRp(amount)})`);
           document.getElementById('txNote').value = '';
@@ -3076,14 +3592,15 @@
           render();
 
           if (posObj) {
-            const spent = mData.transactions
-              .filter((t) => t.categoryId === categoryId)
+            const spent = targetMonthData.transactions
+              .filter((t) => t.categoryId === resolvedCategoryId)
               .reduce((s, t) => s + (Number(t.amount) || 0), 0);
             const rem = posObj.budget - spent;
+            const periodNote = targetPeriod !== activePeriod ? ` [Masuk Buku ${targetPeriod}]` : '';
             if (rem < 0) {
-              showToast(`Tercatat! Pos "${posObj.name}" overbudget ${formatRp(Math.abs(rem))}.`, 'error');
+              showToast(`Tercatat${periodNote}! Pos "${posObj.name}" overbudget ${formatRp(Math.abs(rem))}.`, 'error');
             } else {
-              showToast(`Tercatat ${formatRp(amount)} • Sisa ${posObj.name}: ${formatRp(rem)}`);
+              showToast(`Tercatat ${formatRp(amount)}${periodNote} • Sisa ${posObj.name}: ${formatRp(rem)}`);
             }
           }
         });
@@ -3096,13 +3613,13 @@
           const store = loadStore();
 
           if (!store.months[prevKey]) {
-            showToast(`Data bulan sebelumnya (${prevKey}) belum ada.`, 'warn');
+            showToast(`Data buku periode sebelumnya (${prevKey}) belum ada.`, 'warn');
             return;
           }
 
           openConfirm({
             title: `Salin Pagu dari ${prevKey}?`,
-            desc: `Susunan pos dan nominal pagu dari ${prevKey} akan disalin ke ${curr}. Transaksi di bulan ${curr} tidak terhapus.`,
+            desc: `Susunan pos dan nominal pagu dari buku ${prevKey} akan disalin ke ${curr}. Transaksi di ${curr} tidak terhapus.`,
             okText: 'Salin Pagu',
             onConfirm: () => {
               const st = loadStore();
@@ -3119,8 +3636,8 @@
         document.getElementById('btnResetDefault').addEventListener('click', () => {
           const curr = monthPicker.value;
           openConfirm({
-            title: `Reset Bulan ${curr} ke Data Cadangan Awal?`,
-            desc: 'Data pos dan transaksi bulan ini akan dikembalikan ke data cadangan awal Anda.',
+            title: `Reset Buku ${curr} ke Data Cadangan Awal?`,
+            desc: 'Data pos dan transaksi pada buku periode ini akan dikembalikan ke data cadangan awal Anda.',
             okText: 'Reset Default',
             danger: true,
             onConfirm: () => {
@@ -3133,12 +3650,12 @@
                 md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
                 md.transactions = [];
               }
-              saveStore(st, false, `Reset default bulan ${curr}`);
+              saveStore(st, false, `Reset default buku ${curr}`);
               activeCategoryTab = 'ALL';
               showAllPos = false;
               showAllTx = false;
               render();
-              showToast(`Bulan ${curr} dikembalikan ke data cadangan awal.`);
+              showToast(`Buku ${curr} dikembalikan ke data cadangan awal.`);
             }
           });
         });
@@ -3186,7 +3703,8 @@
                 desc: 'Data pos dan transaksi di browser akan digantikan dengan isi file backup JSON ini.',
                 okText: 'Pulihkan Data',
                 onConfirm: () => {
-                  saveStore({ months: parsed.months }, false, 'Impor file JSON eksternal');
+                  const normalized = normalizeStore(parsed);
+                  saveStore(normalized, false, 'Impor file JSON eksternal');
                   render();
                   showToast('Data berhasil dipulihkan dari file JSON!');
                 }
@@ -3211,6 +3729,7 @@
         document.getElementById('btnExportCsv').addEventListener('click', () => {
           const curr = monthPicker.value;
           const store = loadStore();
+          const cycleRange = getCycleRange(curr, store.cycleStartDay);
           const mData = ensureMonth(store, curr);
           const catMap = Object.fromEntries(mData.categories.map((c) => [c.id, c.name]));
 
@@ -3221,8 +3740,8 @@
 
           const rows = [];
           // BAGIAN 1: RINGKASAN POS ANGGARAN & TOTAL
-          rows.push(`"RINGKASAN POS ANGGARAN BULAN ${curr}"`);
-          rows.push('Pos Anggaran,Kelompok Kategori,Pagu Bulanan (Rp),Terpakai (Rp),Sisa Pagu (Rp),Persentase Terpakai');
+          rows.push(`"RINGKASAN POS ANGGARAN BUKU ${curr} (${cycleRange.labelRange})"`);
+          rows.push('Pos Anggaran,Kelompok Kategori,Pagu Periode (Rp),Terpakai (Rp),Sisa Pagu (Rp),Persentase Terpakai');
 
           let sumPagu = 0;
           let sumSpent = 0;
@@ -3248,7 +3767,7 @@
           rows.push('');
 
           // BAGIAN 2: RINCIAN CATATAN PENGELUARAN HARIAN & TOTAL
-          rows.push(`"RINCIAN CATATAN PENGELUARAN HARIAN BULAN ${curr}"`);
+          rows.push(`"RINCIAN CATATAN PENGELUARAN HARIAN BUKU ${curr} (${cycleRange.labelRange})"`);
           rows.push('Tanggal,Pos Anggaran,Keterangan,Nominal (Rp)');
 
           let totalDailyExpense = 0;
