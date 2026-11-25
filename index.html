@@ -1636,12 +1636,192 @@
     (function () {
       'use strict';
 
-      const STORAGE_KEY = 'family_expense_tracker_v6';
+      const STORAGE_KEY = 'family_expense_tracker_v7';
+      const LEGACY_KEYS = ['family_expense_tracker_v6', 'family_expense_tracker_v5'];
       const AUTOBACKUP_KEY = 'family_expense_autobackups_v1';
       const LAYOUT_KEY = 'family_expense_layout_order_v1';
       const DEFAULT_MODULE_ORDER = ['expense-form', 'pos-summary', 'tx-history'];
 
       const PALETTE = [
+        { key: 'teal', label: 'Muted Teal', hex: '#355e58', soft: '#dfeae7' },
+        { key: 'blue', label: 'Dusty Blue', hex: '#46637d', soft: '#e2e9ef' },
+        { key: 'ochre', label: 'Warm Ochre', hex: '#9c6631', soft: '#f2e7dc' },
+        { key: 'terracotta', label: 'Terracotta', hex: '#9c5243', soft: '#f2e3e0' },
+        { key: 'olive', label: 'Muted Olive', hex: '#536947', soft: '#e4eae0' },
+        { key: 'plum', label: 'Dusty Plum', hex: '#695375', soft: '#eae4ed' },
+        { key: 'slate', label: 'Slate Gray', hex: '#4f5d66', soft: '#e4e8eb' },
+        { key: 'bronze', label: 'Warm Bronze', hex: '#7c6244', soft: '#ede7df' }
+      ];
+
+      // Data bawaan lengkap dari family_expense_backup_2026-11.json
+      const SEED_MONTHS = {
+        "2026-11": {
+          "targetIncome": 18000000,
+          "categories": [
+            { "id": "jatah_istri", "name": "Jatah Istri", "category": "Keluarga & Pendidikan", "budget": 2000000, "color": "terracotta" },
+            { "id": "les_anak", "name": "Les Anak", "category": "Keluarga & Pendidikan", "budget": 1803000, "color": "blue" },
+            { "id": "jatah_orang_tua", "name": "Jatah Orang Tua", "category": "Keluarga & Pendidikan", "budget": 1500000, "color": "teal" },
+            { "id": "kesenangan_pribadi", "name": "Uang Bebas", "category": "Jalan-Jalan & Kesenangan", "budget": 2080334, "color": "ochre" },
+            { "id": "jalan_jalan_keluarga", "name": "Jalan-Jalan Keluarga", "category": "Jalan-Jalan & Kesenangan", "budget": 1000000, "color": "bronze" },
+            { "id": "spp_anak", "name": "SPP Anak", "category": "Keluarga & Pendidikan", "budget": 1100000, "color": "plum" },
+            { "id": "belanja_bulanan", "name": "Belanja Bulanan", "category": "Rumah & Utilitas", "budget": 1200000, "color": "olive" },
+            { "id": "tabungan_sisa_dana", "name": "Tabungan Awal", "category": "Tabungan & Investasi", "budget": 1000000, "color": "teal" },
+            { "id": "listrik_air_internet", "name": "Listrik, Air & Internet", "category": "Rumah & Utilitas", "budget": 500000, "color": "slate" },
+            { "id": "cicilan_ipl", "name": "Cicilan IPL (Rp2,5 jt/thn)", "category": "Rumah & Utilitas", "budget": 250000, "color": "blue" },
+            { "id": "pos_1795539253678", "name": "Transportasi", "category": "Keluarga & Pendidikan", "budget": 900000, "color": "plum" },
+            { "id": "pos_1795539070046", "name": "Cicilan Iphone", "category": "Hutang", "budget": 1666666, "color": "terracotta" },
+            { "id": "pos_1795562452475", "name": "Hutang lainnya", "category": "Hutang", "budget": 3000000, "color": "terracotta" }
+          ],
+          "transactions": [
+            { "id": "tx_1795596324052", "date": "2026-11-25", "categoryId": "kesenangan_pribadi", "note": "Kas kantor", "amount": 50000 },
+            { "id": "tx_1795571171991", "date": "2026-11-25", "categoryId": "kesenangan_pribadi", "note": "Cash out", "amount": 500000 },
+            { "id": "tx_1795570546737", "date": "2026-11-25", "categoryId": "cicilan_ipl", "note": "IPL GF", "amount": 250000 },
+            { "id": "tx_1795570484184", "date": "2026-11-25", "categoryId": "listrik_air_internet", "note": "Tagihan air - GF", "amount": 86000 },
+            { "id": "tx_1795569716993", "date": "2026-11-25", "categoryId": "tabungan_sisa_dana", "note": "Reksa Dana: RDPU", "amount": 1000000 },
+            { "id": "tx_1795568542924", "date": "2026-11-25", "categoryId": "belanja_bulanan", "note": "Sea Bank shoppee", "amount": 1000000 },
+            { "id": "tx_1795562721148", "date": "2026-11-25", "categoryId": "les_anak", "note": "Math, English, kodland (patungan sm ibunya Abim)", "amount": 1803000 },
+            { "id": "tx_1795562591378", "date": "2026-11-25", "categoryId": "pos_1795539070046", "note": "2/6", "amount": 1666666 },
+            { "id": "tx_1795561944319", "date": "2026-11-25", "categoryId": "listrik_air_internet", "note": "Listrik AC", "amount": 78325 },
+            { "id": "tx_1795561596393", "date": "2026-11-25", "categoryId": "spp_anak", "note": "December 2026", "amount": 1100000 },
+            { "id": "tx_1795561507341", "date": "2026-11-25", "categoryId": "pos_1795539253678", "note": "Gopay Ayah Abim", "amount": 101200 },
+            { "id": "tx_1795561419461", "date": "2026-11-25", "categoryId": "jatah_orang_tua", "note": "Oma Ika", "amount": 500000 },
+            { "id": "tx_1795561400635", "date": "2026-11-25", "categoryId": "jatah_orang_tua", "note": "Ibu Tati", "amount": 500000 },
+            { "id": "tx_1795561104666", "date": "2026-11-25", "categoryId": "jatah_istri", "note": "Setor awal gajian", "amount": 500000 }
+          ]
+        },
+        "2026-12": {
+          "targetIncome": 18000000,
+          "categories": [
+            { "id": "jatah_istri", "name": "Jatah Istri", "category": "Keluarga & Pendidikan", "budget": 2000000, "color": "terracotta" },
+            { "id": "les_anak", "name": "Les Anak", "category": "Keluarga & Pendidikan", "budget": 2000000, "color": "blue" },
+            { "id": "jatah_orang_tua", "name": "Jatah Orang Tua", "category": "Keluarga & Pendidikan", "budget": 1500000, "color": "teal" },
+            { "id": "kesenangan_pribadi", "name": "Kebutuhan Pribadi", "category": "Jalan-Jalan & Kesenangan", "budget": 2000000, "color": "ochre" },
+            { "id": "jalan_jalan_keluarga", "name": "Jalan-Jalan Keluarga", "category": "Jalan-Jalan & Kesenangan", "budget": 1500000, "color": "bronze" },
+            { "id": "spp_anak", "name": "SPP Anak", "category": "Keluarga & Pendidikan", "budget": 1100000, "color": "plum" },
+            { "id": "belanja_bulanan", "name": "Belanja Bulanan", "category": "Rumah & Utilitas", "budget": 1500000, "color": "olive" },
+            { "id": "tabungan_sisa_dana", "name": "Tabungan / Sisa Dana", "category": "Tabungan & Investasi", "budget": 3000000, "color": "teal" },
+            { "id": "listrik_air_internet", "name": "Listrik, Air & Internet", "category": "Rumah & Utilitas", "budget": 500000, "color": "slate" },
+            { "id": "cicilan_ipl", "name": "Cicilan IPL (Rp2,5 jt/thn)", "category": "Rumah & Utilitas", "budget": 210000, "color": "blue" },
+            { "id": "pos_1795539070046", "name": "Cicilan Iphone", "category": "Hutang", "budget": 1690000, "color": "teal" },
+            { "id": "pos_1795539253678", "name": "Transportasi", "category": "Keluarga & Pendidikan", "budget": 1000000, "color": "teal" }
+          ],
+          "transactions": []
+        }
+      };
+
+      const DEFAULT_CATEGORIES = SEED_MONTHS['2026-12'].categories.map((c) => ({ ...c }));
+
+      let activeCategoryTab = 'ALL';
+      let modalSelectedColor = 'teal';
+
+      function formatRp(num) {
+        const val = Number(num) || 0;
+        const sign = val < 0 ? '-Rp' : 'Rp';
+        return sign + Math.abs(Math.round(val)).toLocaleString('id-ID');
+      }
+
+      function parseDigits(str) {
+        const cleaned = String(str || '').replace(/[^\d]/g, '');
+        return cleaned ? parseInt(cleaned, 10) : 0;
+      }
+
+      function formatInputThousands(el) {
+        const val = parseDigits(el.value);
+        el.value = val > 0 ? val.toLocaleString('id-ID') : '';
+      }
+
+      function getCurrentMonthStr() {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      }
+
+      function getDefaultDateForMonth(monthStr) {
+        const today = new Date().toISOString().split('T')[0];
+        if (monthStr === getCurrentMonthStr() && today.startsWith(monthStr)) {
+          return today;
+        }
+        return `${monthStr}-01`;
+      }
+
+      function getPaletteObj(key) {
+        return PALETTE.find((p) => p.key === key) || PALETTE[0];
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str ?? '');
+        return div.innerHTML;
+      }
+
+      function showToast(msg, type = 'info') {
+        const stack = document.getElementById('toastStack');
+        if (!stack) return;
+        const el = document.createElement('div');
+        el.className = `toast-item ${type === 'warn' ? 'warn' : type === 'error' ? 'error' : ''}`;
+        el.textContent = msg;
+        stack.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transition = 'opacity 0.25s';
+          setTimeout(() => el.remove(), 260);
+        }, 3000);
+      }
+
+      function cloneSeedStore() {
+        return { months: JSON.parse(JSON.stringify(SEED_MONTHS)) };
+      }
+
+      function loadStore() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed.months === 'object' && Object.keys(parsed.months).length > 0) {
+              // Pastikan bulan bawaan 2026-11 dan 2026-12 tetap tersedia jika belum ada
+              let updated = false;
+              Object.keys(SEED_MONTHS).forEach((mKey) => {
+                if (!parsed.months[mKey]) {
+                  parsed.months[mKey] = JSON.parse(JSON.stringify(SEED_MONTHS[mKey]));
+                  updated = true;
+                }
+              });
+              if (updated) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+              }
+              return parsed;
+            }
+          }
+
+          // Migrasi otomatis dari versi localStorage sebelumnya (v6 / v5)
+          for (const legacyKey of LEGACY_KEYS) {
+            const legacyRaw = localStorage.getItem(legacyKey);
+            if (legacyRaw) {
+              const legacyParsed = JSON.parse(legacyRaw);
+              if (legacyParsed && typeof legacyParsed.months === 'object' && Object.keys(legacyParsed.months).length > 0) {
+                const merged = cloneSeedStore();
+                Object.keys(legacyParsed.months).forEach((mKey) => {
+                  const legMonth = legacyParsed.months[mKey];
+                  if (legMonth && Array.isArray(legMonth.transactions) && legMonth.transactions.length > 0) {
+                    merged.months[mKey] = legMonth;
+                  } else if (!merged.months[mKey] && legMonth) {
+                    merged.months[mKey] = legMonth;
+                  }
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+                return merged;
+              }
+            }
+          }
+
+          // Jika penyimpanan baru, gunakan langsung data lengkap SEED_MONTHS
+          const seeded = cloneSeedStore();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
+          return seeded;
+        } catch (e) {
+          return cloneSeedStore();
+        }
+      }
+
       function saveStore(store, skipAutoBackup = false, backupLabel = 'Perubahan data') {
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
@@ -1835,15 +2015,25 @@
 
       function ensureMonth(store, monthKey) {
         if (!store.months[monthKey]) {
-          store.months[monthKey] = {
-            targetIncome: 12000000,
-            categories: DEFAULT_CATEGORIES.map((c) => ({ ...c })),
-            transactions: []
-          };
+          if (SEED_MONTHS[monthKey]) {
+            store.months[monthKey] = JSON.parse(JSON.stringify(SEED_MONTHS[monthKey]));
+          } else {
+            // Salin susunan pos terbaru dari bulan terakhir yang ada agar berkelanjutan
+            const existingKeys = Object.keys(store.months).sort();
+            const latestKey = existingKeys[existingKeys.length - 1];
+            const template = latestKey ? store.months[latestKey] : null;
+            store.months[monthKey] = {
+              targetIncome: template && typeof template.targetIncome === 'number' ? template.targetIncome : 18000000,
+              categories: template && Array.isArray(template.categories)
+                ? template.categories.map((c) => ({ ...c }))
+                : DEFAULT_CATEGORIES.map((c) => ({ ...c })),
+              transactions: []
+            };
+          }
           saveStore(store, true);
         } else {
           if (typeof store.months[monthKey].targetIncome !== 'number') {
-            store.months[monthKey].targetIncome = 12000000;
+            store.months[monthKey].targetIncome = 18000000;
           }
           if (!Array.isArray(store.months[monthKey].categories)) {
             store.months[monthKey].categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
@@ -2573,7 +2763,13 @@
 
       document.addEventListener('DOMContentLoaded', () => {
         const monthPicker = document.getElementById('monthPicker');
-        const initMonth = getCurrentMonthStr();
+        const storeInit = loadStore();
+        const currentSysMonth = getCurrentMonthStr();
+        const availableMonths = Object.keys(storeInit.months).sort();
+        const initMonth = storeInit.months[currentSysMonth]
+          ? currentSysMonth
+          : (availableMonths.includes('2026-11') ? '2026-11' : (availableMonths[availableMonths.length - 1] || currentSysMonth));
+
         monthPicker.value = initMonth;
         document.getElementById('txDate').value = getDefaultDateForMonth(initMonth);
 
@@ -2799,26 +2995,68 @@
         document.getElementById('btnResetDefault').addEventListener('click', () => {
           const curr = monthPicker.value;
           openConfirm({
-            title: `Reset Bulan ${curr} ke Default?`,
-            desc: 'Susunan pos akan dikembalikan ke 10 pos awal (Total Rp12.000.000).',
+            title: `Reset Bulan ${curr} ke Data Cadangan Awal?`,
+            desc: 'Data pos dan transaksi bulan ini akan dikembalikan ke data cadangan awal Anda.',
             okText: 'Reset Default',
             danger: true,
             onConfirm: () => {
               const st = loadStore();
-              const md = ensureMonth(st, curr);
-              md.targetIncome = 12000000;
-              md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
+              if (SEED_MONTHS[curr]) {
+                st.months[curr] = JSON.parse(JSON.stringify(SEED_MONTHS[curr]));
+              } else {
+                const md = ensureMonth(st, curr);
+                md.targetIncome = 18000000;
+                md.categories = DEFAULT_CATEGORIES.map((c) => ({ ...c }));
+                md.transactions = [];
+              }
               saveStore(st, false, `Reset default bulan ${curr}`);
               activeCategoryTab = 'ALL';
               render();
-              showToast(`Bulan ${curr} dikembalikan ke pengaturan awal Rp12.000.000.`);
+              showToast(`Bulan ${curr} dikembalikan ke data cadangan awal.`);
             }
           });
         });
+        document.getElementById('expenseForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const monthKey = monthPicker.value || getCurrentMonthStr();
+          const date = document.getElementById('txDate').value || getDefaultDateForMonth(monthKey);
+          const categoryId = document.getElementById('txCategory').value;
+          const note = document.getElementById('txNote').value.trim();
+          const amount = parseDigits(txAmountEl.value);
 
-        document.getElementById('btnOpenRestoreModal').addEventListener('click', openRestoreModal);
-        document.getElementById('btnCloseRestoreModal').addEventListener('click', () => {
-          document.getElementById('restoreModal').classList.remove('open');
+          if (!categoryId || !note || amount <= 0) {
+            showToast('Lengkapi pos anggaran, keterangan, dan nominal lebih dari 0.', 'warn');
+            return;
+          }
+
+          const store = loadStore();
+          const mData = ensureMonth(store, monthKey);
+          const posObj = mData.categories.find((c) => c.id === categoryId);
+
+          mData.transactions.unshift({
+            id: `tx_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
+            date,
+            categoryId,
+            note,
+            amount
+          });
+
+          saveStore(store, false, `Catat pengeluaran: ${note} (${formatRp(amount)})`);
+          document.getElementById('txNote').value = '';
+          txAmountEl.value = '';
+          render();
+
+          if (posObj) {
+            const spent = mData.transactions
+              .filter((t) => t.categoryId === categoryId)
+              .reduce((s, t) => s + (Number(t.amount) || 0), 0);
+            const rem = posObj.budget - spent;
+            if (rem < 0) {
+              showToast(`Tercatat! Pos "${posObj.name}" overbudget ${formatRp(Math.abs(rem))}.`, 'error');
+            } else {
+              showToast(`Tercatat ${formatRp(amount)} • Sisa ${posObj.name}: ${formatRp(rem)}`);
+            }
+          }
         });
         document.getElementById('btnDoneRestoreModal').addEventListener('click', () => {
           document.getElementById('restoreModal').classList.remove('open');
