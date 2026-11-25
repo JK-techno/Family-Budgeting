@@ -4,6 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>FAMILY EXPENSE TRACKER</title>
+
+  <!-- Meta Tag Dukungan Tampilan Aplikasi Layar Utama HP (iPhone & Android) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Family Budget" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#26383a" />
+
+  <!-- Ikon Aplikasi Inline SVG (Favicon & Apple Touch Icon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%2326383a'/%3E%3Crect x='22' y='36' width='84' height='60' rx='12' fill='%23355e58' stroke='%23dfeae7' stroke-width='4'/%3E%3Cpath d='M22 52h84' stroke='%23dfeae7' stroke-width='4'/%3E%3Crect x='76' y='62' width='22' height='16' rx='6' fill='%23f4f3ef'/%3E%3Ccircle cx='85' cy='70' r='3.5' fill='%2326383a'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%2326383a'/%3E%3Crect x='32' y='52' width='116' height='82' rx='16' fill='%23355e58' stroke='%23dfeae7' stroke-width='5'/%3E%3Cpath d='M32 74h116' stroke='%23dfeae7' stroke-width='5'/%3E%3Crect x='106' y='88' width='32' height='22' rx='8' fill='%23f4f3ef'/%3E%3Ccircle cx='119' cy='99' r='4.5' fill='%2326383a'/%3E%3C/svg%3E" />
+
   <style>
     :root {
       /* Palet Matte Anti-Silau & Profesional (Soft Warm Stone / Calm Sage Forest) */
@@ -76,7 +88,7 @@
     }
 
     /* =====================================================================
-       HEADER RATA TENGAH PRESISI & ANTI-OVERFLOW
+       HEADER RAMPING, RATA TENGAH & LEGA DI HP
        ===================================================================== */
     .topbar {
       width: 100%;
@@ -94,13 +106,13 @@
       width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 15px 14px;
+      padding: 11px 14px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 10px;
+      gap: 8px;
       min-width: 0;
     }
 
@@ -116,26 +128,26 @@
     }
 
     .brand h1 {
-      font-size: clamp(1.15rem, 4.4vw, 1.5rem);
+      font-size: clamp(1.05rem, 4.1vw, 1.38rem);
       font-weight: 800;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #f8f7f4;
-      line-height: 1.25;
+      line-height: 1.2;
       overflow-wrap: break-word;
       word-break: break-word;
     }
 
     .brand p {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       color: #cbd5d3;
-      margin-top: 3px;
-      max-width: 580px;
+      margin-top: 2px;
+      max-width: 540px;
       overflow-wrap: break-word;
       word-break: break-word;
     }
 
-    .toolbar {
+    .header-controls-row {
       width: 100%;
       max-width: 100%;
       min-width: 0;
@@ -152,15 +164,15 @@
       justify-content: center;
       gap: 6px;
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 6px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 6px 10px;
       border-radius: var(--radius-sm);
       max-width: 100%;
       min-width: 0;
     }
 
     .month-box label {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: #dce4e2;
       white-space: nowrap;
@@ -170,7 +182,7 @@
       background: transparent;
       border: none;
       color: #f8f7f4;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       outline: none;
       cursor: pointer;
@@ -182,55 +194,25 @@
       -webkit-appearance: none;
     }
 
-    /* Rentang Siklus Pembukuan Aktif & Status Auto-Backup */
-    .header-meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      max-width: 100%;
-    }
-
     .cycle-range-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.74rem;
+      justify-content: center;
+      gap: 5px;
+      font-size: 0.72rem;
       font-weight: 700;
       color: #f8f7f4;
       background: rgba(156, 102, 49, 0.42);
       border: 1px solid rgba(226, 184, 135, 0.42);
-      padding: 4px 11px;
+      padding: 3px 11px;
       border-radius: 999px;
       cursor: pointer;
       transition: background-color 0.15s;
+      max-width: 100%;
     }
 
     .cycle-range-pill:hover {
       background: rgba(156, 102, 49, 0.62);
-    }
-
-    .autobackup-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #d6e4e1;
-      background: rgba(53, 94, 88, 0.45);
-      border: 1px solid rgba(136, 184, 176, 0.35);
-      padding: 4px 10px;
-      border-radius: 999px;
-    }
-
-    .autobackup-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #88c4b8;
-      flex-shrink: 0;
     }
 
     /* =====================================================================
@@ -261,20 +243,12 @@
       transform: scale(0.98);
     }
 
-    .btn-ghost-light {
-      background: rgba(255, 255, 255, 0.09);
-      color: #eef2f1;
-      border-color: rgba(255, 255, 255, 0.18);
-    }
-
-    .btn-ghost-light:hover {
-      background: rgba(255, 255, 255, 0.16);
-    }
-
     .btn-cycle-light {
       background: rgba(226, 184, 135, 0.18);
       color: #f9eedf;
       border-color: rgba(226, 184, 135, 0.38);
+      padding: 6px 10px;
+      font-size: 0.76rem;
     }
 
     .btn-cycle-light:hover {
@@ -356,11 +330,11 @@
       width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 16px 14px 36px;
+      padding: 16px 14px 28px;
       min-width: 0;
     }
 
-    /* Banner Setup Siklus Pembukuan (Bisa ditutup atau dibuka ulang kapan saja) */
+    /* Banner Setup Siklus Pembukuan */
     .cycle-setup-banner {
       width: 100%;
       max-width: 100%;
@@ -1209,6 +1183,72 @@
     }
 
     /* =====================================================================
+       FOOTER PANEL UTILITAS & CADANGAN DATA
+       ===================================================================== */
+    .footer-shell {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 4px 14px 34px;
+      min-width: 0;
+    }
+
+    .footer-utility-card {
+      width: 100%;
+      max-width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .footer-status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid #c3d8d4;
+      padding: 5px 13px;
+      border-radius: 999px;
+      max-width: 100%;
+    }
+
+    .autobackup-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .footer-actions-grid {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .footer-caption {
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 540px;
+    }
+
+    /* =====================================================================
        MODALS & TOAST
        ===================================================================== */
     .modal-backdrop {
@@ -1437,7 +1477,7 @@
         background: #ffffff !important;
         color: #000000 !important;
       }
-      .topbar, .toolbar, .cycle-setup-banner, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .see-more-bar, .toast-stack, footer, button {
+      .topbar, .cycle-setup-banner, .drag-handle, .module-controls, #module-expense-form, .pos-card-actions, .filter-pills, .table-filters, .see-more-bar, .toast-stack, .footer-shell, button {
         display: none !important;
       }
       .page-module, .kpi-card, .pos-card {
@@ -1453,21 +1493,6 @@
         display: none !important;
       }
     }
-
-    footer {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 16px 14px 30px;
-      border-top: 1px solid var(--border);
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
   </style>
 </head>
 <body>
@@ -1475,15 +1500,15 @@
   <!-- Toast Stack -->
   <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 
-  <!-- Header Presisi Rata Tengah -->
+  <!-- Header Ramping & Fokus Kontrol Periode Utama -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
         <h1>FAMILY EXPENSE TRACKER</h1>
-        <p>Pengelolaan anggaran keluarga &bull; Siklus gajian fleksibel &bull; Auto-backup otomatis</p>
+        <p>Anggaran keluarga &bull; Siklus gajian fleksibel</p>
       </div>
 
-      <div class="toolbar">
+      <div class="header-controls-row">
         <div class="month-box">
           <label for="monthPicker">Buku Periode:</label>
           <input type="month" id="monthPicker" />
@@ -1491,23 +1516,11 @@
         <button type="button" class="btn-cycle-light" id="btnOpenCycleModal" title="Atur tanggal mulai dan berakhir siklus pembukuan">
           &#9881; <span id="btnCycleLabel">Siklus: Tgl 25 – 24</span>
         </button>
-        <button type="button" class="btn-ghost-light" id="btnCopyPrev">Salin Pagu Bln Lalu</button>
-        <button type="button" class="btn-ghost-light" id="btnOpenRestoreModal">Restore / Cadangan</button>
-        <input type="file" id="fileRestoreJson" accept=".json,application/json" style="display:none" />
-        <button type="button" class="btn-primary" id="btnExportCsv">Unduh CSV</button>
-        <button type="button" class="btn-ghost-light" id="btnExportReport">Laporan + Pie</button>
-        <button type="button" class="btn-ghost-light" id="btnResetDefault">Reset Default</button>
       </div>
 
-      <div class="header-meta-row">
-        <button type="button" class="cycle-range-pill" id="headerCycleRangePill" title="Ketuk untuk mengubah tanggal mulai pembukuan">
-          &#128197; <span id="headerCycleRangeText">Periode: 25 Nov 2026 – 24 Des 2026</span>
-        </button>
-        <div class="autobackup-badge" id="autoBackupStatus" title="Setiap perubahan otomatis disimpan ke titik pemulihan browser">
-          <span class="autobackup-dot"></span>
-          <span id="autoBackupStatusText">Auto-backup aktif</span>
-        </div>
-      </div>
+      <button type="button" class="cycle-range-pill" id="headerCycleRangePill" title="Ketuk untuk mengubah tanggal mulai pembukuan">
+        &#128197; <span id="headerCycleRangeText">Periode: 25 Nov 2026 – 24 Des 2026</span>
+      </button>
     </div>
   </header>
 
@@ -1716,9 +1729,27 @@
 
   </main>
 
-  <footer>
-    <span>FAMILY EXPENSE TRACKER &bull; Pengelolaan Anggaran Bulanan Keluarga</span>
-    <span>Auto-backup tersimpan otomatis di browser setiap ada perubahan.</span>
+  <!-- Footer Utilitas, Laporan, Salin Pagu, Restore & Auto-Backup -->
+  <footer class="footer-shell">
+    <div class="footer-utility-card">
+      <div class="footer-status-pill" id="autoBackupStatus" title="Setiap perubahan otomatis disimpan ke titik pemulihan browser">
+        <span class="autobackup-dot"></span>
+        <span id="autoBackupStatusText">Auto-backup aktif</span>
+      </div>
+
+      <div class="footer-actions-grid">
+        <button type="button" class="btn-primary" id="btnExportCsv">Unduh CSV</button>
+        <button type="button" class="btn-outline" id="btnExportReport">Laporan + Pie</button>
+        <button type="button" class="btn-outline" id="btnCopyPrev">Salin Pagu Bln Lalu</button>
+        <button type="button" class="btn-outline" id="btnOpenRestoreModal">Restore / Cadangan</button>
+        <button type="button" class="btn-danger-soft" id="btnResetDefault">Reset Default</button>
+        <input type="file" id="fileRestoreJson" accept=".json,application/json" style="display:none" />
+      </div>
+
+      <p class="footer-caption">
+        FAMILY EXPENSE TRACKER &bull; Data tersimpan otomatis secara lokal di browser perangkat ini.
+      </p>
+    </div>
   </footer>
 
   <!-- MODAL 0: Set Up Awal & Pengaturan Siklus Pembukuan (Cut-Off Gajian) -->
@@ -1895,8 +1926,8 @@
     (function () {
       'use strict';
 
-      const STORAGE_KEY = 'family_expense_tracker_v8';
-      const LEGACY_KEYS = ['family_expense_tracker_v7', 'family_expense_tracker_v6', 'family_expense_tracker_v5'];
+      const STORAGE_KEY = 'family_expense_tracker_v9';
+      const LEGACY_KEYS = ['family_expense_tracker_v8', 'family_expense_tracker_v7', 'family_expense_tracker_v6', 'family_expense_tracker_v5'];
       const AUTOBACKUP_KEY = 'family_expense_autobackups_v1';
       const LAYOUT_KEY = 'family_expense_layout_order_v1';
       const DEFAULT_MODULE_ORDER = ['expense-form', 'pos-summary', 'tx-history'];
@@ -2003,11 +2034,6 @@
         return `${d} ${MONTH_NAMES_ID[m - 1] || m} ${y}`;
       }
 
-      /**
-       * Menghitung rentang tanggal mulai & berakhir untuk buku periode (YYYY-MM)
-       * Jika startDay = 25 & monthKey = '2026-11' => 2026-11-25 s/d 2026-12-24
-       * Jika startDay = 1  & monthKey = '2026-11' => 2026-11-01 s/d 2026-11-30
-       */
       function getCycleRange(monthKey, startDayRaw) {
         const startDay = clampStartDay(startDayRaw);
         const [year, month] = String(monthKey).split('-').map(Number);
@@ -2026,7 +2052,7 @@
           };
         }
 
-        const nextDate = new Date(year, month, 1); // month sudah 1-based sehingga ini adalah bulan berikutnya
+        const nextDate = new Date(year, month, 1);
         const nextYear = nextDate.getFullYear();
         const nextMonth = nextDate.getMonth() + 1;
         const endDay = startDay - 1;
@@ -2042,14 +2068,6 @@
         };
       }
 
-      /**
-       * Menentukan kunci buku periode (YYYY-MM) dari tanggal transaksi (YYYY-MM-DD)
-       * Contoh startDay = 25:
-       * - 2026-11-25 -> '2026-11'
-       * - 2026-12-01 -> '2026-11' (belum masuk tgl 25 Des, jadi tetap di buku Nov!)
-       * - 2026-12-24 -> '2026-11'
-       * - 2026-12-25 -> '2026-12'
-       */
       function getPeriodKeyForDate(isoDateStr, startDayRaw) {
         const startDay = clampStartDay(startDayRaw);
         const parts = String(isoDateStr || '').split('-').map(Number);
@@ -2152,12 +2170,11 @@
           if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed && typeof parsed.months === 'object' && Object.keys(parsed.months).length > 0) {
-              const normalized = normalizeStore(parsed);
-              return normalized;
+              return normalizeStore(parsed);
             }
           }
 
-          // Migrasi otomatis dari versi localStorage sebelumnya (v7 / v6 / v5)
+          // Migrasi otomatis dari versi localStorage sebelumnya (v8 / v7 / v6 / v5)
           for (const legacyKey of LEGACY_KEYS) {
             const legacyRaw = localStorage.getItem(legacyKey);
             if (legacyRaw) {
@@ -2410,9 +2427,6 @@
         return store.months[monthKey];
       }
 
-      /**
-       * Mengelompokkan ulang transaksi lintas buku agar sesuai dengan cycleStartDay
-       */
       function reorganizeTransactionsByCycle(store, startDay) {
         const allTx = [];
         const seenIds = new Set();
@@ -2433,7 +2447,6 @@
           const targetPeriod = getPeriodKeyForDate(tx.date, startDay);
           const targetMonth = ensureMonth(store, targetPeriod);
 
-          // Pastikan categoryId ada di buku tujuan; jika belum ada, coba cocokkan nama pos
           const hasCat = targetMonth.categories.some((c) => c.id === tx.categoryId);
           if (!hasCat && targetMonth.categories.length > 0) {
             tx.categoryId = targetMonth.categories[0].id;
@@ -3360,7 +3373,7 @@
           );
         });
 
-        // Tombol Tarik Transaksi Masuk Siklus Aktif (jika sebelumnya terinput di periode berbeda)
+        // Tombol Tarik Transaksi Masuk Siklus Aktif
         document.getElementById('btnSyncMisplacedTx').addEventListener('click', () => {
           const store = loadStore();
           const startDay = clampStartDay(store.cycleStartDay);
@@ -3561,7 +3574,6 @@
             return;
           }
 
-          // Otomatis tentukan buku periode berdasarkan siklus pembukuan (misal 25 Nov - 24 Des -> '2026-11')
           const targetPeriod = getPeriodKeyForDate(date, startDay);
           const targetMonthData = ensureMonth(store, targetPeriod);
 
